@@ -1,0 +1,279 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`math test (1 + 2) * 3 1`] = `
+{
+  "expected": [],
+  "furthest": {
+    "column": -1,
+    "index": -1,
+    "line": -1,
+  },
+  "position": {
+    "column": 12,
+    "index": 11,
+    "line": 1,
+  },
+  "success": true,
+  "value": [
+    "Multiply",
+    [
+      "Add",
+      [
+        "Number",
+        1,
+      ],
+      [
+        "Number",
+        2,
+      ],
+    ],
+    [
+      "Number",
+      3,
+    ],
+  ],
+}
+`;
+
+exports[`math test 1 * 2 + 3 1`] = `
+{
+  "expected": [],
+  "furthest": {
+    "column": -1,
+    "index": -1,
+    "line": -1,
+  },
+  "position": {
+    "column": 10,
+    "index": 9,
+    "line": 1,
+  },
+  "success": true,
+  "value": [
+    "Add",
+    [
+      "Multiply",
+      [
+        "Number",
+        1,
+      ],
+      [
+        "Number",
+        2,
+      ],
+    ],
+    [
+      "Number",
+      3,
+    ],
+  ],
+}
+`;
+
+exports[`math test 1 + -2 ^ 2 1`] = `
+{
+  "expected": [],
+  "furthest": {
+    "column": -1,
+    "index": -1,
+    "line": -1,
+  },
+  "position": {
+    "column": 11,
+    "index": 10,
+    "line": 1,
+  },
+  "success": true,
+  "value": [
+    "Add",
+    [
+      "Number",
+      1,
+    ],
+    [
+      "Exponentiate",
+      [
+        "Negate",
+        [
+          "Number",
+          2,
+        ],
+      ],
+      [
+        "Number",
+        2,
+      ],
+    ],
+  ],
+}
+`;
+
+exports[`math test 1 + -2 ^ 2! 1`] = `
+{
+  "expected": [],
+  "furthest": {
+    "column": -1,
+    "index": -1,
+    "line": -1,
+  },
+  "position": {
+    "column": 12,
+    "index": 11,
+    "line": 1,
+  },
+  "success": true,
+  "value": [
+    "Add",
+    [
+      "Number",
+      1,
+    ],
+    [
+      "Exponentiate",
+      [
+        "Negate",
+        [
+          "Number",
+          2,
+        ],
+      ],
+      [
+        "Factorial",
+        [
+          "Number",
+          2,
+        ],
+      ],
+    ],
+  ],
+}
+`;
+
+exports[`math test 1 + -2 1`] = `
+{
+  "expected": [],
+  "furthest": {
+    "column": -1,
+    "index": -1,
+    "line": -1,
+  },
+  "position": {
+    "column": 7,
+    "index": 6,
+    "line": 1,
+  },
+  "success": true,
+  "value": [
+    "Add",
+    [
+      "Number",
+      1,
+    ],
+    [
+      "Negate",
+      [
+        "Number",
+        2,
+      ],
+    ],
+  ],
+}
+`;
+
+exports[`math test 1 + 2 * 3 1`] = `
+{
+  "expected": [],
+  "furthest": {
+    "column": -1,
+    "index": -1,
+    "line": -1,
+  },
+  "position": {
+    "column": 10,
+    "index": 9,
+    "line": 1,
+  },
+  "success": true,
+  "value": [
+    "Add",
+    [
+      "Number",
+      1,
+    ],
+    [
+      "Multiply",
+      [
+        "Number",
+        2,
+      ],
+      [
+        "Number",
+        3,
+      ],
+    ],
+  ],
+}
+`;
+
+exports[`math test 1 + 2 + 3 1`] = `
+{
+  "expected": [],
+  "furthest": {
+    "column": -1,
+    "index": -1,
+    "line": -1,
+  },
+  "position": {
+    "column": 10,
+    "index": 9,
+    "line": 1,
+  },
+  "success": true,
+  "value": [
+    "Add",
+    [
+      "Add",
+      [
+        "Number",
+        1,
+      ],
+      [
+        "Number",
+        2,
+      ],
+    ],
+    [
+      "Number",
+      3,
+    ],
+  ],
+}
+`;
+
+exports[`math test 1 + 2 1`] = `
+{
+  "expected": [],
+  "furthest": {
+    "column": -1,
+    "index": -1,
+    "line": -1,
+  },
+  "position": {
+    "column": 6,
+    "index": 5,
+    "line": 1,
+  },
+  "success": true,
+  "value": [
+    "Add",
+    [
+      "Number",
+      1,
+    ],
+    [
+      "Number",
+      2,
+    ],
+  ],
+}
+`;

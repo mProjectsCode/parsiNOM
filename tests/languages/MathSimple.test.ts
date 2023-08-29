@@ -1,5 +1,5 @@
-import { Parser, STypeBase } from '../src/Parser';
-import {P} from '../src/Helpers';
+import { Parser, STypeBase } from '../../src/Parser';
+import { P } from '../../src/Helpers';
 
 const _ = P.optWhitespace;
 
@@ -14,7 +14,7 @@ type UnaryOperatorParserData<OperatorSType extends STypeBase, OtherSType extends
 	| OtherSType;
 function prefix<OperatorSType extends STypeBase, OtherSType extends STypeBase>(
 	operatorsParser: Parser<OperatorSType>,
-	nextParser: Parser<OtherSType>
+	nextParser: Parser<OtherSType>,
 ): Parser<UnaryOperatorParserData<OperatorSType, OtherSType>> {
 	const parser: Parser<UnaryOperatorParserData<OperatorSType, OtherSType>> = P.lazy(() => {
 		return P.sequence(operatorsParser, parser).or(nextParser);
@@ -24,14 +24,14 @@ function prefix<OperatorSType extends STypeBase, OtherSType extends STypeBase>(
 
 function postfix<OperatorSType extends STypeBase, OtherSType extends STypeBase>(
 	operatorsParser: Parser<OperatorSType>,
-	nextParser: Parser<OtherSType>
+	nextParser: Parser<OtherSType>,
 ): Parser<UnaryOperatorParserData<OperatorSType, OtherSType>> {
 	return P.sequenceMap(
 		(x, postfixes) => {
 			return postfixes.reduce<UnaryOperatorParserData<OperatorSType, OtherSType>>((acc, y) => [y, acc], x);
 		},
 		nextParser,
-		operatorsParser.many()
+		operatorsParser.many(),
 	);
 }
 
@@ -41,17 +41,17 @@ type BinaryOperatorParserData<OperatorSType extends STypeBase, OtherSType extend
 
 function binaryRight<OperatorSType extends STypeBase, OtherSType extends STypeBase>(
 	operatorsParser: Parser<OperatorSType>,
-	nextParser: Parser<OtherSType>
+	nextParser: Parser<OtherSType>,
 ): Parser<BinaryOperatorParserData<OperatorSType, OtherSType>> {
 	const parser: Parser<BinaryOperatorParserData<OperatorSType, OtherSType>> = P.lazy(() =>
-		nextParser.chain(next => P.sequence(operatorsParser, P.alwaysSucceedParser(next), parser).or(P.alwaysSucceedParser(next)))
+		nextParser.chain(next => P.sequence(operatorsParser, P.alwaysSucceedParser(next), parser).or(P.alwaysSucceedParser(next))),
 	);
 	return parser;
 }
 
 function binaryLeft<OperatorSType extends STypeBase, OtherSType extends STypeBase>(
 	operatorsParser: Parser<OperatorSType>,
-	nextParser: Parser<OtherSType>
+	nextParser: Parser<OtherSType>,
 ): Parser<BinaryOperatorParserData<OperatorSType, OtherSType>> {
 	return P.sequenceMap(
 		(first: OtherSType, others) => {
@@ -61,7 +61,7 @@ function binaryLeft<OperatorSType extends STypeBase, OtherSType extends STypeBas
 			}, first);
 		},
 		nextParser,
-		P.sequence(operatorsParser, nextParser).many()
+		P.sequence(operatorsParser, nextParser).many(),
 	);
 }
 
@@ -74,7 +74,7 @@ let Basic: Parser<unknown> = P.lazy(() => P.string('(').then(Math).skip(P.string
 let table: {
 	type: (
 		operatorsParser: Parser<string>,
-		nextParser: Parser<unknown>
+		nextParser: Parser<unknown>,
 	) => Parser<UnaryOperatorParserData<string, unknown>> | Parser<BinaryOperatorParserData<string, unknown>>;
 	ops: Parser<string>;
 }[] = [

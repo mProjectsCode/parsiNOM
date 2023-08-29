@@ -1,5 +1,5 @@
-import { Parser, STypeBase } from '../src/Parser';
-import {P, P_UTILS} from '../src/Helpers';
+import { Parser, STypeBase } from '../../src/Parser';
+import { P, P_UTILS } from '../../src/Helpers';
 import { TupleToUnion } from 'src/HelperTypes';
 
 export type Literal = string | number | boolean;
@@ -80,7 +80,7 @@ const MATH_TOKEN = P.createLanguage<MathTokenLanguage>({
 			.then(
 				P.noneOf('"')
 					.many()
-					.map(x => x.join(''))
+					.map(x => x.join('')),
 			)
 			.skip(P.string('"'))
 			.describe('string'),

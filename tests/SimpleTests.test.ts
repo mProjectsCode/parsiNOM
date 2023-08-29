@@ -1,4 +1,13 @@
+import { Parser } from 'src/Parser';
 import { P, P_UTILS } from '../src/Helpers';
+
+function testParse(parser: Parser<unknown>, str: string, expectedSuccess: boolean) {
+	test(`'${str}'`, () => {
+		const result = parser.parse(str);
+		expect(result.success).toBe(expectedSuccess);
+		expect(result.value).toMatchSnapshot();
+	});
+}
 
 describe('single string', () => {
 	const parser = P.string('aba').skip(P.eof);
@@ -11,9 +20,7 @@ describe('single string', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -27,10 +34,7 @@ describe('many', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -45,10 +49,7 @@ describe('sequence', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -63,10 +64,7 @@ describe('sequence eof', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -83,10 +81,7 @@ describe('sequence many', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -103,10 +98,7 @@ describe('binary left', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -123,10 +115,7 @@ describe('binary right', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -143,10 +132,7 @@ describe('prefix', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -163,10 +149,7 @@ describe('postfix', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -183,10 +166,7 @@ describe('trim', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -203,10 +183,7 @@ describe('sequence trim', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -223,10 +200,7 @@ describe('lazy sequence trim', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -243,10 +217,7 @@ describe('or', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -263,10 +234,7 @@ describe('or sequence', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str).success).toBe(result);
-		});
+		testParse(parser, str, result);
 	}
 });
 
@@ -287,9 +255,6 @@ describe('regex', () => {
 	];
 
 	for (const [str, result] of matchingTable) {
-		test(str, () => {
-			console.log(str, parser.parse(str));
-			expect(parser.parse(str)).toMatchSnapshot();
-		});
+		testParse(parser, str, result);
 	}
 });

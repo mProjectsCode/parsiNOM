@@ -1,77 +1,6 @@
-import { arrayUnion, LanguageDef, LanguageRules, P, P_UTILS, ParsingMarker, ParsingNode, ParsingPosition } from './Helpers';
-
-export type STypeBase = any;
-
-export interface ParseSuccess<SType extends STypeBase> {
-	success: true;
-	position: ParsingPosition;
-	value: SType;
-	furthest: ParsingPosition;
-	expected: string[];
-}
-
-export interface ParseFailure {
-	success: false;
-	position: ParsingPosition;
-	value: unknown | undefined;
-	furthest: ParsingPosition;
-	expected: string[];
-}
-
-export type ParseFunction<SType extends STypeBase> = (context: ParserContext) => ParseResult<SType>;
-
-export type ParseResult<SType extends STypeBase> = ParseSuccess<SType> | ParseFailure;
-
-// export function parseSuccess<SType extends STypeBase>(index: number, value: SType): ParseSuccess<SType> {
-// 	return {
-// 		success: true,
-// 		index: index,
-// 		value: value,
-// 		furthest: -1,
-// 		expected: [],
-// 	};
-// }
-//
-// export function parseFailure(index: number, expected: string | string[]): ParseFailure {
-// 	return {
-// 		success: false,
-// 		index: -1,
-// 		value: undefined,
-// 		furthest: index,
-// 		expected: Array.isArray(expected) ? expected : [expected],
-// 	};
-// }
-
-// export function mergeParseResults<SType extends STypeBase>(result: ParseResult<SType>, last: ParseResult<unknown> | undefined): ParseResult<SType> {
-// 	if (!last) {
-// 		return result;
-// 	}
-//
-// 	if (result.furthest > last.furthest) {
-// 		return result;
-// 	}
-//
-// 	const expected = result.furthest === last.furthest ? arrayUnion(result.expected, last.expected) : last.expected;
-//
-// 	// this if does nothing other than to satisfy typescript
-// 	if (result.success) {
-// 		return {
-// 			success: result.success,
-// 			index: result.index,
-// 			value: result.value,
-// 			furthest: last.furthest,
-// 			expected: expected,
-// 		};
-// 	} else {
-// 		return {
-// 			success: result.success,
-// 			index: result.index,
-// 			value: result.value,
-// 			furthest: last.furthest,
-// 			expected: expected,
-// 		};
-// 	}
-// }
+import { ParserContext } from './ParserContext';
+import { ParseFailure, ParseFunction, ParseResult, ParsingMarker, ParsingNode, STypeBase } from './HelperTypes';
+import { P, P_UTILS } from './Helpers';
 
 export class Parser<const SType extends STypeBase> {
 	public p: ParseFunction<SType>;
@@ -81,7 +10,7 @@ export class Parser<const SType extends STypeBase> {
 	}
 
 	parse(str: string): ParseResult<SType> {
-		return this.p(new ParserContext(str, {index: 0, line: 1, column: 1}));
+		return this.p(new ParserContext(str, { index: 0, line: 1, column: 1 }));
 	}
 
 	or<OtherSType extends STypeBase>(other: Parser<OtherSType>): Parser<SType | OtherSType> {
@@ -99,7 +28,7 @@ export class Parser<const SType extends STypeBase> {
 			},
 			leftParser,
 			this as Parser<SType>,
-			rightParser
+			rightParser,
 		);
 	}
 
@@ -129,7 +58,8 @@ export class Parser<const SType extends STypeBase> {
 		});
 	}
 
-	times(min: number, max: number): Parser<SType[]> {
+	// TODO: fix this like many
+	repeat(min: number, max: number): Parser<SType[]> {
 		if (max < min) {
 			throw new Error('error in times(min, max) parser. max may not be less than min');
 		}
@@ -172,7 +102,7 @@ export class Parser<const SType extends STypeBase> {
 	}
 
 	atMost(max: number): Parser<SType[]> {
-		return this.times(0, max);
+		return this.repeat(0, max);
 	}
 
 	atLeast(min: number): Parser<SType[]> {
@@ -180,13 +110,13 @@ export class Parser<const SType extends STypeBase> {
 			(part1, part2) => {
 				return part1.concat(part2);
 			},
-			this.times(min, min),
-			this.many()
+			this.repeat(min, min),
+			this.many(),
 		);
 	}
 
 	map<const OtherSType extends STypeBase>(fn: (value: SType) => OtherSType): Parser<OtherSType> {
-		return new Parser((context) => {
+		return new Parser(context => {
 			const result = this.p(context);
 			if (!result.success) {
 				return result;
@@ -213,7 +143,7 @@ export class Parser<const SType extends STypeBase> {
 			},
 			P.pos,
 			this as Parser<SType>,
-			P.pos
+			P.pos,
 		);
 	}
 
@@ -229,7 +159,7 @@ export class Parser<const SType extends STypeBase> {
 			},
 			P.pos,
 			this as Parser<SType>,
-			P.pos
+			P.pos,
 		);
 	}
 
@@ -257,7 +187,7 @@ export class Parser<const SType extends STypeBase> {
 			expected = [expected];
 		}
 
-		return new Parser<SType>((context) => {
+		return new Parser<SType>(context => {
 			const result = this.p(context);
 			if (!result.success) {
 				result.expected = expected as string[];
@@ -271,177 +201,14 @@ export class Parser<const SType extends STypeBase> {
 	}
 
 	chain<OtherSType extends STypeBase>(fn: (result: SType) => Parser<OtherSType>): Parser<OtherSType> {
-		return new Parser<OtherSType>((context) => {
+		return new Parser<OtherSType>(context => {
 			const result: ParseResult<SType> = this.p(context);
 			if (!result.success) {
 				return result;
 			}
 			const nextParser: Parser<OtherSType> = fn(result.value);
-			const nextResult = nextParser.p(context.moveToPosition(result.position))
+			const nextResult = nextParser.p(context.moveToPosition(result.position));
 			return context.merge(result, nextResult);
 		});
-	}
-}
-
-export class ParserContext {
-	readonly input: string;
-	position: ParsingPosition;
-
-
-	constructor(input: string, position: ParsingPosition) {
-		this.input = input;
-		this.position = position;
-	}
-
-	moveToPosition(position: ParsingPosition): ParserContext {
-		this.position = position;
-		return this;
-	}
-
-	copy(): ParserContext {
-		return new ParserContext(this.input, {
-			index: this.position.index,
-			column: this.position.column,
-			line: this.position.line,
-		})
-	}
-
-	atEOF(): boolean {
-		return this.position.index >= this.input.length;
-	}
-
-	// OPTIMIZATION: only create a new position when needed, otherwise mutate
-	private move(index: number): ParsingPosition {
-		if (index === this.position.index) {
-			return this.position;
-		}
-
-		const endIndex = index;
-		const inputChunk = this.sliceTo(endIndex);
-		let endLine = this.position.line;
-		let endColumn = this.position.column;
-
-		for (const char of inputChunk) {
-			if (char === "\n") {
-				endLine += 1;
-				endColumn = 1;
-			} else {
-				endColumn += 1;
-			}
-		}
-
-		// console.log({
-		// 	current: this.position,
-		// 	index: endIndex,
-		// 	line: endLine,
-		// 	column: endColumn,
-		// })
-
-		this.position = {
-			index: endIndex,
-			line: endLine,
-			column: endColumn,
-		}
-
-		return this.position;
-	}
-
-	private invalidPosition(): ParsingPosition {
-		return {
-			index: -1,
-			line: -1,
-			column: -1,
-		}
-	}
-
-	sliceTo(endIndex: number): string {
-		return this.input.slice(this.position.index, endIndex);
-	}
-
-	succeedOffset<SType extends STypeBase>(offset: number, value: SType): ParseResult<SType> {
-		return this.succeedAt(this.position.index + offset, value);
-	}
-
-	failOffset<SType extends STypeBase>(offset: number, expected: string | string[]): ParseResult<SType> {
-		return this.failAt(this.position.index + offset, expected);
-	}
-
-	succeed<SType extends STypeBase>(value: SType): ParseResult<SType> {
-		return this.succeedAt(this.position.index, value);
-	}
-
-	fail<SType extends STypeBase>(expected: string | string[]): ParseResult<SType> {
-		return this.failAt(this.position.index, expected);
-	}
-
-	succeedAt<SType extends STypeBase>(index: number, value: SType): ParseResult<SType> {
-		return {
-			success: true,
-			position: this.move(index),
-			value: value,
-			furthest: this.invalidPosition(),
-			expected: [],
-		}
-	}
-
-	failAt<SType extends STypeBase>(index: number, expected: string | string[]): ParseResult<SType> {
-		return {
-			success: false,
-			position: this.invalidPosition(),
-			value: null,
-			furthest: this.move(index),
-			expected: Array.isArray(expected) ? expected : [expected],
-		}
-	}
-
-	succeedAtPosition<SType extends STypeBase>(position: ParsingPosition, value: SType): ParseResult<SType> {
-		return {
-			success: true,
-			position: position,
-			value: value,
-			furthest: this.invalidPosition(),
-			expected: [],
-		}
-	}
-
-	failAtPosition<SType extends STypeBase>(position: ParsingPosition, expected: string | string[]): ParseResult<SType> {
-		return {
-			success: false,
-			position: this.invalidPosition(),
-			value: null,
-			furthest: position,
-			expected: Array.isArray(expected) ? expected : [expected],
-		}
-	}
-
-	merge<ASType extends STypeBase, BSType extends STypeBase>(a: ParseResult<ASType> | undefined, b: ParseResult<BSType>): ParseResult<BSType> {
-		if (a === undefined) {
-			return b;
-		}
-
-		if (b.furthest.index > a.furthest.index) {
-			return b;
-		}
-
-		const expected = b.furthest.index === a.furthest.index ? arrayUnion(a.expected, b.expected) : a.expected;
-
-		// this if does nothing other than to satisfy typescript
-		if (b.success) {
-			return {
-				success: true,
-				position: b.position,
-				value: b.value,
-				furthest: a.furthest,
-				expected: expected,
-			};
-		} else {
-			return {
-				success: false,
-				position: b.position,
-				value: b.value,
-				furthest: a.furthest,
-				expected: expected,
-			};
-		}
 	}
 }

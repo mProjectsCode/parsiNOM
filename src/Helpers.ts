@@ -1,5 +1,5 @@
-import {ParseFunction, Parser, ParseResult, STypeBase} from './Parser';
-import {DeParserArray, TupleToUnion} from './HelperTypes';
+import { Parser } from './Parser';
+import { DeParserArray, LanguageDef, LanguageRules, ParseFunction, ParseResult, ParsingPosition, STypeBase, TupleToUnion } from './HelperTypes';
 
 export function arrayUnion(a: string[] | never[], b: string[] | never[]): string[] {
 	const ret: string[] = [];
@@ -14,32 +14,6 @@ export function arrayUnion(a: string[] | never[], b: string[] | never[]): string
 	return ret;
 }
 
-export interface ParsingPosition {
-	readonly index: number;
-	readonly line: number;
-	readonly column: number;
-}
-
-export interface ParsingMarker<SType extends STypeBase> {
-	start: ParsingPosition;
-	value: SType;
-	end: ParsingPosition;
-}
-
-export interface ParsingNode<SType extends STypeBase> {
-	name: string;
-	start: ParsingPosition;
-	value: SType;
-	end: ParsingPosition;
-}
-
-export type LanguageDef<RuleNames extends object> = {
-	[P in keyof RuleNames]: Parser<RuleNames[P]>;
-};
-export type LanguageRules<RuleNames extends object> = {
-	[P in keyof RuleNames]: (language: LanguageDef<RuleNames>) => Parser<RuleNames[P]>;
-};
-
 export class PUtils {
 	lookahead<SType extends STypeBase>(x: Parser<SType>): Parser<SType>;
 	lookahead(x: string): Parser<string>;
@@ -47,7 +21,7 @@ export class PUtils {
 	lookahead<SType extends STypeBase>(x: Parser<SType> | string | RegExp): Parser<SType | string>;
 	lookahead<SType extends STypeBase>(x: Parser<SType> | string | RegExp): Parser<SType | string> {
 		if (x instanceof Parser) {
-			return new Parser<SType>((context) => {
+			return new Parser<SType>(context => {
 				const result = x.p(context.copy());
 				result.position = context.position;
 				result.value = '';
@@ -63,7 +37,7 @@ export class PUtils {
 	prefix<OperatorSType, OtherSType, ReturnSType>(
 		operatorsParser: Parser<OperatorSType>,
 		nextParser: Parser<OtherSType>,
-		combine: (a: OperatorSType, b: OtherSType | ReturnSType) => ReturnSType
+		combine: (a: OperatorSType, b: OtherSType | ReturnSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		const parser: Parser<OtherSType | ReturnSType> = P.lazy(() => {
 			return P.sequenceMap(combine, operatorsParser, parser).or(nextParser);
@@ -74,24 +48,24 @@ export class PUtils {
 	postfix<OperatorSType, OtherSType, ReturnSType>(
 		operatorsParser: Parser<OperatorSType>,
 		nextParser: Parser<OtherSType>,
-		combine: (a: OperatorSType, b: OtherSType | ReturnSType) => ReturnSType
+		combine: (a: OperatorSType, b: OtherSType | ReturnSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		return P.sequenceMap(
 			(x, postfixes) => {
 				return postfixes.reduce<OtherSType | ReturnSType>((acc, y) => combine(y, acc), x);
 			},
 			nextParser,
-			operatorsParser.many()
+			operatorsParser.many(),
 		);
 	}
 
 	binaryRight<OperatorSType, OtherSType, ReturnSType>(
 		operatorsParser: Parser<OperatorSType>,
 		nextParser: Parser<OtherSType>,
-		combine: (a: OtherSType, b: OperatorSType, c: OtherSType | ReturnSType) => ReturnSType
+		combine: (a: OtherSType, b: OperatorSType, c: OtherSType | ReturnSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		const parser: Parser<OtherSType | ReturnSType> = P.lazy(() =>
-			P.sequenceMap(combine, nextParser, operatorsParser.trim(P.optWhitespace), parser).or(nextParser)
+			P.sequenceMap(combine, nextParser, operatorsParser.trim(P.optWhitespace), parser).or(nextParser),
 		);
 		return parser;
 	}
@@ -99,7 +73,7 @@ export class PUtils {
 	binaryLeft<OperatorSType, OtherSType, ReturnSType>(
 		operatorsParser: Parser<OperatorSType>,
 		nextParser: Parser<OtherSType>,
-		combine: (a: OtherSType | ReturnSType, b: OperatorSType, c: OtherSType) => ReturnSType
+		combine: (a: OtherSType | ReturnSType, b: OperatorSType, c: OtherSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		return P.sequenceMap(
 			(first: OtherSType, others) => {
@@ -109,7 +83,7 @@ export class PUtils {
 				}, first);
 			},
 			nextParser,
-			P.sequence(operatorsParser.trim(P.optWhitespace), nextParser).many()
+			P.sequence(operatorsParser.trim(P.optWhitespace), nextParser).many(),
 		);
 	}
 }
@@ -270,7 +244,7 @@ export class _P {
 				return part1.concat(part2);
 			},
 			parser.map(v => [v]),
-			pairs
+			pairs,
 		);
 	}
 
@@ -284,7 +258,7 @@ export class _P {
 	string(str: string): Parser<string> {
 		const expected = "'" + str + "'";
 
-		return new Parser<string>((context) => {
+		return new Parser<string>(context => {
 			const endIndex = context.position.index + str.length;
 			const subInput = context.sliceTo(endIndex);
 			if (subInput === str) {
@@ -304,7 +278,7 @@ export class _P {
 	regexp(regexp: RegExp, group?: number | undefined): Parser<string> {
 		const expected = regexp.source;
 
-		return new Parser<string>((context) => {
+		return new Parser<string>(context => {
 			const subInput = context.input.slice(context.position.index);
 			const match = regexp.exec(subInput);
 
@@ -331,7 +305,7 @@ export class _P {
 	 * @param value
 	 */
 	alwaysSucceedParser<SType extends STypeBase>(value: SType): Parser<SType> {
-		return new Parser<SType>((context) => {
+		return new Parser<SType>(context => {
 			return context.succeed(value);
 		});
 	}
@@ -342,7 +316,7 @@ export class _P {
 	 * @param expected
 	 */
 	alwaysFailParser<SType extends STypeBase>(expected: string): Parser<SType> {
-		return new Parser<SType>((context) =>  {
+		return new Parser<SType>(context => {
 			return context.fail(expected);
 		});
 	}
@@ -413,7 +387,7 @@ export class _P {
 	 *
 	 * @param parsingFunction
 	 */
-	custom<SType extends STypeBase>(parsingFunction:  ParseFunction<SType>): Parser<SType> {
+	custom<SType extends STypeBase>(parsingFunction: ParseFunction<SType>): Parser<SType> {
 		return new Parser(parsingFunction);
 	}
 
@@ -438,9 +412,9 @@ export class _P {
 	 * @param fn
 	 */
 	takeWhile(fn: (char: string) => boolean): Parser<string> {
-		return new Parser((context) => {
+		return new Parser(context => {
 			let endIndex = context.position.index;
-			while (endIndex <  context.input.length && fn(context.input[endIndex])) {
+			while (endIndex < context.input.length && fn(context.input[endIndex])) {
 				endIndex++;
 			}
 			return context.succeedAt(endIndex, context.input.slice(context.position.index, endIndex));
@@ -454,7 +428,7 @@ export class _P {
 	 * @param fn
 	 */
 	lazy<SType extends STypeBase>(fn: () => Parser<SType>): Parser<SType> {
-		const parser: Parser<SType> = new Parser<SType>((context) => {
+		const parser: Parser<SType> = new Parser<SType>(context => {
 			// console.log('lazy', context);
 
 			parser.p = fn().p;
@@ -469,7 +443,7 @@ export class _P {
 	/**
 	 * Yields the current position.
 	 */
-	readonly pos: Parser<ParsingPosition> = new Parser<ParsingPosition>((context) => {
+	readonly pos: Parser<ParsingPosition> = new Parser<ParsingPosition>(context => {
 		return context.succeed(context.position);
 	});
 
@@ -477,7 +451,7 @@ export class _P {
 	 * Accepts any single character except for eof.
 	 * Yields the character
 	 */
-	readonly any: Parser<string> = new Parser<string>((context) => {
+	readonly any: Parser<string> = new Parser<string>(context => {
 		if (context.atEOF()) {
 			return context.fail('any character or byte');
 		}
@@ -488,11 +462,11 @@ export class _P {
 	 * Accepts the entire rest of the string until the end.
 	 * Yields the rest of the string.
 	 */
-	readonly all: Parser<string> = new Parser<string>((context) => {
+	readonly all: Parser<string> = new Parser<string>(context => {
 		return context.succeedAt(context.input.length, context.input.slice(context.position.index));
 	});
 
-	readonly eof: Parser<null> = new Parser<null>((context) => {
+	readonly eof: Parser<null> = new Parser<null>(context => {
 		if (!context.atEOF()) {
 			return context.fail('eof');
 		}

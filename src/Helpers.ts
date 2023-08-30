@@ -86,6 +86,25 @@ export class PUtils {
 			P.sequence(operatorsParser.trim(P.optWhitespace), nextParser).many(),
 		);
 	}
+
+	func<ArgsSType, ReturnSType>(
+		name: string | Parser<string>,
+		args: Parser<ArgsSType>,
+		combine: (name: string, args: ArgsSType) => ReturnSType,
+	): Parser<ReturnSType> {
+		const nameParser = typeof name === 'string' ? P.string(name) : name;
+		return P.sequenceMap(
+			(name, _lBracket, _1, args, _2, _rBracket) => {
+				return combine(name, args);
+			},
+			nameParser,
+			P.string('('),
+			P.optWhitespace,
+			args,
+			P.optWhitespace,
+			P.string(')'),
+		);
+	}
 }
 
 export const P_UTILS = new PUtils();
@@ -173,7 +192,9 @@ export class _P {
 		...parsers: ParserArr
 	): Parser<OtherSType> {
 		return this.sequence(...parsers).map<OtherSType>(function (results) {
-			return fn(...results);
+			const res = fn(...results);
+			console.log('seq map', res);
+			return res;
 		});
 	}
 
@@ -238,13 +259,13 @@ export class _P {
 	 * @param separator
 	 */
 	separateByNotEmpty<SType extends STypeBase>(parser: Parser<SType>, separator: Parser<unknown>): Parser<SType[]> {
-		const pairs: Parser<SType[]> = separator.then(parser).many();
 		return this.sequenceMap(
 			(part1, part2) => {
-				return part1.concat(part2);
+				console.log('sep', [part1, ...part2]);
+				return [part1, ...part2];
 			},
-			parser.map(v => [v]),
-			pairs,
+			parser,
+			separator.then(parser).many(),
 		);
 	}
 
@@ -261,6 +282,8 @@ export class _P {
 		return new Parser<string>(context => {
 			const endIndex = context.position.index + str.length;
 			const subInput = context.sliceTo(endIndex);
+			console.log('str', str, subInput, context, endIndex);
+
 			if (subInput === str) {
 				return context.succeedAt(endIndex, subInput);
 			} else {
@@ -288,6 +311,7 @@ export class _P {
 				if (captureGroup >= 0 && captureGroup <= match.length) {
 					const fullMatch = match[0];
 					const groupMatch = match[captureGroup];
+					console.log('regexp', expected, fullMatch, context);
 					return context.succeedOffset(fullMatch.length, groupMatch);
 				}
 

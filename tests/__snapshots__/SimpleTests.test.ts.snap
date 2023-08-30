@@ -1,412 +1,928 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`binary left '+ab' 1`] = `null`;
+exports[`binary left '+ab' 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "value": null,
+}
+`;
 
 exports[`binary left 'a + a' 1`] = `
-[
-  "a",
-  "+",
-  "a",
-]
+{
+  "expected": [],
+  "value": [
+    "a",
+    "+",
+    "a",
+  ],
+}
 `;
 
-exports[`binary left 'a + b' 1`] = `null`;
+exports[`binary left 'a + b' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`binary left 'a' 1`] = `"a"`;
+exports[`binary left 'a' 1`] = `
+{
+  "expected": [],
+  "value": "a",
+}
+`;
 
 exports[`binary left 'a+a' 1`] = `
-[
-  "a",
-  "+",
-  "a",
-]
+{
+  "expected": [],
+  "value": [
+    "a",
+    "+",
+    "a",
+  ],
+}
 `;
 
-exports[`binary left 'ab+' 1`] = `null`;
+exports[`binary left 'ab+' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`binary left 'bcaba' 1`] = `null`;
+exports[`binary left 'bcaba' 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`binary right '+ab' 1`] = `null`;
+exports[`binary right '+ab' 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "value": null,
+}
+`;
 
 exports[`binary right 'a + a' 1`] = `
-[
-  "a",
-  "+",
-  "a",
-]
+{
+  "expected": [],
+  "value": [
+    "a",
+    "+",
+    "a",
+  ],
+}
 `;
 
-exports[`binary right 'a + b' 1`] = `null`;
+exports[`binary right 'a + b' 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`binary right 'a' 1`] = `"a"`;
+exports[`binary right 'a' 1`] = `
+{
+  "expected": [],
+  "value": "a",
+}
+`;
 
 exports[`binary right 'a+a' 1`] = `
-[
-  "a",
-  "+",
-  "a",
-]
+{
+  "expected": [],
+  "value": [
+    "a",
+    "+",
+    "a",
+  ],
+}
 `;
 
-exports[`binary right 'ab+' 1`] = `null`;
+exports[`binary right 'ab+' 1`] = `
+{
+  "expected": [],
+  "value": null,
+}
+`;
 
-exports[`binary right 'bcaba' 1`] = `null`;
+exports[`binary right 'bcaba' 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "value": null,
+}
+`;
 
 exports[`lazy sequence trim 'b  a b' 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
+{
+  "expected": [],
+  "value": [
+    "b",
+    "a",
+    "b",
+  ],
+}
 `;
 
 exports[`lazy sequence trim 'b ab' 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
+{
+  "expected": [],
+  "value": [
+    "b",
+    "a",
+    "b",
+  ],
+}
 `;
 
-exports[`lazy sequence trim 'b abb' 1`] = `null`;
+exports[`lazy sequence trim 'b abb' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
 exports[`lazy sequence trim 'ba  b' 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
+{
+  "expected": [],
+  "value": [
+    "b",
+    "a",
+    "b",
+  ],
+}
 `;
 
 exports[`lazy sequence trim 'ba b' 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
+{
+  "expected": [],
+  "value": [
+    "b",
+    "a",
+    "b",
+  ],
+}
 `;
 
 exports[`lazy sequence trim 'bab' 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
+{
+  "expected": [],
+  "value": [
+    "b",
+    "a",
+    "b",
+  ],
+}
 `;
 
-exports[`lazy sequence trim 'bcaba' 1`] = `null`;
+exports[`lazy sequence trim 'bcaba' 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "value": null,
+}
+`;
 
 exports[`many 'a' 1`] = `
-[
-  "a",
-]
+{
+  "expected": [],
+  "value": [
+    "a",
+  ],
+}
 `;
 
 exports[`many 'aa' 1`] = `
-[
-  "a",
-  "a",
-]
+{
+  "expected": [],
+  "value": [
+    "a",
+    "a",
+  ],
+}
 `;
 
 exports[`many 'aaa' 1`] = `
-[
-  "a",
-  "a",
-  "a",
-]
+{
+  "expected": [],
+  "value": [
+    "a",
+    "a",
+    "a",
+  ],
+}
 `;
 
-exports[`many 'abaa' 1`] = `null`;
+exports[`many 'abaa' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`or 'a' 1`] = `"a"`;
+exports[`or 'a' 1`] = `
+{
+  "expected": [],
+  "value": "a",
+}
+`;
 
-exports[`or 'b  a b' 1`] = `null`;
+exports[`or 'b  a b' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`or 'b abb' 1`] = `null`;
+exports[`or 'b abb' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`or 'b' 1`] = `"b"`;
+exports[`or 'b' 1`] = `
+{
+  "expected": [],
+  "value": "b",
+}
+`;
 
-exports[`or 'bb' 1`] = `null`;
+exports[`or 'bb' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`or 'bcaba' 1`] = `null`;
+exports[`or 'bcaba' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`or 'c' 1`] = `"c"`;
+exports[`or 'c' 1`] = `
+{
+  "expected": [],
+  "value": "c",
+}
+`;
 
-exports[`or sequence 'ab' 1`] = `null`;
+exports[`or sequence 'ab' 1`] = `
+{
+  "expected": [
+    "'de'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`or sequence 'aba' 1`] = `null`;
+exports[`or sequence 'aba' 1`] = `
+{
+  "expected": [
+    "'de'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`or sequence 'abc' 1`] = `null`;
+exports[`or sequence 'abc' 1`] = `
+{
+  "expected": [
+    "'de'",
+  ],
+  "value": null,
+}
+`;
 
 exports[`or sequence 'abde' 1`] = `
-[
-  "ab",
-  "de",
-]
+{
+  "expected": [],
+  "value": [
+    "ab",
+    "de",
+  ],
+}
 `;
 
-exports[`or sequence 'bcaba' 1`] = `null`;
+exports[`or sequence 'bcaba' 1`] = `
+{
+  "expected": [],
+  "value": null,
+}
+`;
 
-exports[`or sequence 'c' 1`] = `null`;
+exports[`or sequence 'c' 1`] = `
+{
+  "expected": [
+    "'de'",
+  ],
+  "value": null,
+}
+`;
 
 exports[`or sequence 'cde' 1`] = `
-[
-  "c",
-  "de",
-]
+{
+  "expected": [],
+  "value": [
+    "c",
+    "de",
+  ],
+}
 `;
 
-exports[`postfix '-ab' 1`] = `null`;
+exports[`postfix '-ab' 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`postfix 'a' 1`] = `"a"`;
+exports[`postfix 'a' 1`] = `
+{
+  "expected": [],
+  "value": "a",
+}
+`;
 
-exports[`postfix 'a- b' 1`] = `null`;
+exports[`postfix 'a- b' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
 exports[`postfix 'a-' 1`] = `
-[
-  "-",
-  "a",
-]
+{
+  "expected": [],
+  "value": [
+    "-",
+    "a",
+  ],
+}
 `;
 
 exports[`postfix 'a--' 1`] = `
-[
-  "-",
-  [
+{
+  "expected": [],
+  "value": [
     "-",
-    "a",
+    [
+      "-",
+      "a",
+    ],
   ],
-]
+}
 `;
 
-exports[`postfix 'ab-' 1`] = `null`;
+exports[`postfix 'ab-' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`postfix 'bcaba' 1`] = `null`;
+exports[`postfix 'bcaba' 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "value": null,
+}
+`;
 
 exports[`prefix '--a' 1`] = `
-[
-  "-",
-  [
+{
+  "expected": [],
+  "value": [
     "-",
-    "a",
+    [
+      "-",
+      "a",
+    ],
   ],
-]
+}
 `;
 
 exports[`prefix '-a' 1`] = `
-[
-  "-",
-  "a",
-]
+{
+  "expected": [],
+  "value": [
+    "-",
+    "a",
+  ],
+}
 `;
 
-exports[`prefix '-ab' 1`] = `null`;
+exports[`prefix '-ab' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`prefix 'a - b' 1`] = `null`;
+exports[`prefix 'a - b' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`prefix 'a' 1`] = `"a"`;
+exports[`prefix 'a' 1`] = `
+{
+  "expected": [],
+  "value": "a",
+}
+`;
 
-exports[`prefix 'ab-' 1`] = `null`;
+exports[`prefix 'ab-' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`prefix 'bcaba' 1`] = `null`;
+exports[`prefix 'bcaba' 1`] = `
+{
+  "expected": [],
+  "value": null,
+}
+`;
 
 exports[`regex '1' 1`] = `
 {
-  "end": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
+  "expected": [],
+  "value": {
+    "end": {
+      "column": 2,
+      "index": 1,
+      "line": 1,
+    },
+    "start": {
+      "column": 1,
+      "index": 0,
+      "line": 1,
+    },
+    "value": 1,
   },
-  "start": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-  "value": 1,
 }
 `;
 
 exports[`regex '12' 1`] = `
 {
-  "end": {
-    "column": 3,
-    "index": 2,
-    "line": 1,
+  "expected": [],
+  "value": {
+    "end": {
+      "column": 3,
+      "index": 2,
+      "line": 1,
+    },
+    "start": {
+      "column": 1,
+      "index": 0,
+      "line": 1,
+    },
+    "value": 12,
   },
-  "start": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-  "value": 12,
 }
 `;
 
 exports[`regex '23' 1`] = `
 {
-  "end": {
-    "column": 3,
-    "index": 2,
-    "line": 1,
+  "expected": [],
+  "value": {
+    "end": {
+      "column": 3,
+      "index": 2,
+      "line": 1,
+    },
+    "start": {
+      "column": 1,
+      "index": 0,
+      "line": 1,
+    },
+    "value": 23,
   },
-  "start": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-  "value": 23,
 }
 `;
 
-exports[`regex '234a' 1`] = `null`;
+exports[`regex '234a' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
 exports[`regex '4234' 1`] = `
 {
-  "end": {
-    "column": 5,
-    "index": 4,
-    "line": 1,
+  "expected": [],
+  "value": {
+    "end": {
+      "column": 5,
+      "index": 4,
+      "line": 1,
+    },
+    "start": {
+      "column": 1,
+      "index": 0,
+      "line": 1,
+    },
+    "value": 4234,
   },
-  "start": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-  "value": 4234,
 }
 `;
 
-exports[`regex 'a1a' 1`] = `null`;
+exports[`regex 'a1a' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`regex 'a123' 1`] = `null`;
+exports[`regex 'a123' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`sequence 'a' 1`] = `null`;
+exports[`sequence 'a' 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`sequence 'aa' 1`] = `null`;
+exports[`sequence 'aa' 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`sequence 'aab' 1`] = `null`;
+exports[`sequence 'aab' 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "value": null,
+}
+`;
 
 exports[`sequence 'ab' 1`] = `
-[
-  "a",
-  "b",
-]
+{
+  "expected": [],
+  "value": [
+    "a",
+    "b",
+  ],
+}
 `;
 
-exports[`sequence 'baba' 1`] = `null`;
+exports[`sequence 'baba' 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`sequence eof 'a' 1`] = `null`;
+exports[`sequence eof 'a' 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`sequence eof 'aa' 1`] = `null`;
+exports[`sequence eof 'aa' 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`sequence eof 'aab' 1`] = `null`;
+exports[`sequence eof 'aab' 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "value": null,
+}
+`;
 
 exports[`sequence eof 'ab' 1`] = `
-[
-  "a",
-  "b",
-]
+{
+  "expected": [],
+  "value": [
+    "a",
+    "b",
+  ],
+}
 `;
 
-exports[`sequence eof 'baba' 1`] = `null`;
+exports[`sequence eof 'baba' 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`sequence many 'a' 1`] = `null`;
+exports[`sequence many 'a' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`sequence many 'aa' 1`] = `null`;
+exports[`sequence many 'aa' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
 exports[`sequence many 'ab' 1`] = `
-[
-  [
-    "a",
-    "b",
+{
+  "expected": [],
+  "value": [
+    [
+      "a",
+      "b",
+    ],
   ],
-]
+}
 `;
 
-exports[`sequence many 'aba' 1`] = `null`;
+exports[`sequence many 'aba' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
 exports[`sequence many 'abab' 1`] = `
-[
-  [
-    "a",
-    "b",
+{
+  "expected": [],
+  "value": [
+    [
+      "a",
+      "b",
+    ],
+    [
+      "a",
+      "b",
+    ],
   ],
-  [
-    "a",
-    "b",
-  ],
-]
+}
 `;
 
-exports[`sequence many 'baba' 1`] = `null`;
+exports[`sequence many 'baba' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`sequence many 'bcaba' 1`] = `null`;
+exports[`sequence many 'bcaba' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
 exports[`sequence trim 'b  a b' 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
+{
+  "expected": [],
+  "value": [
+    "b",
+    "a",
+    "b",
+  ],
+}
 `;
 
 exports[`sequence trim 'b ab' 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
+{
+  "expected": [],
+  "value": [
+    "b",
+    "a",
+    "b",
+  ],
+}
 `;
 
-exports[`sequence trim 'b abb' 1`] = `null`;
+exports[`sequence trim 'b abb' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
 exports[`sequence trim 'ba  b' 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
+{
+  "expected": [],
+  "value": [
+    "b",
+    "a",
+    "b",
+  ],
+}
 `;
 
 exports[`sequence trim 'ba b' 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
+{
+  "expected": [],
+  "value": [
+    "b",
+    "a",
+    "b",
+  ],
+}
 `;
 
 exports[`sequence trim 'bab' 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
+{
+  "expected": [],
+  "value": [
+    "b",
+    "a",
+    "b",
+  ],
+}
 `;
 
-exports[`sequence trim 'bcaba' 1`] = `null`;
+exports[`sequence trim 'bcaba' 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`single string 'a' 1`] = `null`;
+exports[`single string 'a' 1`] = `
+{
+  "expected": [
+    "'aba'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`single string 'ab' 1`] = `null`;
+exports[`single string 'ab' 1`] = `
+{
+  "expected": [
+    "'aba'",
+  ],
+  "value": null,
+}
+`;
 
-exports[`single string 'aba' 1`] = `"aba"`;
+exports[`single string 'aba' 1`] = `
+{
+  "expected": [],
+  "value": "aba",
+}
+`;
 
-exports[`single string 'abab' 1`] = `null`;
+exports[`single string 'abab' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`single string 'ababa' 1`] = `null`;
+exports[`single string 'ababa' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`trim '  a ' 1`] = `"a"`;
+exports[`trim '  a ' 1`] = `
+{
+  "expected": [],
+  "value": "a",
+}
+`;
 
-exports[`trim ' a' 1`] = `"a"`;
+exports[`trim ' a' 1`] = `
+{
+  "expected": [],
+  "value": "a",
+}
+`;
 
-exports[`trim ' ab' 1`] = `null`;
+exports[`trim ' ab' 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "value": null,
+}
+`;
 
-exports[`trim 'a  ' 1`] = `"a"`;
+exports[`trim 'a  ' 1`] = `
+{
+  "expected": [],
+  "value": "a",
+}
+`;
 
-exports[`trim 'a ' 1`] = `"a"`;
+exports[`trim 'a ' 1`] = `
+{
+  "expected": [],
+  "value": "a",
+}
+`;
 
-exports[`trim 'a' 1`] = `"a"`;
+exports[`trim 'a' 1`] = `
+{
+  "expected": [],
+  "value": "a",
+}
+`;
 
-exports[`trim 'bcaba' 1`] = `null`;
+exports[`trim 'bcaba' 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "value": null,
+}
+`;

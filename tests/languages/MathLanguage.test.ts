@@ -1,6 +1,6 @@
-import { Parser, STypeBase } from '../../src/Parser';
+import { Parser } from '../../src/Parser';
 import { P, P_UTILS } from '../../src/Helpers';
-import { TupleToUnion } from 'src/HelperTypes';
+import { TupleToUnion } from '../../src/HelperTypes';
 
 export type Literal = string | number | boolean;
 

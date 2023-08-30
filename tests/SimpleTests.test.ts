@@ -1,13 +1,5 @@
-import { Parser } from 'src/Parser';
 import { P, P_UTILS } from '../src/Helpers';
-
-function testParse(parser: Parser<unknown>, str: string, expectedSuccess: boolean) {
-	test(`'${str}'`, () => {
-		const result = parser.parse(str);
-		expect(result.success).toBe(expectedSuccess);
-		expect(result.value).toMatchSnapshot();
-	});
-}
+import { testParse } from './TestHelpers';
 
 describe('single string', () => {
 	const parser = P.string('aba').skip(P.eof);

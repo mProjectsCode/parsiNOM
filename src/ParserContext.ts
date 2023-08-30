@@ -1,5 +1,5 @@
-import { arrayUnion, ParsingPosition } from './Helpers';
-import { ParseResult, STypeBase } from './Parser';
+import { arrayUnion } from './Helpers';
+import { ParseResult, ParsingPosition, STypeBase } from './HelperTypes';
 
 export class ParserContext {
 	readonly input: string;

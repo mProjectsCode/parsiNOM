@@ -1,0 +1,93 @@
+import { Parser } from 'src/Parser';
+import { P, P_UTILS } from '../../src/Helpers';
+
+const ident = P.regexp(/^[a-z]+/i)
+	.map(x => {
+		console.log('ident', x);
+		return x;
+	})
+	.describe('identifier');
+const spaceIdent = P.sequenceMap(
+	(a, b) => {
+		return a + b.map(x => x[0] + x[1]).join();
+	},
+	ident,
+	P.sequence(P.optWhitespace, ident).many(),
+).describe('identifier with spaces');
+const str = P.string('"')
+	.then(
+		P.noneOf('"')
+			.many()
+			.map(x => x.join('')),
+	)
+	.skip(P.string('"'))
+	.describe('string');
+const value = P.or(ident, str);
+
+interface BindTarget {
+	file: string | undefined;
+	path: string;
+}
+
+const bindTarget: Parser<BindTarget> = P.sequenceMap(
+	(a, b) => {
+		if (a === null) {
+			return {
+				file: undefined,
+				path: b,
+			};
+		} else {
+			return {
+				file: a[0],
+				path: b,
+			};
+		}
+	},
+	P.sequence(ident, P.string('#')).optional(),
+	ident,
+);
+
+const args = P.separateBy(ident, P.string(',').trim(P.optWhitespace));
+
+interface InputFieldDeclaration {
+	type: string;
+	args: string[];
+	bindTarget: BindTarget | undefined;
+}
+
+const declaration: Parser<InputFieldDeclaration> = P.sequenceMap(
+	(type, args, b) => {
+		const bindTarget = b === null ? undefined : b[1];
+		return {
+			type: type,
+			args: args,
+			bindTarget: bindTarget,
+		};
+	},
+	ident.describe('input field type'),
+	args.trim(P.optWhitespace).wrap(P.string('('), P.string(')')).fallback([]),
+	P.sequence(P.string(':'), bindTarget).optional(),
+);
+
+const fullDeclaration = P.sequenceMap(
+	(_1, _2, declaration, _3) => {
+		return declaration;
+	},
+	P.string('INPUT'),
+	P.string('['),
+	declaration,
+	P.string(']'),
+);
+
+describe('input fields', () => {
+	const testCases: string[] = ['INPUT[toggle():togg]', 'INPUT[list(option):file#somethings]'];
+
+	for (const testCase of testCases) {
+		test(testCase, () => {
+			const res = fullDeclaration.parse(testCase);
+			console.log(testCase, res);
+
+			expect(res.success).toBe(true);
+		});
+	}
+});

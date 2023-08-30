@@ -58,7 +58,7 @@ export class Parser<const SType extends STypeBase> {
 		});
 	}
 
-	// TODO: fix this like many
+	// TODO: fix this like many. Maybe no fixing is necessary, further investigation needed
 	repeat(min: number, max: number): Parser<SType[]> {
 		if (max < min) {
 			throw new Error('error in times(min, max) parser. max may not be less than min');
@@ -163,11 +163,11 @@ export class Parser<const SType extends STypeBase> {
 		);
 	}
 
-	seperateBy(separator: Parser<unknown>): Parser<SType[]> {
+	separateBy(separator: Parser<unknown>): Parser<SType[]> {
 		return P.separateBy(this, separator);
 	}
 
-	seperateByNotEmpty(separator: Parser<unknown>): Parser<SType[]> {
+	separateByNotEmpty(separator: Parser<unknown>): Parser<SType[]> {
 		return P.separateByNotEmpty(this, separator);
 	}
 
@@ -210,5 +210,9 @@ export class Parser<const SType extends STypeBase> {
 			const nextResult = nextParser.p(context.moveToPosition(result.position));
 			return context.merge(result, nextResult);
 		});
+	}
+
+	optional(): Parser<SType | null> {
+		return this.or(P.alwaysSucceedParser(null));
 	}
 }

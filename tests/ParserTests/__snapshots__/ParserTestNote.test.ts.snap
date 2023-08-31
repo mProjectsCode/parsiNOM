@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`node '' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`node 'foo' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`node 'this' AST to match snapshot 1`] = `
+{
+  "end": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+  "name": "fancy node",
+  "start": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+  "value": "this",
+}
+`;

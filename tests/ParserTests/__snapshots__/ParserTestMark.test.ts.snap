@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mark '' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`mark 'foo' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`mark 'this' AST to match snapshot 1`] = `
+{
+  "end": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+  "start": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+  "value": "this",
+}
+`;

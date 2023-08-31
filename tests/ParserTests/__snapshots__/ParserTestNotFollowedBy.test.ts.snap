@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`notFollowedBy '' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`notFollowedBy 'foo' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`notFollowedBy 'that' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`notFollowedBy 'thatthis' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`notFollowedBy 'this' AST to match snapshot 1`] = `
+{
+  "end": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+  "name": "after",
+  "start": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+  "value": {
+    "end": {
+      "column": 5,
+      "index": 4,
+      "line": 1,
+    },
+    "name": "before",
+    "start": {
+      "column": 1,
+      "index": 0,
+      "line": 1,
+    },
+    "value": "this",
+  },
+}
+`;
+
+exports[`notFollowedBy 'thisfoo' AST to match snapshot 1`] = `
+{
+  "end": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+  "name": "after",
+  "start": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+  "value": {
+    "end": {
+      "column": 5,
+      "index": 4,
+      "line": 1,
+    },
+    "name": "before",
+    "start": {
+      "column": 1,
+      "index": 0,
+      "line": 1,
+    },
+    "value": "this",
+  },
+}
+`;
+
+exports[`notFollowedBy 'thisthat' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "not 'that'",
+  ],
+  "pos": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+}
+`;

@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`or '' Error to match snapshot 1`] = `
+{
+  "expected": [],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`or 'foo' Error to match snapshot 1`] = `
+{
+  "expected": [],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`or 'that' AST to match snapshot 1`] = `"that"`;
+
+exports[`or 'thatthis' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+}
+`;
+
+exports[`or 'this' AST to match snapshot 1`] = `"this"`;
+
+exports[`or 'thisthat' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+}
+`;

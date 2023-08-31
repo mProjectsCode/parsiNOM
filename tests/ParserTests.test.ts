@@ -243,7 +243,7 @@ describe('separateByNotEmpty', () => {
 });
 
 describe('lookahead', () => {
-	const parser = P.string('this').node('before').lookahead('that').node('after');
+	const parser = P.string('this').node('before').followedBy('that').node('after');
 	const matchingTable: [string, boolean][] = [
 		['', false],
 		['thisthat', true],
@@ -289,7 +289,7 @@ describe('describe', () => {
 });
 
 describe('fallback', () => {
-	const parser = P.string('this').then(P.string('that').fallback('some fallback')).skip(P.eof);
+	const parser = P.string('this').then(P.string('that').optional('some fallback')).skip(P.eof);
 	const matchingTable: [string, boolean][] = [
 		['', false],
 		['this', true],

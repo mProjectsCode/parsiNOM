@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`separateBy '' AST to match snapshot 1`] = `[]`;
+
+exports[`separateBy 'foo' Error to match snapshot 1`] = `
+{
+  "expected": [],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`separateBy 'this' AST to match snapshot 1`] = `
+[
+  "this",
+]
+`;
+
+exports[`separateBy 'this, this' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+}
+`;
+
+exports[`separateBy 'this,this' AST to match snapshot 1`] = `
+[
+  "this",
+  "this",
+]
+`;
+
+exports[`separateBy 'this,this,this' AST to match snapshot 1`] = `
+[
+  "this",
+  "this",
+  "this",
+]
+`;

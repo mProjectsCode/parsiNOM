@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`many '' AST to match snapshot 1`] = `[]`;
+
+exports[`many 'a' AST to match snapshot 1`] = `
+[
+  "a",
+]
+`;
+
+exports[`many 'aa' AST to match snapshot 1`] = `
+[
+  "a",
+  "a",
+]
+`;
+
+exports[`many 'aaa' AST to match snapshot 1`] = `
+[
+  "a",
+  "a",
+  "a",
+]
+`;
+
+exports[`many 'abaa' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;

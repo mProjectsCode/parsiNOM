@@ -171,13 +171,23 @@ export class Parser<const SType extends STypeBase> {
 		return P.separateByNotEmpty(this, separator);
 	}
 
-	lookahead(x: Parser<SType>): Parser<SType>;
-	lookahead(x: string): Parser<string>;
-	lookahead(x: RegExp): Parser<string>;
-	lookahead(x: Parser<SType> | string | RegExp): Parser<SType | string> {
-		return this.skip(P_UTILS.lookahead(x));
+	/**
+	 * Functions like lookahead. Checks if this parser is followed by `next`, but does not advance the parsing position.
+	 *
+	 * @param next
+	 */
+	followedBy(next: Parser<SType>): Parser<SType>;
+	followedBy(next: string): Parser<string>;
+	followedBy(next: RegExp): Parser<string>;
+	followedBy(next: Parser<SType> | string | RegExp): Parser<SType | string> {
+		return this.skip(P_UTILS.lookahead(next));
 	}
 
+	/**
+	 * Functions like inverse lookahead. Checks if this parser is **not** followed by `next`, but does not advance the parsing position.
+	 *
+	 * @param next
+	 */
 	notFollowedBy(next: Parser<unknown>): Parser<SType> {
 		return this.skip(P.notFollowedBy(next));
 	}
@@ -196,10 +206,20 @@ export class Parser<const SType extends STypeBase> {
 		});
 	}
 
-	fallback<OtherSType extends STypeBase>(value: OtherSType): Parser<SType | OtherSType> {
+	/**
+	 * Makes the parser optional. Provide an optional fallback value that will be yielded when the parser fails, otherwise the parser yields `undefined`, but it will never fail.
+	 */
+	optional(): Parser<SType | undefined>;
+	optional<OtherSType extends STypeBase>(value: OtherSType): Parser<SType | OtherSType>;
+	optional<OtherSType extends STypeBase>(value?: OtherSType): Parser<SType | OtherSType | undefined> {
 		return this.or(P.alwaysSucceedParser(value));
 	}
 
+	/**
+	 * Specify a function that returns a followup parser based on the result of this parser.
+	 *
+	 * @param fn
+	 */
 	chain<OtherSType extends STypeBase>(fn: (result: SType) => Parser<OtherSType>): Parser<OtherSType> {
 		return new Parser<OtherSType>(context => {
 			const result: ParseResult<SType> = this.p(context);
@@ -210,9 +230,5 @@ export class Parser<const SType extends STypeBase> {
 			const nextResult = nextParser.p(context.moveToPosition(result.position));
 			return context.merge(result, nextResult);
 		});
-	}
-
-	optional(): Parser<SType | null> {
-		return this.or(P.alwaysSucceedParser(null));
 	}
 }

@@ -3,9 +3,10 @@ import { P } from '../../src/ParsiNOM';
 describe.each([
 	['', false],
 	['this', true],
+	['thisthat', false],
 	['foo', false],
-])(`node '%s'`, (str, expected) => {
-	const parser = P.string('this').node('fancy node').skip(P.eof);
+])(`thenEof '%s'`, (str, expected) => {
+	const parser = P.string('this').thenEof();
 	const result = parser.parse(str);
 
 	test(`success to be ${expected}`, () => {

@@ -1,11 +1,11 @@
 import { Parser } from 'src/Parser';
-import { P, P_UTILS } from '../../src/Helpers';
+import { P } from '../../src/ParsiNOM';
 
 const quote = `'`;
 
 const ident = P.regexp(/^[a-z]+/i)
 	.map(x => {
-		console.log('ident', x);
+		// console.log('ident', x);
 		return x;
 	})
 	.describe('identifier');

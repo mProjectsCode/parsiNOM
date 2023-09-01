@@ -1,5 +1,5 @@
 import { Parser } from '../../src/Parser';
-import { P } from '../../src/Helpers';
+import { P } from '../../src/ParsiNOM';
 import { STypeBase } from '../../src/HelperTypes';
 
 const _ = P.optWhitespace;

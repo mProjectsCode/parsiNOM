@@ -1,6 +1,7 @@
 import { Parser } from '../../src/Parser';
-import { P, P_UTILS } from '../../src/Helpers';
+import { P } from '../../src/ParsiNOM';
 import { TupleToUnion } from '../../src/HelperTypes';
+import { P_UTILS } from '../../src/ParserUtils';
 
 export type Literal = string | number | boolean;
 

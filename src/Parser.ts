@@ -1,6 +1,7 @@
 import { ParserContext } from './ParserContext';
 import { ParseFailure, ParseFunction, ParseResult, ParsingMarker, ParsingNode, STypeBase } from './HelperTypes';
-import { P, P_UTILS } from './Helpers';
+import { P } from './ParsiNOM';
+import { P_UTILS } from './ParserUtils';
 
 export class Parser<const SType extends STypeBase> {
 	public p: ParseFunction<SType>;
@@ -229,6 +230,19 @@ export class Parser<const SType extends STypeBase> {
 			const nextParser: Parser<OtherSType> = fn(result.value);
 			const nextResult = nextParser.p(context.moveToPosition(result.position));
 			return context.merge(result, nextResult);
+		});
+	}
+
+	thenEof(): Parser<SType> {
+		return new Parser<SType>(context => {
+			const result: ParseResult<SType> = this.p(context);
+			if (!result.success) {
+				return result;
+			}
+			if (!context.atEOF()) {
+				return context.fail('eof');
+			}
+			return result;
 		});
 	}
 }

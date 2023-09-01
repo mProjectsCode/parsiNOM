@@ -1,5 +1,6 @@
-import { P, P_UTILS } from '../src/Helpers';
+import { P } from '../src/ParsiNOM';
 import { testParse } from './TestHelpers';
+import { P_UTILS } from '../src/ParserUtils';
 
 describe('single string', () => {
 	const parser = P.string('aba').skip(P.eof);

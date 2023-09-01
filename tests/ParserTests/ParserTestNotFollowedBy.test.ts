@@ -1,4 +1,4 @@
-import { P } from '../../src/Helpers';
+import { P } from '../../src/ParsiNOM';
 
 describe.each([
 	['', false],

@@ -125,7 +125,7 @@ export class Parser<const SType extends STypeBase> {
 			// we are kind of changing the generic type of `ParseResult` here and TS does not like it.
 			// return context.mutateResult(result, fn(result.value));
 
-			return context.succeed(fn(result.value));
+			return context.merge(result, context.succeed(fn(result.value)));
 		});
 	}
 
@@ -240,7 +240,7 @@ export class Parser<const SType extends STypeBase> {
 				return result;
 			}
 			if (!context.atEOF()) {
-				return context.fail('eof');
+				return context.merge(result, context.fail('eof'));
 			}
 			return result;
 		});

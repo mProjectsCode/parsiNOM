@@ -4,9 +4,11 @@ export function testParse(parser: Parser<unknown>, str: string, expectedSuccess:
 	test(`'${str}'`, () => {
 		const result = parser.parse(str);
 		expect(result.success).toBe(expectedSuccess);
-		expect({
-			value: result?.value,
-			expected: result?.expected,
-		}).toMatchSnapshot();
+
+		if (expectedSuccess) {
+			expect(result.value).toMatchSnapshot();
+		} else {
+			expect(result.expected).toMatchSnapshot();
+		}
 	});
 }

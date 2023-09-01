@@ -18,6 +18,12 @@ export class ParsiNOM {
 				const p = parsers[i];
 
 				const newResult = p.p(context);
+				if (!newResult.success) {
+					console.log('seq failed', newResult, result, context.merge(result, newResult));
+				}
+				if (newResult.success) {
+					console.log('seq su', newResult, result, context.merge(result, newResult));
+				}
 				result = context.merge(result, newResult);
 
 				if (!result.success) {
@@ -31,7 +37,9 @@ export class ParsiNOM {
 
 			// console.log('sequence', value);
 
-			return context.succeed(value as DeParserArray<ParserArr>);
+			console.log('seq succeded', result, context.merge(result, context.succeed(value as DeParserArray<ParserArr>)));
+
+			return context.merge(result, context.succeed(value as DeParserArray<ParserArr>));
 		});
 	}
 
@@ -69,7 +77,7 @@ export class ParsiNOM {
 					context.moveToPosition(result.position);
 				}
 			}
-			return context.succeed(value);
+			return context.merge(result, context.succeed(value));
 		});
 	}
 
@@ -125,6 +133,7 @@ export class ParsiNOM {
 				const newResult = p.p(context.copy());
 
 				result = context.merge(result, newResult);
+				console.log(`or`, result);
 				if (result.success) {
 					return result;
 				}

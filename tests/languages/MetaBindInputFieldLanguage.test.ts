@@ -118,22 +118,23 @@ const fullDeclaration = P.sequenceMap(
 );
 
 describe('input fields', () => {
-	const testCases: string[] = [
-		'INPUT[toggle():togg]',
-		'INPUT[list(option):file#somethings]',
-		'INPUT[list(option()):file#somethings]',
-		'INPUT[list(option(test)):file#somethings]',
-		'INPUT[list(option( test foo bar , baz )):file#somethings]',
-		"INPUT[list(option('asd asd ()')):file#somethings]",
-		"INPUT[list(option('asd asd ()',asd,'ab')):file#somethings]",
+	const testCases: [string, boolean][] = [
+		['INPUT[toggle():togg]', true],
+		['INPUT[list(option):file#somethings]', true],
+		['INPUT[list(option()):file#somethings]', true],
+		['INPUT[list(option(test)):file#somethings]', true],
+		['INPUT[list(option( test foo bar , baz )):file#somethings]', true],
+		["INPUT[list(option('asd asd ()')):file#somethings]", true],
+		["INPUT[list(option('asd asd ()',asd,'ab')):file#somethings]", true],
+		["INPUT[list(option('asd asd (),asd,)):file#somethings]", false],
 	];
 
-	for (const testCase of testCases) {
+	for (const [testCase, expected] of testCases) {
 		test(testCase, () => {
 			const res = fullDeclaration.parse(testCase);
 			console.log(testCase, JSON.stringify(res, undefined, 4));
 
-			expect(res.success).toBe(true);
+			expect(res.success).toBe(expected);
 		});
 	}
 });

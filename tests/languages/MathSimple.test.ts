@@ -95,7 +95,9 @@ describe('math test', () => {
 
 	for (const testCase of testCases) {
 		test(testCase, () => {
-			expect(Math.parse(testCase)).toMatchSnapshot();
+			const res = Math.parse(testCase);
+			expect(res.success).toBe(true);
+			expect(res.value).toMatchSnapshot();
 		});
 	}
 });

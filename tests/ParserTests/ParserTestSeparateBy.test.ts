@@ -9,7 +9,7 @@ describe.each([
 	['foo', false],
 ])(`separateBy '%s'`, (str, expected) => {
 	const parser = P.string('this').separateBy(P.string(',')).skip(P.eof);
-	const result = parser.parse(str);
+	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {
 		expect(result.success).toBe(expected);

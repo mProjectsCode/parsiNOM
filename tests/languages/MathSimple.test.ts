@@ -17,7 +17,7 @@ function prefix<OperatorSType extends STypeBase, OtherSType extends STypeBase>(
 	operatorsParser: Parser<OperatorSType>,
 	nextParser: Parser<OtherSType>,
 ): Parser<UnaryOperatorParserData<OperatorSType, OtherSType>> {
-	const parser: Parser<UnaryOperatorParserData<OperatorSType, OtherSType>> = P.lazy(() => {
+	const parser: Parser<UnaryOperatorParserData<OperatorSType, OtherSType>> = P.reference(() => {
 		return P.sequence(operatorsParser, parser).or(nextParser);
 	});
 	return parser;
@@ -44,7 +44,7 @@ function binaryRight<OperatorSType extends STypeBase, OtherSType extends STypeBa
 	operatorsParser: Parser<OperatorSType>,
 	nextParser: Parser<OtherSType>,
 ): Parser<BinaryOperatorParserData<OperatorSType, OtherSType>> {
-	const parser: Parser<BinaryOperatorParserData<OperatorSType, OtherSType>> = P.lazy(() =>
+	const parser: Parser<BinaryOperatorParserData<OperatorSType, OtherSType>> = P.reference(() =>
 		nextParser.chain(next => P.sequence(operatorsParser, P.alwaysSucceedParser(next), parser).or(P.alwaysSucceedParser(next))),
 	);
 	return parser;
@@ -70,7 +70,7 @@ let Num: Parser<readonly ['Number', number]> = P.regexp(/[0-9]+/)
 	.map(str => ['Number', Number.parseInt(str)])
 	.describe('number');
 
-let Basic: Parser<unknown> = P.lazy(() => P.string('(').then(Math).skip(P.string(')')).or(Num));
+let Basic: Parser<unknown> = P.reference(() => P.string('(').then(Math).skip(P.string(')')).or(Num));
 
 let table: {
 	type: (
@@ -95,7 +95,7 @@ describe('math test', () => {
 
 	for (const testCase of testCases) {
 		test(testCase, () => {
-			const res = Math.parse(testCase);
+			const res = Math.tryParse(testCase);
 			expect(res.success).toBe(true);
 			expect(res.value).toMatchSnapshot();
 		});

@@ -26,6 +26,7 @@ exports[`many 'aaa' AST to match snapshot 1`] = `
 exports[`many 'abaa' Error to match snapshot 1`] = `
 {
   "expected": [
+    "'a'",
     "eof",
   ],
   "pos": {

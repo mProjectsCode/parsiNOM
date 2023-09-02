@@ -21,7 +21,7 @@ describe.each([
 			}
 		})
 		.skip(P.eof);
-	const result = parser.parse(str);
+	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {
 		expect(result.success).toBe(expected);

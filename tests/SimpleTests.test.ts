@@ -181,7 +181,7 @@ describe('sequence trim', () => {
 });
 
 describe('lazy sequence trim', () => {
-	const parser = P.lazy(() => P.sequence(P.string('b'), P.string('a').trim(P.optWhitespace), P.string('b')).skip(P.eof));
+	const parser = P.reference(() => P.sequence(P.string('b'), P.string('a').trim(P.optWhitespace), P.string('b')).skip(P.eof));
 	const matchingTable: [string, boolean][] = [
 		['bab', true],
 		['ba b', true],

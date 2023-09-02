@@ -9,7 +9,7 @@ describe.each([
 	['foo', false],
 ])(`trim fixed length '%s'`, (str, expected) => {
 	const parser = P.string('this').trim(P.string(' ')).skip(P.eof);
-	const result = parser.parse(str);
+	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {
 		expect(result.success).toBe(expected);
@@ -38,7 +38,7 @@ describe.each([
 	['foo', false],
 ])(`trim variable length '%s'`, (str, expected) => {
 	const parser = P.string('this').trim(P.optWhitespace).skip(P.eof);
-	const result = parser.parse(str);
+	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {
 		expect(result.success).toBe(expected);

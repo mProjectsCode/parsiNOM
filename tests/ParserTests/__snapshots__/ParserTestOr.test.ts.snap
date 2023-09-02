@@ -2,7 +2,10 @@
 
 exports[`or '' Error to match snapshot 1`] = `
 {
-  "expected": [],
+  "expected": [
+    "'that'",
+    "'this'",
+  ],
   "pos": {
     "column": 1,
     "index": 0,
@@ -13,7 +16,10 @@ exports[`or '' Error to match snapshot 1`] = `
 
 exports[`or 'foo' Error to match snapshot 1`] = `
 {
-  "expected": [],
+  "expected": [
+    "'that'",
+    "'this'",
+  ],
   "pos": {
     "column": 1,
     "index": 0,

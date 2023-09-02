@@ -27,7 +27,7 @@ export class ParserUtils {
 		nextParser: Parser<OtherSType>,
 		combine: (a: OperatorSType, b: OtherSType | ReturnSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
-		const parser: Parser<OtherSType | ReturnSType> = P.lazy(() => {
+		const parser: Parser<OtherSType | ReturnSType> = P.reference(() => {
 			return P.sequenceMap(combine, operatorsParser, parser).or(nextParser);
 		});
 		return parser;
@@ -52,7 +52,7 @@ export class ParserUtils {
 		nextParser: Parser<OtherSType>,
 		combine: (a: OtherSType, b: OperatorSType, c: OtherSType | ReturnSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
-		const parser: Parser<OtherSType | ReturnSType> = P.lazy(() =>
+		const parser: Parser<OtherSType | ReturnSType> = P.reference(() =>
 			P.sequenceMap(combine, nextParser, operatorsParser.trim(P.optWhitespace), parser).or(nextParser),
 		);
 		return parser;

@@ -2,7 +2,10 @@
 
 exports[`chain '' Error to match snapshot 1`] = `
 {
-  "expected": [],
+  "expected": [
+    "'this'",
+    "a digit",
+  ],
   "pos": {
     "column": 1,
     "index": 0,
@@ -41,7 +44,10 @@ exports[`chain '1that' Error to match snapshot 1`] = `
 
 exports[`chain 'foo' Error to match snapshot 1`] = `
 {
-  "expected": [],
+  "expected": [
+    "'this'",
+    "a digit",
+  ],
   "pos": {
     "column": 1,
     "index": 0,
@@ -52,7 +58,10 @@ exports[`chain 'foo' Error to match snapshot 1`] = `
 
 exports[`chain 'thatthis' Error to match snapshot 1`] = `
 {
-  "expected": [],
+  "expected": [
+    "'this'",
+    "a digit",
+  ],
   "pos": {
     "column": 1,
     "index": 0,

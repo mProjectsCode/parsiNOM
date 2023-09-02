@@ -35,11 +35,11 @@ exports[`separateByNotEmpty 'this' AST to match snapshot 1`] = `
 exports[`separateByNotEmpty 'this, this' Error to match snapshot 1`] = `
 {
   "expected": [
-    "eof",
+    "'this'",
   ],
   "pos": {
-    "column": 5,
-    "index": 4,
+    "column": 6,
+    "index": 5,
     "line": 1,
   },
 }

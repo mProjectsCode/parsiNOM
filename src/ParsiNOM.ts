@@ -1,7 +1,28 @@
-import { DeParserArray, LanguageDef, LanguageRules, ParseFunction, ParseResult, ParsingPosition, STypeBase, TupleToUnion } from './HelperTypes';
+import {
+	DeParserArray,
+	LanguageDef,
+	NomLanguage,
+	NomLanguageRef,
+	LanguageRules,
+	NomLanguageRules,
+	ParseFunction,
+	ParseResult,
+	ParsingPosition,
+	STypeBase,
+	TupleToUnion,
+	ParserRef,
+	NomLanguagePartial,
+	ParseFailure,
+} from './HelperTypes';
 import { Parser } from './Parser';
+import { ParsingError } from './ParserError';
 
 export class ParsiNOM {
+	// --- OTHER ---
+	createError(str: string, parseFailure: ParseFailure): ParsingError {
+		return new ParsingError(str, parseFailure);
+	}
+
 	// --- COMBINATORS ---
 
 	/**
@@ -18,12 +39,6 @@ export class ParsiNOM {
 				const p = parsers[i];
 
 				const newResult = p.p(context);
-				if (!newResult.success) {
-					console.log('seq failed', newResult, result, context.merge(result, newResult));
-				}
-				if (newResult.success) {
-					console.log('seq su', newResult, result, context.merge(result, newResult));
-				}
 				result = context.merge(result, newResult);
 
 				if (!result.success) {
@@ -36,8 +51,6 @@ export class ParsiNOM {
 			}
 
 			// console.log('sequence', value);
-
-			console.log('seq succeded', result, context.merge(result, context.succeed(value as DeParserArray<ParserArr>)));
 
 			return context.merge(result, context.succeed(value as DeParserArray<ParserArr>));
 		});
@@ -99,19 +112,25 @@ export class ParsiNOM {
 	}
 
 	/**
-	 * Utility for creating recursive languages. The individual parsers do not need to be wrapped in {@link P.lazy}.
+	 * Utility for creating languages.
+	 * Use `language` to refer to rules defined previously and `ref` to refer to rules that are defined later and the same rule.
+	 * You can also use `ref` to refer to all other rules, but that will be slower.
 	 *
 	 * @param parsers
 	 */
-	createLanguage<RuleNames extends object>(parsers: LanguageRules<RuleNames>): LanguageDef<RuleNames> {
-		const language: LanguageDef<RuleNames> = {} as LanguageDef<RuleNames>;
+	createLanguage<const RulesType extends object>(parsers: NomLanguageRules<RulesType>): NomLanguage<RulesType> {
+		const language: NomLanguagePartial<RulesType> = {} as NomLanguagePartial<RulesType>;
+		const languageRef: NomLanguageRef<RulesType> = {} as NomLanguageRef<RulesType>;
+
 		for (const key in parsers) {
-			const func = (): Parser<RuleNames[Extract<keyof RuleNames, string>]> => {
-				return parsers[key](language);
-			};
-			language[key] = P.lazy(func);
+			languageRef[key] = P.reference(() => parsers[key](language, languageRef));
 		}
-		return language;
+
+		for (const key in parsers) {
+			language[key] = parsers[key](language, languageRef);
+		}
+
+		return language as NomLanguage<RulesType>;
 	}
 
 	/**
@@ -133,7 +152,6 @@ export class ParsiNOM {
 				const newResult = p.p(context.copy());
 
 				result = context.merge(result, newResult);
-				console.log(`or`, result);
 				if (result.success) {
 					return result;
 				}
@@ -352,15 +370,10 @@ export class ParsiNOM {
 	 *
 	 * @param fn
 	 */
-	lazy<SType extends STypeBase>(fn: () => Parser<SType>): Parser<SType> {
-		const parser: Parser<SType> = new Parser<SType>(context => {
-			// console.log('lazy', context);
-
-			parser.p = fn().p;
-			return parser.p(context);
+	reference<SType extends STypeBase>(fn: () => Parser<SType>): ParserRef<SType> {
+		return new Parser<SType>(context => {
+			return fn().p(context);
 		});
-
-		return parser;
 	}
 
 	// --- UTILITY PARSERS ---

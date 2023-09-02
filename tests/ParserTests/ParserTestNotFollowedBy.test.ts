@@ -10,7 +10,7 @@ describe.each([
 	['foo', false],
 ])(`notFollowedBy '%s'`, (str, expected) => {
 	const parser = P.string('this').node('before').notFollowedBy(P.string('that')).node('after');
-	const result = parser.parse(str);
+	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {
 		expect(result.success).toBe(expected);

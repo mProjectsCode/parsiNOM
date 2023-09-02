@@ -6,7 +6,7 @@ describe.each([
 	['foo', false],
 ])(`describe '%s'`, (str, expected) => {
 	const parser = P.string('this').describe('some error').skip(P.eof);
-	const result = parser.parse(str);
+	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {
 		expect(result.success).toBe(expected);

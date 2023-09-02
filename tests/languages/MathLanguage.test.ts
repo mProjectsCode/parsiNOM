@@ -73,7 +73,7 @@ export interface MathTokenLanguage {
 
 const MATH_TOKEN = P.createLanguage<MathTokenLanguage>({
 	number: _ =>
-		P.regexp(/[0-9]+/)
+		P.regexp(/^[0-9]+/)
 			.map(str => Number.parseInt(str))
 			.describe('number'),
 	string: _ =>
@@ -125,21 +125,21 @@ const Math = P.createLanguage<MathLanguage>({
 	bool: () => MATH_TOKEN.bool.map(EXPRESSION_CONSTRUCTOR.literal).describe('bool'),
 	string: () => MATH_TOKEN.string.map(EXPRESSION_CONSTRUCTOR.literal).describe('string'),
 
-	parens: q => q.binaryOp.wrap(P.string('('), P.string(')')),
+	parens: (l, r) => r.binaryOp.wrap(P.string('('), P.string(')')),
 
-	atom: q => P.or(q.parens, q.number, q.bool, q.string),
+	atom: l => P.or(l.parens, l.number, l.bool, l.string),
 
-	unaryFactorial: q => P_UTILS.postfix(MATH_TOKEN.unaryFactorial, q.atom, EXPRESSION_CONSTRUCTOR.unary),
-	unaryNegate: q => P_UTILS.prefix(MATH_TOKEN.binaryMinus, q.unaryFactorial, EXPRESSION_CONSTRUCTOR.unary),
+	unaryFactorial: l => P_UTILS.postfix(MATH_TOKEN.unaryFactorial, l.atom, EXPRESSION_CONSTRUCTOR.unary),
+	unaryNegate: l => P_UTILS.prefix(MATH_TOKEN.binaryMinus, l.unaryFactorial, EXPRESSION_CONSTRUCTOR.unary),
 
-	binaryExp: q => P_UTILS.binaryRight(MATH_TOKEN.binaryExp, q.unaryNegate, EXPRESSION_CONSTRUCTOR.binary),
-	binaryMulDiv: q => P_UTILS.binaryLeft(MATH_TOKEN.binaryMulDiv, q.binaryExp, EXPRESSION_CONSTRUCTOR.binary),
-	binaryPlusMinus: q => P_UTILS.binaryLeft(MATH_TOKEN.binaryPlus.or(MATH_TOKEN.binaryMinus), q.binaryMulDiv, EXPRESSION_CONSTRUCTOR.binary),
-	binaryCompare: q => P_UTILS.binaryLeft(MATH_TOKEN.binaryCompare, q.binaryPlusMinus, EXPRESSION_CONSTRUCTOR.binary),
-	binaryBoolean: q => P_UTILS.binaryLeft(MATH_TOKEN.binaryAnd.or(MATH_TOKEN.binaryOr), q.binaryCompare, EXPRESSION_CONSTRUCTOR.binary),
+	binaryExp: l => P_UTILS.binaryRight(MATH_TOKEN.binaryExp, l.unaryNegate, EXPRESSION_CONSTRUCTOR.binary),
+	binaryMulDiv: l => P_UTILS.binaryLeft(MATH_TOKEN.binaryMulDiv, l.binaryExp, EXPRESSION_CONSTRUCTOR.binary),
+	binaryPlusMinus: l => P_UTILS.binaryLeft(MATH_TOKEN.binaryPlus.or(MATH_TOKEN.binaryMinus), l.binaryMulDiv, EXPRESSION_CONSTRUCTOR.binary),
+	binaryCompare: l => P_UTILS.binaryLeft(MATH_TOKEN.binaryCompare, l.binaryPlusMinus, EXPRESSION_CONSTRUCTOR.binary),
+	binaryBoolean: l => P_UTILS.binaryLeft(MATH_TOKEN.binaryAnd.or(MATH_TOKEN.binaryOr), l.binaryCompare, EXPRESSION_CONSTRUCTOR.binary),
 
-	binaryOp: q => q.binaryBoolean,
-	expression: q => q.binaryOp,
+	binaryOp: l => l.binaryBoolean,
+	expression: l => l.binaryOp,
 });
 
 const MathParser = Math.expression.skip(P.eof);
@@ -149,7 +149,7 @@ describe('math2 test', () => {
 
 	for (const testCase of testCases) {
 		test(testCase, () => {
-			const res = MathParser.parse(testCase);
+			const res = MathParser.tryParse(testCase);
 			console.log(testCase, res);
 
 			expect(res.success).toBe(true);

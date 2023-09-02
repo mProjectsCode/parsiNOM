@@ -1,14 +1,24 @@
 import { Parser } from '../src/Parser';
 
-export function testParse(parser: Parser<unknown>, str: string, expectedSuccess: boolean) {
-	test(`'${str}'`, () => {
-		const result = parser.parse(str);
-		expect(result.success).toBe(expectedSuccess);
+export function testParse(parser: Parser<unknown>, str: string, expected: boolean) {
+	const result = parser.tryParse(str);
 
-		if (expectedSuccess) {
-			expect(result.value).toMatchSnapshot();
+	describe(`'${str}'`, () => {
+		test(`success to be ${expected}`, () => {
+			expect(result.success).toBe(expected);
+		});
+
+		if (expected) {
+			test(`AST to match snapshot`, () => {
+				expect(result.value).toMatchSnapshot();
+			});
 		} else {
-			expect(result.expected).toMatchSnapshot();
+			test(`Error to match snapshot`, () => {
+				expect({
+					pos: result.furthest,
+					expected: result.expected,
+				}).toMatchSnapshot();
+			});
 		}
 	});
 }

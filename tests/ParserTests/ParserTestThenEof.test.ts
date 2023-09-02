@@ -7,7 +7,7 @@ describe.each([
 	['foo', false],
 ])(`thenEof '%s'`, (str, expected) => {
 	const parser = P.string('this').thenEof();
-	const result = parser.parse(str);
+	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {
 		expect(result.success).toBe(expected);

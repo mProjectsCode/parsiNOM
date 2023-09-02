@@ -1,6 +1,22 @@
 import { Parser } from 'src/Parser';
 import { P } from '../../src/ParsiNOM';
 
+interface InputFieldArgument {
+	name: string;
+	value: string[];
+}
+
+interface BindTarget {
+	file: string | undefined;
+	path: string;
+}
+
+interface InputFieldDeclaration {
+	type: string;
+	args: InputFieldArgument[];
+	bindTarget: BindTarget | undefined;
+}
+
 const quote = `'`;
 
 const ident = P.regexp(/^[a-z]+/i)
@@ -24,10 +40,10 @@ const str = P.string(quote)
 			.many()
 			.map(x => x.join('')),
 	)
-	.skip(P.string(quote))
-	.describe('string');
+	.skip(P.string(quote));
 
 const specialIdent = P.regexp(/^[^ \t\n\r()',]+/).describe('any character except whitespace, parentheses, single quotation marks and commas');
+
 const specialSpaceIdent = P.sequenceMap(
 	(a, b) => {
 		return a + b.map(x => x[0] + x[1]).join();
@@ -37,11 +53,6 @@ const specialSpaceIdent = P.sequenceMap(
 ).describe('any character except parentheses');
 
 const value = P.or(specialSpaceIdent, str);
-
-interface BindTarget {
-	file: string | undefined;
-	path: string;
-}
 
 const bindTarget: Parser<BindTarget> = P.sequenceMap(
 	(a, b) => {
@@ -63,11 +74,6 @@ const bindTarget: Parser<BindTarget> = P.sequenceMap(
 
 const inputFieldArgumentValue = P.separateBy(value, P.string(',').trim(P.optWhitespace));
 
-interface InputFieldArgument {
-	name: string;
-	value: string[];
-}
-
 const inputFieldArgument = P.sequenceMap(
 	(name, value): InputFieldArgument => {
 		return {
@@ -83,12 +89,6 @@ const inputFieldArgument = P.sequenceMap(
 );
 
 const inputFieldArguments = P.separateBy(inputFieldArgument, P.string(',').trim(P.optWhitespace));
-
-interface InputFieldDeclaration {
-	type: string;
-	args: InputFieldArgument[];
-	bindTarget: BindTarget | undefined;
-}
 
 const declaration: Parser<InputFieldDeclaration> = P.sequenceMap(
 	(type, args, b) => {
@@ -126,15 +126,19 @@ describe('input fields', () => {
 		['INPUT[list(option( test foo bar , baz )):file#somethings]', true],
 		["INPUT[list(option('asd asd ()')):file#somethings]", true],
 		["INPUT[list(option('asd asd ()',asd,'ab')):file#somethings]", true],
+		["INPUT[list(option('asd asd (),asd,'ab')):file#somethings]", false],
 		["INPUT[list(option('asd asd (),asd,)):file#somethings]", false],
 	];
 
 	for (const [testCase, expected] of testCases) {
 		test(testCase, () => {
-			const res = fullDeclaration.parse(testCase);
+			const res = fullDeclaration.tryParse(testCase);
 			console.log(testCase, JSON.stringify(res, undefined, 4));
 
 			expect(res.success).toBe(expected);
+			if (!res.success) {
+				console.log(P.createError(testCase, res));
+			}
 		});
 	}
 });

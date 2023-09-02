@@ -10,8 +10,17 @@ export class Parser<const SType extends STypeBase> {
 		this.p = p;
 	}
 
-	parse(str: string): ParseResult<SType> {
+	tryParse(str: string): ParseResult<SType> {
 		return this.p(new ParserContext(str, { index: 0, line: 1, column: 1 }));
+	}
+
+	parse(str: string): SType | undefined {
+		const result = this.tryParse(str);
+		if (result.success) {
+			return result.value;
+		} else {
+			throw P.createError(str, result);
+		}
 	}
 
 	or<OtherSType extends STypeBase>(other: Parser<OtherSType>): Parser<SType | OtherSType> {
@@ -53,7 +62,7 @@ export class Parser<const SType extends STypeBase> {
 					context.moveToPosition(result.position);
 					value.push(result.value);
 				} else {
-					return context.succeedAtPosition(iterStartPosition, value);
+					return context.merge(result, context.succeedAtPosition(iterStartPosition, value));
 				}
 			}
 		});
@@ -193,7 +202,7 @@ export class Parser<const SType extends STypeBase> {
 		return this.skip(P.notFollowedBy(next));
 	}
 
-	describe(expected: string | string[]): Parser<SType> {
+	describe(expected: string | string[] = []): Parser<SType> {
 		if (!Array.isArray(expected)) {
 			expected = [expected];
 		}

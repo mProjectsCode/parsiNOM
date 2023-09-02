@@ -1,28 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`binary left '+ab' 1`] = `
-[
-  "'a'",
-]
+exports[`binary left '+ab' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
 `;
 
-exports[`binary left 'a + a' 1`] = `
-[
-  "a",
-  "+",
-  "a",
-]
-`;
-
-exports[`binary left 'a + b' 1`] = `
-[
-  "eof",
-]
-`;
-
-exports[`binary left 'a' 1`] = `"a"`;
-
-exports[`binary left 'a+a' 1`] = `
+exports[`binary left 'a + a' AST to match snapshot 1`] = `
 [
   "a",
   "+",
@@ -30,25 +21,22 @@ exports[`binary left 'a+a' 1`] = `
 ]
 `;
 
-exports[`binary left 'ab+' 1`] = `
-[
-  "eof",
-]
+exports[`binary left 'a + b' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+}
 `;
 
-exports[`binary left 'bcaba' 1`] = `
-[
-  "'a'",
-]
-`;
+exports[`binary left 'a' AST to match snapshot 1`] = `"a"`;
 
-exports[`binary right '+ab' 1`] = `
-[
-  "'a'",
-]
-`;
-
-exports[`binary right 'a + a' 1`] = `
+exports[`binary left 'a+a' AST to match snapshot 1`] = `
 [
   "a",
   "+",
@@ -56,15 +44,47 @@ exports[`binary right 'a + a' 1`] = `
 ]
 `;
 
-exports[`binary right 'a + b' 1`] = `
-[
-  "'a'",
-]
+exports[`binary left 'ab+' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'+'",
+    "eof",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`binary right 'a' 1`] = `"a"`;
+exports[`binary left 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
 
-exports[`binary right 'a+a' 1`] = `
+exports[`binary right '+ab' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`binary right 'a + a' AST to match snapshot 1`] = `
 [
   "a",
   "+",
@@ -72,15 +92,57 @@ exports[`binary right 'a+a' 1`] = `
 ]
 `;
 
-exports[`binary right 'ab+' 1`] = `[]`;
+exports[`binary right 'a + b' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+}
+`;
 
-exports[`binary right 'bcaba' 1`] = `
+exports[`binary right 'a' AST to match snapshot 1`] = `"a"`;
+
+exports[`binary right 'a+a' AST to match snapshot 1`] = `
 [
-  "'a'",
+  "a",
+  "+",
+  "a",
 ]
 `;
 
-exports[`lazy sequence trim 'b  a b' 1`] = `
+exports[`binary right 'ab+' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'+'",
+    "eof",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`binary right 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`lazy sequence trim 'b  a b' AST to match snapshot 1`] = `
 [
   "b",
   "a",
@@ -88,7 +150,7 @@ exports[`lazy sequence trim 'b  a b' 1`] = `
 ]
 `;
 
-exports[`lazy sequence trim 'b ab' 1`] = `
+exports[`lazy sequence trim 'b ab' AST to match snapshot 1`] = `
 [
   "b",
   "a",
@@ -96,29 +158,20 @@ exports[`lazy sequence trim 'b ab' 1`] = `
 ]
 `;
 
-exports[`lazy sequence trim 'b abb' 1`] = `
-[
-  "eof",
-]
+exports[`lazy sequence trim 'b abb' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+}
 `;
 
-exports[`lazy sequence trim 'ba  b' 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
-`;
-
-exports[`lazy sequence trim 'ba b' 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
-`;
-
-exports[`lazy sequence trim 'bab' 1`] = `
+exports[`lazy sequence trim 'ba  b' AST to match snapshot 1`] = `
 [
   "b",
   "a",
@@ -126,26 +179,49 @@ exports[`lazy sequence trim 'bab' 1`] = `
 ]
 `;
 
-exports[`lazy sequence trim 'bcaba' 1`] = `
+exports[`lazy sequence trim 'ba b' AST to match snapshot 1`] = `
 [
-  "'a'",
+  "b",
+  "a",
+  "b",
 ]
 `;
 
-exports[`many 'a' 1`] = `
+exports[`lazy sequence trim 'bab' AST to match snapshot 1`] = `
+[
+  "b",
+  "a",
+  "b",
+]
+`;
+
+exports[`lazy sequence trim 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`many 'a' AST to match snapshot 1`] = `
 [
   "a",
 ]
 `;
 
-exports[`many 'aa' 1`] = `
+exports[`many 'aa' AST to match snapshot 1`] = `
 [
   "a",
   "a",
 ]
 `;
 
-exports[`many 'aaa' 1`] = `
+exports[`many 'aaa' AST to match snapshot 1`] = `
 [
   "a",
   "a",
@@ -153,104 +229,195 @@ exports[`many 'aaa' 1`] = `
 ]
 `;
 
-exports[`many 'abaa' 1`] = `
-[
-  "eof",
-]
+exports[`many 'abaa' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+    "eof",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`or 'a' 1`] = `"a"`;
+exports[`or 'a' AST to match snapshot 1`] = `"a"`;
 
-exports[`or 'b  a b' 1`] = `
-[
-  "eof",
-]
+exports[`or 'b  a b' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`or 'b abb' 1`] = `
-[
-  "eof",
-]
+exports[`or 'b abb' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`or 'b' 1`] = `"b"`;
+exports[`or 'b' AST to match snapshot 1`] = `"b"`;
 
-exports[`or 'bb' 1`] = `
-[
-  "eof",
-]
+exports[`or 'bb' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`or 'bcaba' 1`] = `
-[
-  "eof",
-]
+exports[`or 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`or 'c' 1`] = `"c"`;
+exports[`or 'c' AST to match snapshot 1`] = `"c"`;
 
-exports[`or sequence 'ab' 1`] = `
-[
-  "'de'",
-]
+exports[`or sequence 'ab' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'de'",
+  ],
+  "pos": {
+    "column": 3,
+    "index": 2,
+    "line": 1,
+  },
+}
 `;
 
-exports[`or sequence 'aba' 1`] = `
-[
-  "'de'",
-]
+exports[`or sequence 'aba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'de'",
+  ],
+  "pos": {
+    "column": 3,
+    "index": 2,
+    "line": 1,
+  },
+}
 `;
 
-exports[`or sequence 'abc' 1`] = `
-[
-  "'de'",
-]
+exports[`or sequence 'abc' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'de'",
+  ],
+  "pos": {
+    "column": 3,
+    "index": 2,
+    "line": 1,
+  },
+}
 `;
 
-exports[`or sequence 'abde' 1`] = `
+exports[`or sequence 'abde' AST to match snapshot 1`] = `
 [
   "ab",
   "de",
 ]
 `;
 
-exports[`or sequence 'bcaba' 1`] = `[]`;
-
-exports[`or sequence 'c' 1`] = `
-[
-  "'de'",
-]
+exports[`or sequence 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'ab'",
+    "'c'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
 `;
 
-exports[`or sequence 'cde' 1`] = `
+exports[`or sequence 'c' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'de'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`or sequence 'cde' AST to match snapshot 1`] = `
 [
   "c",
   "de",
 ]
 `;
 
-exports[`postfix '-ab' 1`] = `
-[
-  "'a'",
-]
+exports[`postfix '-ab' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
 `;
 
-exports[`postfix 'a' 1`] = `"a"`;
+exports[`postfix 'a' AST to match snapshot 1`] = `"a"`;
 
-exports[`postfix 'a- b' 1`] = `
-[
-  "eof",
-]
+exports[`postfix 'a- b' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'-'",
+    "eof",
+  ],
+  "pos": {
+    "column": 3,
+    "index": 2,
+    "line": 1,
+  },
+}
 `;
 
-exports[`postfix 'a-' 1`] = `
+exports[`postfix 'a-' AST to match snapshot 1`] = `
 [
   "-",
   "a",
 ]
 `;
 
-exports[`postfix 'a--' 1`] = `
+exports[`postfix 'a--' AST to match snapshot 1`] = `
 [
   "-",
   [
@@ -260,19 +427,34 @@ exports[`postfix 'a--' 1`] = `
 ]
 `;
 
-exports[`postfix 'ab-' 1`] = `
-[
-  "eof",
-]
+exports[`postfix 'ab-' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'-'",
+    "eof",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`postfix 'bcaba' 1`] = `
-[
-  "'a'",
-]
+exports[`postfix 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
 `;
 
-exports[`prefix '--a' 1`] = `
+exports[`prefix '--a' AST to match snapshot 1`] = `
 [
   "-",
   [
@@ -282,36 +464,69 @@ exports[`prefix '--a' 1`] = `
 ]
 `;
 
-exports[`prefix '-a' 1`] = `
+exports[`prefix '-a' AST to match snapshot 1`] = `
 [
   "-",
   "a",
 ]
 `;
 
-exports[`prefix '-ab' 1`] = `
-[
-  "eof",
-]
+exports[`prefix '-ab' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 3,
+    "index": 2,
+    "line": 1,
+  },
+}
 `;
 
-exports[`prefix 'a - b' 1`] = `
-[
-  "eof",
-]
+exports[`prefix 'a - b' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`prefix 'a' 1`] = `"a"`;
+exports[`prefix 'a' AST to match snapshot 1`] = `"a"`;
 
-exports[`prefix 'ab-' 1`] = `
-[
-  "eof",
-]
+exports[`prefix 'ab-' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`prefix 'bcaba' 1`] = `[]`;
+exports[`prefix 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'-'",
+    "'a'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
 
-exports[`regex '1' 1`] = `
+exports[`regex '1' AST to match snapshot 1`] = `
 {
   "end": {
     "column": 2,
@@ -327,7 +542,7 @@ exports[`regex '1' 1`] = `
 }
 `;
 
-exports[`regex '12' 1`] = `
+exports[`regex '12' AST to match snapshot 1`] = `
 {
   "end": {
     "column": 3,
@@ -343,7 +558,7 @@ exports[`regex '12' 1`] = `
 }
 `;
 
-exports[`regex '23' 1`] = `
+exports[`regex '23' AST to match snapshot 1`] = `
 {
   "end": {
     "column": 3,
@@ -359,13 +574,20 @@ exports[`regex '23' 1`] = `
 }
 `;
 
-exports[`regex '234a' 1`] = `
-[
-  "eof",
-]
+exports[`regex '234a' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 4,
+    "index": 3,
+    "line": 1,
+  },
+}
 `;
 
-exports[`regex '4234' 1`] = `
+exports[`regex '4234' AST to match snapshot 1`] = `
 {
   "end": {
     "column": 5,
@@ -381,93 +603,177 @@ exports[`regex '4234' 1`] = `
 }
 `;
 
-exports[`regex 'a1a' 1`] = `
-[
-  "eof",
-]
+exports[`regex 'a1a' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`regex 'a123' 1`] = `
-[
-  "eof",
-]
+exports[`regex 'a123' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 4,
+    "index": 3,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence 'a' 1`] = `
-[
-  "'b'",
-]
+exports[`sequence 'a' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence 'aa' 1`] = `
-[
-  "'b'",
-]
+exports[`sequence 'aa' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence 'aab' 1`] = `
-[
-  "'b'",
-]
+exports[`sequence 'aab' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence 'ab' 1`] = `
+exports[`sequence 'ab' AST to match snapshot 1`] = `
 [
   "a",
   "b",
 ]
 `;
 
-exports[`sequence 'baba' 1`] = `
-[
-  "'a'",
-]
+exports[`sequence 'baba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence eof 'a' 1`] = `
-[
-  "'b'",
-]
+exports[`sequence eof 'a' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence eof 'aa' 1`] = `
-[
-  "'b'",
-]
+exports[`sequence eof 'aa' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence eof 'aab' 1`] = `
-[
-  "'b'",
-]
+exports[`sequence eof 'aab' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence eof 'ab' 1`] = `
+exports[`sequence eof 'ab' AST to match snapshot 1`] = `
 [
   "a",
   "b",
 ]
 `;
 
-exports[`sequence eof 'baba' 1`] = `
-[
-  "'a'",
-]
+exports[`sequence eof 'baba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence many 'a' 1`] = `
-[
-  "eof",
-]
+exports[`sequence many 'a' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence many 'aa' 1`] = `
-[
-  "eof",
-]
+exports[`sequence many 'aa' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence many 'ab' 1`] = `
+exports[`sequence many 'ab' AST to match snapshot 1`] = `
 [
   [
     "a",
@@ -476,13 +782,20 @@ exports[`sequence many 'ab' 1`] = `
 ]
 `;
 
-exports[`sequence many 'aba' 1`] = `
-[
-  "eof",
-]
+exports[`sequence many 'aba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 4,
+    "index": 3,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence many 'abab' 1`] = `
+exports[`sequence many 'abab' AST to match snapshot 1`] = `
 [
   [
     "a",
@@ -495,19 +808,35 @@ exports[`sequence many 'abab' 1`] = `
 ]
 `;
 
-exports[`sequence many 'baba' 1`] = `
-[
-  "eof",
-]
+exports[`sequence many 'baba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence many 'bcaba' 1`] = `
-[
-  "eof",
-]
+exports[`sequence many 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence trim 'b  a b' 1`] = `
+exports[`sequence trim 'b  a b' AST to match snapshot 1`] = `
 [
   "b",
   "a",
@@ -515,7 +844,7 @@ exports[`sequence trim 'b  a b' 1`] = `
 ]
 `;
 
-exports[`sequence trim 'b ab' 1`] = `
+exports[`sequence trim 'b ab' AST to match snapshot 1`] = `
 [
   "b",
   "a",
@@ -523,13 +852,20 @@ exports[`sequence trim 'b ab' 1`] = `
 ]
 `;
 
-exports[`sequence trim 'b abb' 1`] = `
-[
-  "eof",
-]
+exports[`sequence trim 'b abb' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+}
 `;
 
-exports[`sequence trim 'ba  b' 1`] = `
+exports[`sequence trim 'ba  b' AST to match snapshot 1`] = `
 [
   "b",
   "a",
@@ -537,7 +873,7 @@ exports[`sequence trim 'ba  b' 1`] = `
 ]
 `;
 
-exports[`sequence trim 'ba b' 1`] = `
+exports[`sequence trim 'ba b' AST to match snapshot 1`] = `
 [
   "b",
   "a",
@@ -545,7 +881,7 @@ exports[`sequence trim 'ba b' 1`] = `
 ]
 `;
 
-exports[`sequence trim 'bab' 1`] = `
+exports[`sequence trim 'bab' AST to match snapshot 1`] = `
 [
   "b",
   "a",
@@ -553,56 +889,105 @@ exports[`sequence trim 'bab' 1`] = `
 ]
 `;
 
-exports[`sequence trim 'bcaba' 1`] = `
-[
-  "'a'",
-]
+exports[`sequence trim 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
 `;
 
-exports[`single string 'a' 1`] = `
-[
-  "'aba'",
-]
+exports[`single string 'a' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'aba'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
 `;
 
-exports[`single string 'ab' 1`] = `
-[
-  "'aba'",
-]
+exports[`single string 'ab' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'aba'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
 `;
 
-exports[`single string 'aba' 1`] = `"aba"`;
+exports[`single string 'aba' AST to match snapshot 1`] = `"aba"`;
 
-exports[`single string 'abab' 1`] = `
-[
-  "eof",
-]
+exports[`single string 'abab' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 4,
+    "index": 3,
+    "line": 1,
+  },
+}
 `;
 
-exports[`single string 'ababa' 1`] = `
-[
-  "eof",
-]
+exports[`single string 'ababa' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 4,
+    "index": 3,
+    "line": 1,
+  },
+}
 `;
 
-exports[`trim '  a ' 1`] = `"a"`;
+exports[`trim '  a ' AST to match snapshot 1`] = `"a"`;
 
-exports[`trim ' a' 1`] = `"a"`;
+exports[`trim ' a' AST to match snapshot 1`] = `"a"`;
 
-exports[`trim ' ab' 1`] = `
-[
-  "eof",
-]
+exports[`trim ' ab' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 3,
+    "index": 2,
+    "line": 1,
+  },
+}
 `;
 
-exports[`trim 'a  ' 1`] = `"a"`;
+exports[`trim 'a  ' AST to match snapshot 1`] = `"a"`;
 
-exports[`trim 'a ' 1`] = `"a"`;
+exports[`trim 'a ' AST to match snapshot 1`] = `"a"`;
 
-exports[`trim 'a' 1`] = `"a"`;
+exports[`trim 'a' AST to match snapshot 1`] = `"a"`;
 
-exports[`trim 'bcaba' 1`] = `
-[
-  "'a'",
-]
+exports[`trim 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
 `;

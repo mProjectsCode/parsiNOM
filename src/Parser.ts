@@ -1,7 +1,7 @@
 import { ParserContext } from './ParserContext';
 import { ParseFailure, ParseFunction, ParseResult, ParsingMarker, ParsingNode, STypeBase } from './HelperTypes';
 import { P } from './ParsiNOM';
-import { P_UTILS } from './ParserUtils';
+import { P_HELPERS } from './Helpers';
 
 export class Parser<const SType extends STypeBase> {
 	public p: ParseFunction<SType>;
@@ -186,11 +186,8 @@ export class Parser<const SType extends STypeBase> {
 	 *
 	 * @param next
 	 */
-	followedBy(next: Parser<SType>): Parser<SType>;
-	followedBy(next: string): Parser<string>;
-	followedBy(next: RegExp): Parser<string>;
-	followedBy(next: Parser<SType> | string | RegExp): Parser<SType | string> {
-		return this.skip(P_UTILS.lookahead(next));
+	followedBy(next: Parser<unknown>): Parser<SType> {
+		return this.skip(P_HELPERS.followedBy(next));
 	}
 
 	/**
@@ -199,7 +196,7 @@ export class Parser<const SType extends STypeBase> {
 	 * @param next
 	 */
 	notFollowedBy(next: Parser<unknown>): Parser<SType> {
-		return this.skip(P.notFollowedBy(next));
+		return this.skip(P_HELPERS.notFollowedBy(next));
 	}
 
 	describe(expected: string | string[] = []): Parser<SType> {
@@ -222,7 +219,7 @@ export class Parser<const SType extends STypeBase> {
 	optional(): Parser<SType | undefined>;
 	optional<OtherSType extends STypeBase>(value: OtherSType): Parser<SType | OtherSType>;
 	optional<OtherSType extends STypeBase>(value?: OtherSType): Parser<SType | OtherSType | undefined> {
-		return this.or(P.alwaysSucceedParser(value));
+		return this.or(P.succeed(value));
 	}
 
 	/**

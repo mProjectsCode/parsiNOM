@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`succeed '' AST to match snapshot 1`] = `"value"`;
+
+exports[`succeed 'foo' AST to match snapshot 1`] = `"value"`;
+
+exports[`succeed 'that' AST to match snapshot 1`] = `"value"`;
+
+exports[`succeed 'this' AST to match snapshot 1`] = `"value"`;
+
+exports[`succeed 'thisthat' AST to match snapshot 1`] = `"value"`;
+
+exports[`succeed 'thisthatfoo' AST to match snapshot 1`] = `"value"`;

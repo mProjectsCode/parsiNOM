@@ -13,6 +13,7 @@ function operators(operators: Record<string, string>): Parser<string> {
 type UnaryOperatorParserData<OperatorSType extends STypeBase, OtherSType extends STypeBase> =
 	| [OperatorSType, UnaryOperatorParserData<OperatorSType, OtherSType>]
 	| OtherSType;
+
 function prefix<OperatorSType extends STypeBase, OtherSType extends STypeBase>(
 	operatorsParser: Parser<OperatorSType>,
 	nextParser: Parser<OtherSType>,
@@ -45,7 +46,7 @@ function binaryRight<OperatorSType extends STypeBase, OtherSType extends STypeBa
 	nextParser: Parser<OtherSType>,
 ): Parser<BinaryOperatorParserData<OperatorSType, OtherSType>> {
 	const parser: Parser<BinaryOperatorParserData<OperatorSType, OtherSType>> = P.reference(() =>
-		nextParser.chain(next => P.sequence(operatorsParser, P.alwaysSucceedParser(next), parser).or(P.alwaysSucceedParser(next))),
+		nextParser.chain(next => P.sequence(operatorsParser, P.succeed(next), parser).or(P.succeed(next))),
 	);
 	return parser;
 }

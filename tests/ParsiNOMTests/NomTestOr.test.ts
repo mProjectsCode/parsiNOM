@@ -2,13 +2,13 @@ import { P } from '../../src/ParsiNOM';
 
 describe.each([
 	['', false],
-	['thisthat', true],
-	['this', false],
-	['that', false],
+	['this', true],
+	['that', true],
+	['thisthat', false],
 	['thatthis', false],
 	['foo', false],
-])(`followedBy '%s'`, (str, expected) => {
-	const parser = P.string('this').node('before').followedBy(P.string('that')).node('after');
+])(`or '%s'`, (str, expected) => {
+	const parser = P.or(P.string('this'), P.string('that')).skip(P.eof);
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

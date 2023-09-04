@@ -1,27 +1,7 @@
-import { STypeBase } from './HelperTypes';
 import { Parser } from './Parser';
 import { P } from './ParsiNOM';
 
 export class ParserUtils {
-	lookahead<SType extends STypeBase>(x: Parser<SType>): Parser<SType>;
-	lookahead(x: string): Parser<string>;
-	lookahead(x: RegExp): Parser<string>;
-	lookahead<SType extends STypeBase>(x: Parser<SType> | string | RegExp): Parser<SType | string>;
-	lookahead<SType extends STypeBase>(x: Parser<SType> | string | RegExp): Parser<SType | string> {
-		if (x instanceof Parser) {
-			return new Parser<SType>(context => {
-				const result = x.p(context.copy());
-				result.position = context.position;
-				result.value = '';
-				return result;
-			});
-		} else if (typeof x === 'string') {
-			return this.lookahead(P.string(x));
-		}
-
-		return this.lookahead(P.regexp(x));
-	}
-
 	prefix<OperatorSType, OtherSType, ReturnSType>(
 		operatorsParser: Parser<OperatorSType>,
 		nextParser: Parser<OtherSType>,

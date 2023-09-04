@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fail '' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "expected",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`fail 'foo' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "expected",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`fail 'that' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "expected",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`fail 'this' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "expected",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`fail 'thisthat' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "expected",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`fail 'thisthatfoo' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "expected",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;

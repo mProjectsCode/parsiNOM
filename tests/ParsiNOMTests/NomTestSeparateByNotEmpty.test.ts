@@ -2,13 +2,13 @@ import { P } from '../../src/ParsiNOM';
 
 describe.each([
 	['', false],
-	['thisthat', true],
-	['this', false],
-	['that', false],
-	['thatthis', false],
+	['this', true],
+	['this,this', true],
+	['this,this,this', true],
+	['this, this', false],
 	['foo', false],
-])(`followedBy '%s'`, (str, expected) => {
-	const parser = P.string('this').node('before').followedBy(P.string('that')).node('after');
+])(`separateByNotEmpty '%s'`, (str, expected) => {
+	const parser = P.separateByNotEmpty(P.string('this'), P.string(',')).skip(P.eof);
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

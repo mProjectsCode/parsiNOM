@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`oneOf '' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "one character of 'abc'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`oneOf 'a' AST to match snapshot 1`] = `"a"`;
+
+exports[`oneOf 'afoo' AST to match snapshot 1`] = `"a"`;
+
+exports[`oneOf 'b' AST to match snapshot 1`] = `"b"`;
+
+exports[`oneOf 'c' AST to match snapshot 1`] = `"c"`;
+
+exports[`oneOf 'foo' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "one character of 'abc'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;

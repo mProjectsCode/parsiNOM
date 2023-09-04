@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`regexp '&foo' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "^[a-z]+",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`regexp '' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "^[a-z]+",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`regexp '2thisthat' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "^[a-z]+",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`regexp 'this' AST to match snapshot 1`] = `"this"`;
+
+exports[`regexp 'thisthat' AST to match snapshot 1`] = `"thisthat"`;

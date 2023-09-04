@@ -1,14 +1,14 @@
 import { P } from '../../src/ParsiNOM';
 
 describe.each([
-	['', false],
+	['', true],
+	['this', true],
+	['that', true],
 	['thisthat', true],
-	['this', false],
-	['that', false],
-	['thatthis', false],
-	['foo', false],
-])(`followedBy '%s'`, (str, expected) => {
-	const parser = P.string('this').node('before').followedBy(P.string('that')).node('after');
+	['thisthatfoo', true],
+	['foo', true],
+])(`succeed '%s'`, (str, expected) => {
+	const parser = P.succeed('value');
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

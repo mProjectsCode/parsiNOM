@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`separateByNotEmpty '' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`separateByNotEmpty 'foo' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`separateByNotEmpty 'this' AST to match snapshot 1`] = `
+[
+  "this",
+]
+`;
+
+exports[`separateByNotEmpty 'this, this' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 6,
+    "index": 5,
+    "line": 1,
+  },
+}
+`;
+
+exports[`separateByNotEmpty 'this,this' AST to match snapshot 1`] = `
+[
+  "this",
+  "this",
+]
+`;
+
+exports[`separateByNotEmpty 'this,this,this' AST to match snapshot 1`] = `
+[
+  "this",
+  "this",
+  "this",
+]
+`;

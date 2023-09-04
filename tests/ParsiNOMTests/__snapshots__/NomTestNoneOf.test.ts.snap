@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`noneOf '' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "no character of 'abc'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`noneOf 'a' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "no character of 'abc'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`noneOf 'afoo' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "no character of 'abc'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`noneOf 'b' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "no character of 'abc'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`noneOf 'c' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "no character of 'abc'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`noneOf 'foo' AST to match snapshot 1`] = `"f"`;

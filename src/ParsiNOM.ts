@@ -1,21 +1,20 @@
 import {
 	DeParserArray,
-	LanguageDef,
 	NomLanguage,
+	NomLanguagePartial,
 	NomLanguageRef,
-	LanguageRules,
 	NomLanguageRules,
+	ParseFailure,
 	ParseFunction,
 	ParseResult,
+	ParserRef,
 	ParsingPosition,
 	STypeBase,
 	TupleToUnion,
-	ParserRef,
-	NomLanguagePartial,
-	ParseFailure,
 } from './HelperTypes';
 import { Parser } from './Parser';
 import { ParsingError } from './ParserError';
+import { P_HELPERS } from './Helpers';
 
 export class ParsiNOM {
 	// --- OTHER ---
@@ -53,44 +52,6 @@ export class ParsiNOM {
 			// console.log('sequence', value);
 
 			return context.merge(result, context.succeed(value as DeParserArray<ParserArr>));
-		});
-	}
-
-	/**
-	 * Matches multiple parsers in a row, yielding a record of the parser results that have a key.
-	 *
-	 * @param parsers
-	 */
-	sequenceKeyed<SType extends STypeBase, Key extends string>(...parsers: (Parser<SType> | [Key, Parser<SType>])[]): Parser<Record<Key, SType>> {
-		return new Parser<Record<Key, SType>>((context): ParseResult<Record<Key, SType>> => {
-			let result = undefined;
-			const value: Record<Key, SType> = {} as Record<Key, SType>;
-
-			for (let i = 0; i < parsers.length; i++) {
-				const p = parsers[i];
-
-				if (Array.isArray(p)) {
-					const newResult = p[1].p(context);
-					result = context.merge(result, newResult);
-
-					if (!result.success) {
-						return result;
-					}
-
-					value[p[0]] = result.value;
-					context.moveToPosition(result.position);
-				} else {
-					const newResult = p.p(context);
-					result = context.merge(result, newResult);
-
-					if (!result.success) {
-						return result;
-					}
-
-					context.moveToPosition(result.position);
-				}
-			}
-			return context.merge(result, context.succeed(value));
 		});
 	}
 
@@ -140,7 +101,7 @@ export class ParsiNOM {
 	 */
 	or<const ParserArr extends readonly Parser<unknown>[]>(...parsers: ParserArr): Parser<TupleToUnion<DeParserArray<ParserArr>>> {
 		if (parsers.length === 0) {
-			P.alwaysFailParser('or must have at least one alternative');
+			P.fail('or must have at least one alternative');
 		}
 
 		return new Parser<TupleToUnion<DeParserArray<ParserArr>>>((context): ParseResult<TupleToUnion<DeParserArray<ParserArr>>> => {
@@ -168,7 +129,7 @@ export class ParsiNOM {
 	 * @param separator
 	 */
 	separateBy<SType extends STypeBase>(parser: Parser<SType>, separator: Parser<unknown>): Parser<SType[]> {
-		return this.separateByNotEmpty(parser, separator).or(P.alwaysSucceedParser([]));
+		return this.separateByNotEmpty(parser, separator).or(P.succeed([]));
 	}
 
 	/**
@@ -247,7 +208,7 @@ export class ParsiNOM {
 	 *
 	 * @param value
 	 */
-	alwaysSucceedParser<SType extends STypeBase>(value: SType): Parser<SType> {
+	succeed<SType extends STypeBase>(value: SType): Parser<SType> {
 		return new Parser<SType>(context => {
 			return context.succeed(value);
 		});
@@ -258,39 +219,9 @@ export class ParsiNOM {
 	 *
 	 * @param expected
 	 */
-	alwaysFailParser<SType extends STypeBase>(expected: string): Parser<SType> {
+	fail<SType extends STypeBase>(expected: string): Parser<SType> {
 		return new Parser<SType>(context => {
 			return context.fail(expected);
-		});
-	}
-
-	/**
-	 * Returns a parser that yields null if the input parser fails, and fails if the input parser accepts. Consumes no input.
-	 * More or less an inverse lookahead.
-	 *
-	 * @param parser
-	 */
-	notFollowedBy(parser: Parser<unknown>): Parser<null> {
-		return new Parser((context): ParseResult<null> => {
-			const result = parser.p(context.copy());
-			const text = context.sliceTo(result.position.index);
-			return result.success ? context.fail(`not '` + text + `'`) : context.succeed(null);
-		});
-	}
-
-	/**
-	 * Returns a parser that passes the next character into `fn` and yields the character if `fn` returns true.
-	 *
-	 * @param fn
-	 */
-	test(fn: (char: string) => boolean): Parser<string> {
-		return new Parser<string>((context): ParseResult<string> => {
-			const char = context.input[context.position.index];
-			if (!context.atEOF() && fn(char)) {
-				return context.succeedOffset(1, char);
-			} else {
-				return context.fail(`a character matching ${fn}`);
-			}
 		});
 	}
 
@@ -300,7 +231,7 @@ export class ParsiNOM {
 	 * @param str
 	 */
 	oneOf(str: string): Parser<string> {
-		return this.test((char: string) => {
+		return P_HELPERS.test((char: string) => {
 			return str.includes(char);
 		}).describe(`one character of '${str}'`);
 	}
@@ -320,7 +251,7 @@ export class ParsiNOM {
 	 * @param str
 	 */
 	noneOf(str: string): Parser<string> {
-		return this.test(function (char: string) {
+		return P_HELPERS.test(function (char: string) {
 			return !str.includes(char);
 		}).describe(`no character of '${str}'`);
 	}
@@ -343,7 +274,7 @@ export class ParsiNOM {
 	range(begin: string, end: string): Parser<string> {
 		const beginCharCode = begin.charCodeAt(0);
 		const endCharCode = end.charCodeAt(0);
-		return this.test(char => {
+		return P_HELPERS.test(char => {
 			const charCode = char.charCodeAt(0);
 			return beginCharCode <= charCode && charCode <= endCharCode;
 		}).describe(`${begin}-${end}`);
@@ -404,11 +335,11 @@ export class ParsiNOM {
 		return context.succeedAt(context.input.length, context.input.slice(context.position.index));
 	});
 
-	readonly eof: Parser<null> = new Parser<null>(context => {
+	readonly eof: Parser<undefined> = new Parser<undefined>(context => {
 		if (!context.atEOF()) {
 			return context.fail('eof');
 		}
-		return context.succeed(null);
+		return context.succeed(undefined);
 	});
 
 	readonly digit = this.regexp(/[0-9]/).describe('a digit');

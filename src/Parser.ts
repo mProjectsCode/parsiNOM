@@ -160,9 +160,9 @@ export class Parser<const SType extends STypeBase> {
 					end: end,
 				};
 			},
-			P_UTILS.pos(),
+			P_UTILS.position(),
 			this as Parser<SType>,
-			P_UTILS.pos(),
+			P_UTILS.position(),
 		);
 	}
 
@@ -176,9 +176,9 @@ export class Parser<const SType extends STypeBase> {
 					end: end,
 				};
 			},
-			P_UTILS.pos(),
+			P_UTILS.position(),
 			this as Parser<SType>,
-			P_UTILS.pos(),
+			P_UTILS.position(),
 		);
 	}
 

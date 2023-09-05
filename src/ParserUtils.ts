@@ -6,7 +6,7 @@ export class P_UTILS {
 	/**
 	 * Yields the current position.
 	 */
-	static pos(): Parser<ParsingPosition> {
+	static position(): Parser<ParsingPosition> {
 		return new Parser<ParsingPosition>(context => {
 			return context.succeed(context.position);
 		});
@@ -29,7 +29,7 @@ export class P_UTILS {
 	 * Accepts the entire rest of the string until the end.
 	 * Yields the rest of the string.
 	 */
-	static all(): Parser<string> {
+	static remaining(): Parser<string> {
 		return new Parser<string>(context => {
 			return context.succeedAt(context.input.length, context.input.slice(context.position.index));
 		});
@@ -48,15 +48,15 @@ export class P_UTILS {
 		return P.regexp(/^[0-9]/).describe('a digit');
 	}
 	static digits() {
-		return P.regexp(/^[0-9]*/).describe('optional digits');
+		return P.regexp(/^[0-9]+/).describe('optional digits');
 	}
 	static letter() {
 		return P.regexp(/^[a-z]/i).describe('a letter');
 	}
 	static letters() {
-		return P.regexp(/^[a-z]*/i).describe('optional letters');
+		return P.regexp(/^[a-z]+/i).describe('optional letters');
 	}
-	static optWhitespace() {
+	static optionalWhitespace() {
 		return P.regexp(/^\s*/).describe('optional whitespace');
 	}
 	static whitespace() {
@@ -73,9 +73,6 @@ export class P_UTILS {
 	}
 	static newline() {
 		return P.or(this.crlf(), this.lf(), this.cr()).describe('newline');
-	}
-	static end() {
-		return P.or(this.newline(), this.eof());
 	}
 
 	static prefix<OperatorSType, OtherSType, ReturnSType>(
@@ -109,7 +106,7 @@ export class P_UTILS {
 		combine: (a: OtherSType, b: OperatorSType, c: OtherSType | ReturnSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		const parser: Parser<OtherSType | ReturnSType> = P.reference(() =>
-			P.sequenceMap(combine, nextParser, operatorsParser.trim(this.optWhitespace()), parser).or(nextParser),
+			P.sequenceMap(combine, nextParser, operatorsParser.trim(this.optionalWhitespace()), parser).or(nextParser),
 		);
 		return parser;
 	}
@@ -127,7 +124,7 @@ export class P_UTILS {
 				}, first);
 			},
 			nextParser,
-			P.sequence(operatorsParser.trim(this.optWhitespace()), nextParser).many(),
+			P.sequence(operatorsParser.trim(this.optionalWhitespace()), nextParser).many(),
 		);
 	}
 
@@ -143,9 +140,9 @@ export class P_UTILS {
 			},
 			nameParser,
 			P.string('('),
-			this.optWhitespace(),
+			this.optionalWhitespace(),
 			args,
-			this.optWhitespace(),
+			this.optionalWhitespace(),
 			P.string(')'),
 		);
 	}

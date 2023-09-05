@@ -2,14 +2,13 @@ import { P } from '../../src/ParsiNOM';
 import { P_UTILS } from '../../src/ParserUtils';
 
 describe.each([
-	['', false],
-	[' this ', true],
-	['this ', false],
-	[' this', false],
-	['  this', false],
-	['foo', false],
-])(`trim fixed length '%s'`, (str, expected) => {
-	const parser = P.string('this').trim(P.string(' ')).thenEof();
+	['0', true],
+	['2', true],
+	['9', true],
+	['a', false],
+	['a1', false],
+])(`digit '%s'`, (str, expected) => {
+	const parser = P_UTILS.digit();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {
@@ -31,14 +30,13 @@ describe.each([
 });
 
 describe.each([
-	['', false],
-	[' this ', true],
-	['this ', true],
-	[' this', true],
-	['  this', true],
-	['foo', false],
-])(`trim variable length '%s'`, (str, expected) => {
-	const parser = P.string('this').trim(P_UTILS.optionalWhitespace()).thenEof();
+	['0', true],
+	['22', true],
+	['99', true],
+	['a', false],
+	['a12', false],
+])(`digits '%s'`, (str, expected) => {
+	const parser = P_UTILS.digits();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

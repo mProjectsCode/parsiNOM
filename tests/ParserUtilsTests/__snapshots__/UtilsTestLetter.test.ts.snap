@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`letter ' ' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "a letter",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`letter '#' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "a letter",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`letter '' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "a letter",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`letter 'a' AST to match snapshot 1`] = `"a"`;
+
+exports[`letter 'b' AST to match snapshot 1`] = `"b"`;
+
+exports[`letter 'z' AST to match snapshot 1`] = `"z"`;
+
+exports[`letters ' ' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "optional letters",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`letters '#' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "optional letters",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`letters '' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "optional letters",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`letters 'a' AST to match snapshot 1`] = `"a"`;
+
+exports[`letters 'bb' AST to match snapshot 1`] = `"bb"`;
+
+exports[`letters 'zz' AST to match snapshot 1`] = `"zz"`;

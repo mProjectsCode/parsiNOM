@@ -147,7 +147,7 @@ describe('postfix', () => {
 });
 
 describe('trim', () => {
-	const parser = P.string('a').trim(P_UTILS.optWhitespace()).thenEof();
+	const parser = P.string('a').trim(P_UTILS.optionalWhitespace()).thenEof();
 	const matchingTable: [string, boolean][] = [
 		['a', true],
 		['a ', true],
@@ -164,7 +164,7 @@ describe('trim', () => {
 });
 
 describe('sequence trim', () => {
-	const parser = P.sequence(P.string('b'), P.string('a').trim(P_UTILS.optWhitespace()), P.string('b')).thenEof();
+	const parser = P.sequence(P.string('b'), P.string('a').trim(P_UTILS.optionalWhitespace()), P.string('b')).thenEof();
 	const matchingTable: [string, boolean][] = [
 		['bab', true],
 		['ba b', true],
@@ -181,7 +181,7 @@ describe('sequence trim', () => {
 });
 
 describe('lazy sequence trim', () => {
-	const parser = P.reference(() => P.sequence(P.string('b'), P.string('a').trim(P_UTILS.optWhitespace()), P.string('b')).thenEof());
+	const parser = P.reference(() => P.sequence(P.string('b'), P.string('a').trim(P_UTILS.optionalWhitespace()), P.string('b')).thenEof());
 	const matchingTable: [string, boolean][] = [
 		['bab', true],
 		['ba b', true],

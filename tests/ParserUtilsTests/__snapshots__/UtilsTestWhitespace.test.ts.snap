@@ -1,0 +1,155 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`newline '0' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "newline",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`newline '1' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "newline",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`newline '2' AST to match snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '3' AST to match snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '4' AST to match snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '5' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 2,
+    "line": 2,
+  },
+}
+`;
+
+exports[`newline '6' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "newline",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`optional whitespace '0' AST to match snapshot 1`] = `""`;
+
+exports[`optional whitespace '1' AST to match snapshot 1`] = `" "`;
+
+exports[`optional whitespace '2' AST to match snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '3' AST to match snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '4' AST to match snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '5' AST to match snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`optional whitespace '6' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`whitespace '0' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "whitespace",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`whitespace '1' AST to match snapshot 1`] = `" "`;
+
+exports[`whitespace '2' AST to match snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '3' AST to match snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '4' AST to match snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '5' AST to match snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`whitespace '6' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "whitespace",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;

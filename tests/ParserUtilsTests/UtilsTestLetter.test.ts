@@ -2,14 +2,14 @@ import { P } from '../../src/ParsiNOM';
 import { P_UTILS } from '../../src/ParserUtils';
 
 describe.each([
+	['a', true],
+	['b', true],
+	['z', true],
+	['#', false],
+	[' ', false],
 	['', false],
-	[' this ', true],
-	['this ', false],
-	[' this', false],
-	['  this', false],
-	['foo', false],
-])(`trim fixed length '%s'`, (str, expected) => {
-	const parser = P.string('this').trim(P.string(' ')).thenEof();
+])(`letter '%s'`, (str, expected) => {
+	const parser = P_UTILS.letter();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {
@@ -31,14 +31,14 @@ describe.each([
 });
 
 describe.each([
+	['a', true],
+	['bb', true],
+	['zz', true],
+	['#', false],
+	[' ', false],
 	['', false],
-	[' this ', true],
-	['this ', true],
-	[' this', true],
-	['  this', true],
-	['foo', false],
-])(`trim variable length '%s'`, (str, expected) => {
-	const parser = P.string('this').trim(P_UTILS.optionalWhitespace()).thenEof();
+])(`letters '%s'`, (str, expected) => {
+	const parser = P_UTILS.letters();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

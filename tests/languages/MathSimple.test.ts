@@ -3,7 +3,7 @@ import { P } from '../../src/ParsiNOM';
 import { STypeBase } from '../../src/HelperTypes';
 import { P_UTILS } from '../../src/ParserUtils';
 
-const _ = P_UTILS.optWhitespace();
+const _ = P_UTILS.optionalWhitespace();
 
 function operators(operators: Record<string, string>): Parser<string> {
 	const keys = Object.keys(operators).sort();

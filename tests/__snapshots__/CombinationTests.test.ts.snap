@@ -1,0 +1,236 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sequence many 'a' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence many 'aa' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence many 'ab' AST to match snapshot 1`] = `
+[
+  [
+    "a",
+    "b",
+  ],
+]
+`;
+
+exports[`sequence many 'aba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 4,
+    "index": 3,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence many 'abab' AST to match snapshot 1`] = `
+[
+  [
+    "a",
+    "b",
+  ],
+  [
+    "a",
+    "b",
+  ],
+]
+`;
+
+exports[`sequence many 'baba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence many 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence or 'ab' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'de'",
+  ],
+  "pos": {
+    "column": 3,
+    "index": 2,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence or 'aba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'de'",
+  ],
+  "pos": {
+    "column": 3,
+    "index": 2,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence or 'abc' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'de'",
+  ],
+  "pos": {
+    "column": 3,
+    "index": 2,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence or 'abde' AST to match snapshot 1`] = `
+[
+  "ab",
+  "de",
+]
+`;
+
+exports[`sequence or 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'ab'",
+    "'c'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence or 'c' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'de'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence or 'cde' AST to match snapshot 1`] = `
+[
+  "c",
+  "de",
+]
+`;
+
+exports[`sequence trim 'b  a b' AST to match snapshot 1`] = `
+[
+  "b",
+  "a",
+  "b",
+]
+`;
+
+exports[`sequence trim 'b ab' AST to match snapshot 1`] = `
+[
+  "b",
+  "a",
+  "b",
+]
+`;
+
+exports[`sequence trim 'b abb' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence trim 'ba  b' AST to match snapshot 1`] = `
+[
+  "b",
+  "a",
+  "b",
+]
+`;
+
+exports[`sequence trim 'ba b' AST to match snapshot 1`] = `
+[
+  "b",
+  "a",
+  "b",
+]
+`;
+
+exports[`sequence trim 'bab' AST to match snapshot 1`] = `
+[
+  "b",
+  "a",
+  "b",
+]
+`;
+
+exports[`sequence trim 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;

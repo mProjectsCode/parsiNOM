@@ -32,7 +32,7 @@ const spaceIdent = P.sequenceMap(
 		return a + b.map(x => x[0] + x[1]).join();
 	},
 	ident,
-	P.sequence(P_UTILS.optWhitespace(), ident).many(),
+	P.sequence(P_UTILS.optionalWhitespace(), ident).many(),
 ).describe('identifier with spaces');
 
 const str = P.string(quote)
@@ -50,7 +50,7 @@ const specialSpaceIdent = P.sequenceMap(
 		return a + b.map(x => x[0] + x[1]).join();
 	},
 	specialIdent,
-	P.sequence(P_UTILS.optWhitespace(), specialIdent).many(),
+	P.sequence(P_UTILS.optionalWhitespace(), specialIdent).many(),
 ).describe('any character except parentheses');
 
 const value = P.or(specialSpaceIdent, str);
@@ -73,7 +73,7 @@ const bindTarget: Parser<BindTarget> = P.sequenceMap(
 	ident,
 );
 
-const inputFieldArgumentValue = P.separateBy(value, P.string(',').trim(P_UTILS.optWhitespace()));
+const inputFieldArgumentValue = P.separateBy(value, P.string(',').trim(P_UTILS.optionalWhitespace()));
 
 const inputFieldArgument = P.sequenceMap(
 	(name, value): InputFieldArgument => {
@@ -84,12 +84,12 @@ const inputFieldArgument = P.sequenceMap(
 	},
 	ident,
 	inputFieldArgumentValue
-		.trim(P_UTILS.optWhitespace())
+		.trim(P_UTILS.optionalWhitespace())
 		.wrap(P.string('('), P.string(')'))
 		.optional([] as string[]),
 );
 
-const inputFieldArguments = P.separateBy(inputFieldArgument, P.string(',').trim(P_UTILS.optWhitespace()));
+const inputFieldArguments = P.separateBy(inputFieldArgument, P.string(',').trim(P_UTILS.optionalWhitespace()));
 
 const declaration: Parser<InputFieldDeclaration> = P.sequenceMap(
 	(type, args, b) => {
@@ -102,7 +102,7 @@ const declaration: Parser<InputFieldDeclaration> = P.sequenceMap(
 	},
 	ident.describe('input field type'),
 	inputFieldArguments
-		.trim(P_UTILS.optWhitespace())
+		.trim(P_UTILS.optionalWhitespace())
 		.wrap(P.string('('), P.string(')'))
 		.optional([] as InputFieldArgument[]),
 	P.sequence(P.string(':'), bindTarget).optional(),

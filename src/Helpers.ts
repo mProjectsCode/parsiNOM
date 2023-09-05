@@ -37,8 +37,9 @@ export class ParserHelpers {
 	 */
 	notFollowedBy(parser: Parser<unknown>): Parser<undefined> {
 		return new Parser((context): ParseResult<undefined> => {
-			const result = parser.p(context.copy());
-			const text = context.sliceTo(result.position.index);
+			const contextCopy = context.copy();
+			const result = parser.p(contextCopy);
+			const text = context.sliceTo(contextCopy.position.index);
 			return result.success ? context.fail(`not '` + text + `'`) : context.succeed(undefined);
 		});
 	}

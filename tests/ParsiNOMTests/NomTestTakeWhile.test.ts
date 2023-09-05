@@ -1,12 +1,14 @@
 import { P } from '../../src/ParsiNOM';
-import { P_UTILS } from '../../src/ParserUtils';
 
 describe.each([
-	['', false],
-	['this', true],
-	['foo', false],
-])(`skip '%s'`, (str, expected) => {
-	const parser = P.string('this').skip(P_UTILS.eof());
+	['', true],
+	['a', true],
+	['aa', true],
+	['aab', true],
+	['baa', true],
+	['foo', true],
+])(`sequence '%s'`, (str, expected) => {
+	const parser = P.takeWhile(char => char === 'a');
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

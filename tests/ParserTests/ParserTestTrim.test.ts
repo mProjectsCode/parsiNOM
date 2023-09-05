@@ -1,4 +1,5 @@
 import { P } from '../../src/ParsiNOM';
+import { P_UTILS } from '../../src/ParserUtils';
 
 describe.each([
 	['', false],
@@ -8,7 +9,7 @@ describe.each([
 	['  this', false],
 	['foo', false],
 ])(`trim fixed length '%s'`, (str, expected) => {
-	const parser = P.string('this').trim(P.string(' ')).skip(P.eof);
+	const parser = P.string('this').trim(P.string(' ')).thenEof();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {
@@ -37,7 +38,7 @@ describe.each([
 	['  this', true],
 	['foo', false],
 ])(`trim variable length '%s'`, (str, expected) => {
-	const parser = P.string('this').trim(P.optWhitespace).skip(P.eof);
+	const parser = P.string('this').trim(P_UTILS.optWhitespace()).thenEof();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

@@ -7,7 +7,7 @@ describe.each([
 ])(`map '%s'`, (str, expected) => {
 	const parser = P.string('this')
 		.map(x => x + ' is the result')
-		.skip(P.eof);
+		.thenEof();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

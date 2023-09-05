@@ -1,11 +1,12 @@
 import { P } from '../../src/ParsiNOM';
+import { P_UTILS } from '../../src/ParserUtils';
 
 describe.each([
 	['', false],
 	['this', true],
 	['foo', false],
 ])(`node '%s'`, (str, expected) => {
-	const parser = P.string('this').node('fancy node').skip(P.eof);
+	const parser = P.string('this').node('fancy node').thenEof();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

@@ -16,9 +16,9 @@ import { Parser } from './Parser';
 import { ParsingError } from './ParserError';
 import { P_HELPERS } from './Helpers';
 
-export class ParsiNOM {
+export class P {
 	// --- OTHER ---
-	createError(str: string, parseFailure: ParseFailure): ParsingError {
+	static createError(str: string, parseFailure: ParseFailure): ParsingError {
 		return new ParsingError(str, parseFailure);
 	}
 
@@ -29,7 +29,7 @@ export class ParsiNOM {
 	 *
 	 * @param parsers
 	 */
-	sequence<const SType extends STypeBase, ParserArr extends readonly Parser<SType>[]>(...parsers: ParserArr): Parser<DeParserArray<ParserArr>> {
+	static sequence<const SType extends STypeBase, ParserArr extends readonly Parser<SType>[]>(...parsers: ParserArr): Parser<DeParserArray<ParserArr>> {
 		return new Parser<DeParserArray<ParserArr>>((context): ParseResult<DeParserArray<ParserArr>> => {
 			let result = undefined;
 			const value: SType[] = new Array(parsers.length);
@@ -46,7 +46,6 @@ export class ParsiNOM {
 				}
 
 				value[i] = result.value;
-				context.moveToPosition(result.position);
 			}
 
 			// console.log('sequence', value);
@@ -61,7 +60,7 @@ export class ParsiNOM {
 	 * @param fn
 	 * @param parsers
 	 */
-	sequenceMap<const SType extends STypeBase, OtherSType extends STypeBase, ParserArr extends Parser<SType>[]>(
+	static sequenceMap<const SType extends STypeBase, OtherSType extends STypeBase, ParserArr extends Parser<SType>[]>(
 		fn: (...value: DeParserArray<ParserArr>) => OtherSType,
 		...parsers: ParserArr
 	): Parser<OtherSType> {
@@ -79,7 +78,7 @@ export class ParsiNOM {
 	 *
 	 * @param parsers
 	 */
-	createLanguage<const RulesType extends object>(parsers: NomLanguageRules<RulesType>): NomLanguage<RulesType> {
+	static createLanguage<const RulesType extends object>(parsers: NomLanguageRules<RulesType>): NomLanguage<RulesType> {
 		const language: NomLanguagePartial<RulesType> = {} as NomLanguagePartial<RulesType>;
 		const languageRef: NomLanguageRef<RulesType> = {} as NomLanguageRef<RulesType>;
 
@@ -99,7 +98,7 @@ export class ParsiNOM {
 	 *
 	 * @param parsers
 	 */
-	or<const ParserArr extends readonly Parser<unknown>[]>(...parsers: ParserArr): Parser<TupleToUnion<DeParserArray<ParserArr>>> {
+	static or<const ParserArr extends readonly Parser<unknown>[]>(...parsers: ParserArr): Parser<TupleToUnion<DeParserArray<ParserArr>>> {
 		if (parsers.length === 0) {
 			P.fail('or must have at least one alternative');
 		}
@@ -110,10 +109,12 @@ export class ParsiNOM {
 			for (let i = 0; i < parsers.length; i++) {
 				const p = parsers[i] as Parser<TupleToUnion<DeParserArray<ParserArr>>>;
 
-				const newResult = p.p(context.copy());
+				const contextCopy = context.copy();
+				const newResult = p.p(contextCopy);
 
 				result = context.merge(result, newResult);
 				if (result.success) {
+					context.moveToPosition(contextCopy.position);
 					return result;
 				}
 			}
@@ -128,7 +129,7 @@ export class ParsiNOM {
 	 * @param parser
 	 * @param separator
 	 */
-	separateBy<SType extends STypeBase>(parser: Parser<SType>, separator: Parser<unknown>): Parser<SType[]> {
+	static separateBy<SType extends STypeBase>(parser: Parser<SType>, separator: Parser<unknown>): Parser<SType[]> {
 		return this.separateByNotEmpty(parser, separator).or(P.succeed([]));
 	}
 
@@ -138,7 +139,7 @@ export class ParsiNOM {
 	 * @param parser
 	 * @param separator
 	 */
-	separateByNotEmpty<SType extends STypeBase>(parser: Parser<SType>, separator: Parser<unknown>): Parser<SType[]> {
+	static separateByNotEmpty<SType extends STypeBase>(parser: Parser<SType>, separator: Parser<unknown>): Parser<SType[]> {
 		return this.sequenceMap(
 			(part1, part2) => {
 				// console.log('sep', [part1, ...part2]);
@@ -156,7 +157,7 @@ export class ParsiNOM {
 	 *
 	 * @param str
 	 */
-	string(str: string): Parser<string> {
+	static string(str: string): Parser<string> {
 		const expected = "'" + str + "'";
 
 		return new Parser<string>(context => {
@@ -178,7 +179,7 @@ export class ParsiNOM {
 	 * @param regexp
 	 * @param group
 	 */
-	regexp(regexp: RegExp, group?: number | undefined): Parser<string> {
+	static regexp(regexp: RegExp, group?: number | undefined): Parser<string> {
 		const expected = regexp.source;
 
 		return new Parser<string>(context => {
@@ -208,7 +209,7 @@ export class ParsiNOM {
 	 *
 	 * @param value
 	 */
-	succeed<SType extends STypeBase>(value: SType): Parser<SType> {
+	static succeed<SType extends STypeBase>(value: SType): Parser<SType> {
 		return new Parser<SType>(context => {
 			return context.succeed(value);
 		});
@@ -219,7 +220,7 @@ export class ParsiNOM {
 	 *
 	 * @param expected
 	 */
-	fail<SType extends STypeBase>(expected: string): Parser<SType> {
+	static fail<SType extends STypeBase>(expected: string): Parser<SType> {
 		return new Parser<SType>(context => {
 			return context.fail(expected);
 		});
@@ -230,7 +231,7 @@ export class ParsiNOM {
 	 *
 	 * @param str
 	 */
-	oneOf(str: string): Parser<string> {
+	static oneOf(str: string): Parser<string> {
 		return P_HELPERS.test((char: string) => {
 			return str.includes(char);
 		}).describe(`one character of '${str}'`);
@@ -241,7 +242,7 @@ export class ParsiNOM {
 	 *
 	 * @param strings
 	 */
-	oneStringOf(strings: readonly string[]): Parser<string> {
+	static oneStringOf(strings: readonly string[]): Parser<string> {
 		return this.or(...strings.map(x => this.string(x))).describe(strings.map(x => `'${x}'`).join(' or '));
 	}
 
@@ -250,7 +251,7 @@ export class ParsiNOM {
 	 *
 	 * @param str
 	 */
-	noneOf(str: string): Parser<string> {
+	static noneOf(str: string): Parser<string> {
 		return P_HELPERS.test(function (char: string) {
 			return !str.includes(char);
 		}).describe(`no character of '${str}'`);
@@ -261,7 +262,7 @@ export class ParsiNOM {
 	 *
 	 * @param parsingFunction
 	 */
-	custom<SType extends STypeBase>(parsingFunction: ParseFunction<SType>): Parser<SType> {
+	static custom<SType extends STypeBase>(parsingFunction: ParseFunction<SType>): Parser<SType> {
 		return new Parser(parsingFunction);
 	}
 
@@ -271,7 +272,7 @@ export class ParsiNOM {
 	 * @param begin
 	 * @param end
 	 */
-	range(begin: string, end: string): Parser<string> {
+	static range(begin: string, end: string): Parser<string> {
 		const beginCharCode = begin.charCodeAt(0);
 		const endCharCode = end.charCodeAt(0);
 		return P_HELPERS.test(char => {
@@ -285,7 +286,7 @@ export class ParsiNOM {
 	 *
 	 * @param fn
 	 */
-	takeWhile(fn: (char: string) => boolean): Parser<string> {
+	static takeWhile(fn: (char: string) => boolean): Parser<string> {
 		return new Parser(context => {
 			let endIndex = context.position.index;
 			while (endIndex < context.input.length && fn(context.input[endIndex])) {
@@ -301,58 +302,9 @@ export class ParsiNOM {
 	 *
 	 * @param fn
 	 */
-	reference<SType extends STypeBase>(fn: () => Parser<SType>): ParserRef<SType> {
+	static reference<SType extends STypeBase>(fn: () => Parser<SType>): ParserRef<SType> {
 		return new Parser<SType>(context => {
 			return fn().p(context);
 		});
 	}
-
-	// --- UTILITY PARSERS ---
-
-	/**
-	 * Yields the current position.
-	 */
-	readonly pos: Parser<ParsingPosition> = new Parser<ParsingPosition>(context => {
-		return context.succeed(context.position);
-	});
-
-	/**
-	 * Accepts any single character except for eof.
-	 * Yields the character
-	 */
-	readonly any: Parser<string> = new Parser<string>(context => {
-		if (context.atEOF()) {
-			return context.fail('any character or byte');
-		}
-		return context.succeedOffset(1, context.input[context.position.index]);
-	});
-
-	/**
-	 * Accepts the entire rest of the string until the end.
-	 * Yields the rest of the string.
-	 */
-	readonly all: Parser<string> = new Parser<string>(context => {
-		return context.succeedAt(context.input.length, context.input.slice(context.position.index));
-	});
-
-	readonly eof: Parser<undefined> = new Parser<undefined>(context => {
-		if (!context.atEOF()) {
-			return context.fail('eof');
-		}
-		return context.succeed(undefined);
-	});
-
-	readonly digit = this.regexp(/[0-9]/).describe('a digit');
-	readonly digits = this.regexp(/[0-9]*/).describe('optional digits');
-	readonly letter = this.regexp(/[a-z]/i).describe('a letter');
-	readonly letters = this.regexp(/[a-z]*/i).describe('optional letters');
-	readonly optWhitespace = this.regexp(/\s*/).describe('optional whitespace');
-	readonly whitespace = this.regexp(/\s+/).describe('whitespace');
-	readonly cr = this.string('\r');
-	readonly lf = this.string('\n');
-	readonly crlf = this.string('\r\n');
-	readonly newline = this.or(this.crlf, this.lf, this.cr).describe('newline');
-	readonly end = this.or(this.newline, this.eof);
 }
-
-export const P = new ParsiNOM();

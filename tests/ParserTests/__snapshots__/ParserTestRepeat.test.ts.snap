@@ -42,6 +42,7 @@ exports[`repeat 'aaa' Error to match snapshot 1`] = `
 exports[`repeat 'abaa' Error to match snapshot 1`] = `
 {
   "expected": [
+    "'a'",
     "eof",
   ],
   "pos": {

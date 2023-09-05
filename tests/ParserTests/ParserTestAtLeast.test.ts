@@ -7,7 +7,7 @@ describe.each([
 	['aaa', true],
 	['abaa', false],
 ])(`atLeast '%s'`, (str, expected) => {
-	const parser = P.string('a').atLeast(2).skip(P.eof);
+	const parser = P.string('a').atLeast(2).thenEof();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

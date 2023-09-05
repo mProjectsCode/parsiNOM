@@ -1,4 +1,5 @@
 import { P } from '../../src/ParsiNOM';
+import { P_UTILS } from '../../src/ParserUtils';
 
 describe.each([
 	['', false],
@@ -8,7 +9,7 @@ describe.each([
 	['this, this', false],
 	['foo', false],
 ])(`separateByNotEmpty '%s'`, (str, expected) => {
-	const parser = P.string('this').separateByNotEmpty(P.string(',')).skip(P.eof);
+	const parser = P.string('this').separateByNotEmpty(P.string(',')).thenEof();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

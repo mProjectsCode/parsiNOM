@@ -1,5 +1,94 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ab sequence many 'a' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`ab sequence many 'aa' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`ab sequence many 'ab' AST to match snapshot 1`] = `
+[
+  [
+    "a",
+    "b",
+  ],
+]
+`;
+
+exports[`ab sequence many 'aba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 4,
+    "index": 3,
+    "line": 1,
+  },
+}
+`;
+
+exports[`ab sequence many 'abab' AST to match snapshot 1`] = `
+[
+  [
+    "a",
+    "b",
+  ],
+  [
+    "a",
+    "b",
+  ],
+]
+`;
+
+exports[`ab sequence many 'baba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`ab sequence many 'bcaba' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
 exports[`binary left '+ab' Error to match snapshot 1`] = `
 {
   "expected": [
@@ -738,95 +827,6 @@ exports[`sequence eof 'baba' Error to match snapshot 1`] = `
 {
   "expected": [
     "'a'",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`sequence many 'a' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'b'",
-  ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
-}
-`;
-
-exports[`sequence many 'aa' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'b'",
-  ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
-}
-`;
-
-exports[`sequence many 'ab' AST to match snapshot 1`] = `
-[
-  [
-    "a",
-    "b",
-  ],
-]
-`;
-
-exports[`sequence many 'aba' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'b'",
-  ],
-  "pos": {
-    "column": 4,
-    "index": 3,
-    "line": 1,
-  },
-}
-`;
-
-exports[`sequence many 'abab' AST to match snapshot 1`] = `
-[
-  [
-    "a",
-    "b",
-  ],
-  [
-    "a",
-    "b",
-  ],
-]
-`;
-
-exports[`sequence many 'baba' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'a'",
-    "eof",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`sequence many 'bcaba' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'a'",
-    "eof",
   ],
   "pos": {
     "column": 1,

@@ -1,4 +1,5 @@
 import { P } from '../../src/ParsiNOM';
+import { P_UTILS } from '../../src/ParserUtils';
 
 describe.each([
 	['', false],
@@ -8,7 +9,7 @@ describe.each([
 	['thisthatfoo', false],
 	['foo', false],
 ])(`sequence '%s'`, (str, expected) => {
-	const parser = P.sequence(P.string('this'), P.string('that'), P.eof);
+	const parser = P.sequence(P.string('this'), P.string('that'), P_UTILS.eof());
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

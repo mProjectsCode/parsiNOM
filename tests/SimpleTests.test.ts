@@ -3,7 +3,7 @@ import { testParse } from './TestHelpers';
 import { P_UTILS } from '../src/ParserUtils';
 
 describe('single string', () => {
-	const parser = P.string('aba').skip(P.eof);
+	const parser = P.string('aba').thenEof();
 	const matchingTable: [string, boolean][] = [
 		['aba', true],
 		['a', false],
@@ -18,7 +18,7 @@ describe('single string', () => {
 });
 
 describe('many', () => {
-	const parser = P.string('a').many().skip(P.eof);
+	const parser = P.string('a').many().thenEof();
 	const matchingTable: [string, boolean][] = [
 		['a', true],
 		['aa', true],
@@ -47,7 +47,7 @@ describe('sequence', () => {
 });
 
 describe('sequence eof', () => {
-	const parser = P.sequence(P.string('a'), P.string('b')).skip(P.eof);
+	const parser = P.sequence(P.string('a'), P.string('b')).thenEof();
 	const matchingTable: [string, boolean][] = [
 		['ab', true],
 		['aab', false],
@@ -61,8 +61,8 @@ describe('sequence eof', () => {
 	}
 });
 
-describe('sequence many', () => {
-	const parser = P.sequence(P.string('a'), P.string('b')).many().skip(P.eof);
+describe('ab sequence many', () => {
+	const parser = P.sequence(P.string('a'), P.string('b')).many().thenEof();
 	const matchingTable: [string, boolean][] = [
 		['ab', true],
 		['abab', true],
@@ -79,7 +79,7 @@ describe('sequence many', () => {
 });
 
 describe('binary left', () => {
-	const parser = P_UTILS.binaryLeft(P.string('+'), P.string('a'), (a, b, c) => [a, b, c]).skip(P.eof);
+	const parser = P_UTILS.binaryLeft(P.string('+'), P.string('a'), (a, b, c) => [a, b, c]).thenEof();
 	const matchingTable: [string, boolean][] = [
 		['a+a', true],
 		['a + a', true],
@@ -96,7 +96,7 @@ describe('binary left', () => {
 });
 
 describe('binary right', () => {
-	const parser = P_UTILS.binaryRight(P.string('+'), P.string('a'), (a, b, c) => [a, b, c]).skip(P.eof);
+	const parser = P_UTILS.binaryRight(P.string('+'), P.string('a'), (a, b, c) => [a, b, c]).thenEof();
 	const matchingTable: [string, boolean][] = [
 		['a+a', true],
 		['a + a', true],
@@ -113,7 +113,7 @@ describe('binary right', () => {
 });
 
 describe('prefix', () => {
-	const parser = P_UTILS.prefix(P.string('-'), P.string('a'), (a, b) => [a, b]).skip(P.eof);
+	const parser = P_UTILS.prefix(P.string('-'), P.string('a'), (a, b) => [a, b]).thenEof();
 	const matchingTable: [string, boolean][] = [
 		['a', true],
 		['-a', true],
@@ -130,7 +130,7 @@ describe('prefix', () => {
 });
 
 describe('postfix', () => {
-	const parser = P_UTILS.postfix(P.string('-'), P.string('a'), (a, b) => [a, b]).skip(P.eof);
+	const parser = P_UTILS.postfix(P.string('-'), P.string('a'), (a, b) => [a, b]).thenEof();
 	const matchingTable: [string, boolean][] = [
 		['a', true],
 		['a-', true],
@@ -147,7 +147,7 @@ describe('postfix', () => {
 });
 
 describe('trim', () => {
-	const parser = P.string('a').trim(P.optWhitespace).skip(P.eof);
+	const parser = P.string('a').trim(P_UTILS.optWhitespace()).thenEof();
 	const matchingTable: [string, boolean][] = [
 		['a', true],
 		['a ', true],
@@ -164,7 +164,7 @@ describe('trim', () => {
 });
 
 describe('sequence trim', () => {
-	const parser = P.sequence(P.string('b'), P.string('a').trim(P.optWhitespace), P.string('b')).skip(P.eof);
+	const parser = P.sequence(P.string('b'), P.string('a').trim(P_UTILS.optWhitespace()), P.string('b')).thenEof();
 	const matchingTable: [string, boolean][] = [
 		['bab', true],
 		['ba b', true],
@@ -181,7 +181,7 @@ describe('sequence trim', () => {
 });
 
 describe('lazy sequence trim', () => {
-	const parser = P.reference(() => P.sequence(P.string('b'), P.string('a').trim(P.optWhitespace), P.string('b')).skip(P.eof));
+	const parser = P.reference(() => P.sequence(P.string('b'), P.string('a').trim(P_UTILS.optWhitespace()), P.string('b')).thenEof());
 	const matchingTable: [string, boolean][] = [
 		['bab', true],
 		['ba b', true],
@@ -198,7 +198,7 @@ describe('lazy sequence trim', () => {
 });
 
 describe('or', () => {
-	const parser = P.or(P.string('a'), P.string('b'), P.string('c')).skip(P.eof);
+	const parser = P.or(P.string('a'), P.string('b'), P.string('c')).thenEof();
 	const matchingTable: [string, boolean][] = [
 		['a', true],
 		['b', true],
@@ -236,7 +236,7 @@ describe('regex', () => {
 		.map(str => Number.parseInt(str))
 		.describe('number')
 		.mark()
-		.skip(P.eof);
+		.thenEof();
 	const matchingTable: [string, boolean][] = [
 		['1', true],
 		['12', true],

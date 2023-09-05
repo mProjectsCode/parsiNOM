@@ -31,6 +31,7 @@ exports[`atMost 'aaa' Error to match snapshot 1`] = `
 exports[`atMost 'abaa' Error to match snapshot 1`] = `
 {
   "expected": [
+    "'a'",
     "eof",
   ],
   "pos": {

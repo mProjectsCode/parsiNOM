@@ -1,4 +1,5 @@
 import { P } from '../../src/ParsiNOM';
+import { P_UTILS } from '../../src/ParserUtils';
 
 describe.each([
 	['', false],
@@ -8,7 +9,7 @@ describe.each([
 	['thatthis', false],
 	['foo', false],
 ])(`optional value '%s'`, (str, expected) => {
-	const parser = P.string('this').then(P.string('that').optional()).skip(P.eof);
+	const parser = P.string('this').then(P.string('that').optional()).thenEof();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {
@@ -37,7 +38,7 @@ describe.each([
 	['thatthis', false],
 	['foo', false],
 ])(`optional no value '%s'`, (str, expected) => {
-	const parser = P.string('this').then(P.string('that').optional('some fallback')).skip(P.eof);
+	const parser = P.string('this').then(P.string('that').optional('some fallback')).thenEof();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

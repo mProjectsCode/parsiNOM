@@ -1,4 +1,5 @@
 import { P } from '../../src/ParsiNOM';
+import { P_UTILS } from '../../src/ParserUtils';
 
 describe.each([
 	['', false],
@@ -8,7 +9,7 @@ describe.each([
 	['thatthis', false],
 	['foo', false],
 ])(`then '%s'`, (str, expected) => {
-	const parser = P.string('this').then(P.string('that')).skip(P.eof);
+	const parser = P.string('this').then(P.string('that')).thenEof();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

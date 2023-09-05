@@ -29,7 +29,7 @@ export class ParserContext {
 
 	// OPTIMIZATION: only create a new position when needed, otherwise mutate
 	private move(index: number): ParsingPosition {
-		if (index === this.position.index) {
+		if (index <= this.position.index) {
 			return this.position;
 		}
 
@@ -100,26 +100,6 @@ export class ParserContext {
 			position: this.invalidPosition(),
 			value: null,
 			furthest: this.move(index),
-			expected: Array.isArray(expected) ? expected : [expected],
-		};
-	}
-
-	succeedAtPosition<SType extends STypeBase>(position: ParsingPosition, value: SType): ParseResult<SType> {
-		return {
-			success: true,
-			position: position,
-			value: value,
-			furthest: this.invalidPosition(),
-			expected: [],
-		};
-	}
-
-	failAtPosition<SType extends STypeBase>(position: ParsingPosition, expected: string | string[]): ParseResult<SType> {
-		return {
-			success: false,
-			position: this.invalidPosition(),
-			value: null,
-			furthest: position,
 			expected: Array.isArray(expected) ? expected : [expected],
 		};
 	}

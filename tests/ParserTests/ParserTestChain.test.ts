@@ -1,4 +1,5 @@
 import { P } from '../../src/ParsiNOM';
+import { P_UTILS } from '../../src/ParserUtils';
 
 describe.each([
 	['', false],
@@ -12,7 +13,7 @@ describe.each([
 	['foo', false],
 ])(`chain '%s'`, (str, expected) => {
 	const parser = P.string('this')
-		.or(P.digit.map(x => Number(x)))
+		.or(P_UTILS.digit().map(x => Number(x)))
 		.chain(res => {
 			if (typeof res === 'string') {
 				return P.string('that');
@@ -20,7 +21,7 @@ describe.each([
 				return P.string('bar');
 			}
 		})
-		.skip(P.eof);
+		.thenEof();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

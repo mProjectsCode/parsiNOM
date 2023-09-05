@@ -142,7 +142,7 @@ const Math = P.createLanguage<MathLanguage>({
 	expression: l => l.binaryOp,
 });
 
-const MathParser = Math.expression.skip(P.eof);
+const MathParser = Math.expression.thenEof();
 
 describe('math2 test', () => {
 	const testCases: string[] = ['1', '1+2', '1 + 2 + 3', '1 * 2 + 3', '1 + 2 * 3', '(1 + 2) * 3', '1 + -2', '1 + -2 ^ 2', '1 + -2 ^ 2!'];

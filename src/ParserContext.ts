@@ -29,7 +29,10 @@ export class ParserContext {
 
 	// OPTIMIZATION: only create a new position when needed, otherwise mutate
 	private move(index: number): ParsingPosition {
-		if (index <= this.position.index) {
+		if (index < this.position.index) {
+			throw new Error(`Can not step backwards using move. Current pos ${JSON.stringify(this.position.index)}. Move index ${index}.`);
+		}
+		if (index === this.position.index) {
 			return this.position;
 		}
 

@@ -1,7 +1,7 @@
 import { ParserContext } from './ParserContext';
 import { ParseFailure, ParseFunction, ParseResult, ParsingMarker, ParsingNode, STypeBase } from './HelperTypes';
 import { P } from './ParsiNOM';
-import { P_HELPERS } from './Helpers';
+import { P_HELPERS, validateRange } from './Helpers';
 import { P_UTILS } from './ParserUtils';
 
 export class Parser<const SType extends STypeBase> {
@@ -73,11 +73,8 @@ export class Parser<const SType extends STypeBase> {
 		});
 	}
 
-	// TODO: fix this like many. Maybe no fixing is necessary, further investigation needed
 	repeat(min: number, max: number): Parser<SType[]> {
-		if (max < min) {
-			throw new Error('error in times(min, max) parser. max may not be less than min');
-		}
+		validateRange(min, max);
 
 		return new Parser<SType[]>((context): ParseResult<SType[]> => {
 			let newResult = undefined;

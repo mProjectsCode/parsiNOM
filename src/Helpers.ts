@@ -18,6 +18,32 @@ export function arrayUnion(a: string[] | never[], b: string[] | never[]): string
 	return ret;
 }
 
+export function validateRange(min: number, max: number): void {
+	if (max < min) {
+		throw new Error(`Invalid Range: max might not be smaller than min. Received [${min}, ${max}].`);
+	}
+
+	if (min < 0 || max < 0) {
+		throw new Error(`Invalid Range: max and min might not be smaller than 0. Received [${min}, ${max}].`);
+	}
+
+	if (min === Infinity || max === Infinity) {
+		throw new Error(`Invalid Range: max and min might not be infinity. Received [${min}, ${max}].`);
+	}
+
+	if (!Number.isInteger(min) || !Number.isInteger(max)) {
+		throw new Error(`Invalid Range: max and min must be integers. Received [${min}, ${max}].`);
+	}
+}
+
+export function validateRegexFlags(flags: string): void {
+	for (const flag of flags) {
+		if (flag !== 'i' && flag !== 'm' && flag !== 's' && flag !== 'u') {
+			throw new Error(`RegExp flag '${flag}' is not allowed. The only allowed flags are 'i', 'm', 's' and 'u'.`);
+		}
+	}
+}
+
 // Parser Helpers
 
 export class ParserHelpers {

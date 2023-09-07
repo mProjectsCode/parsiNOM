@@ -2,6 +2,7 @@ import { P } from '../src/ParsiNOM';
 import { P_UTILS } from '../src/ParserUtils';
 
 describe.each([
+	['', true],
 	['ab', true],
 	['abab', true],
 	['a', false],
@@ -32,6 +33,9 @@ describe.each([
 });
 
 describe.each([
+	['', false],
+	['a', false],
+	['b', false],
 	['bab', true],
 	['ba b', true],
 	['ba  b', true],
@@ -62,15 +66,15 @@ describe.each([
 });
 
 describe.each([
-	['abde', true],
-	['cde', true],
-	['c', false],
-	['ab', false],
-	['aba', false],
-	['abc', false],
-	['bcaba', false],
+	['', false],
+	['thisfoo', true],
+	['thatfoo', true],
+	['foo', false],
+	['this', false],
+	['that', false],
+	['bar', false],
 ])(`sequence or '%s'`, (str, expected) => {
-	const parser = P.sequence(P.or(P.string('ab'), P.string('c')), P.string('de'));
+	const parser = P.sequence(P.or(P.string('this'), P.string('that')), P.string('foo'));
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

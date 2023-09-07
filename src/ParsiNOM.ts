@@ -14,7 +14,7 @@ import {
 } from './HelperTypes';
 import { Parser } from './Parser';
 import { ParsingError } from './ParserError';
-import { P_HELPERS } from './Helpers';
+import { P_HELPERS, validateRegexFlags } from './Helpers';
 
 export class P {
 	// --- OTHER ---
@@ -100,7 +100,7 @@ export class P {
 	 */
 	static or<const ParserArr extends readonly Parser<unknown>[]>(...parsers: ParserArr): Parser<TupleToUnion<DeParserArray<ParserArr>>> {
 		if (parsers.length === 0) {
-			P.fail('or must have at least one alternative');
+			throw new Error('or must have at least one alternative');
 		}
 
 		return new Parser<TupleToUnion<DeParserArray<ParserArr>>>((context): ParseResult<TupleToUnion<DeParserArray<ParserArr>>> => {
@@ -180,6 +180,8 @@ export class P {
 	 * @param group
 	 */
 	static regexp(regexp: RegExp, group?: number | undefined): Parser<string> {
+		validateRegexFlags(regexp.flags);
+
 		const expected = regexp.source;
 
 		return new Parser<string>(context => {

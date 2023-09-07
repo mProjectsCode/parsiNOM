@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`sequence many '' AST to match snapshot 1`] = `[]`;
+
 exports[`sequence many 'a' Error to match snapshot 1`] = `
 {
   "expected": [
@@ -89,57 +91,11 @@ exports[`sequence many 'bcaba' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence or 'ab' Error to match snapshot 1`] = `
+exports[`sequence or '' Error to match snapshot 1`] = `
 {
   "expected": [
-    "'de'",
-  ],
-  "pos": {
-    "column": 3,
-    "index": 2,
-    "line": 1,
-  },
-}
-`;
-
-exports[`sequence or 'aba' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'de'",
-  ],
-  "pos": {
-    "column": 3,
-    "index": 2,
-    "line": 1,
-  },
-}
-`;
-
-exports[`sequence or 'abc' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'de'",
-  ],
-  "pos": {
-    "column": 3,
-    "index": 2,
-    "line": 1,
-  },
-}
-`;
-
-exports[`sequence or 'abde' AST to match snapshot 1`] = `
-[
-  "ab",
-  "de",
-]
-`;
-
-exports[`sequence or 'bcaba' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'ab'",
-    "'c'",
+    "'that'",
+    "'this'",
   ],
   "pos": {
     "column": 1,
@@ -149,24 +105,98 @@ exports[`sequence or 'bcaba' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence or 'c' Error to match snapshot 1`] = `
+exports[`sequence or 'bar' Error to match snapshot 1`] = `
 {
   "expected": [
-    "'de'",
+    "'that'",
+    "'this'",
   ],
   "pos": {
-    "column": 2,
-    "index": 1,
+    "column": 1,
+    "index": 0,
     "line": 1,
   },
 }
 `;
 
-exports[`sequence or 'cde' AST to match snapshot 1`] = `
+exports[`sequence or 'foo' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'that'",
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence or 'that' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'foo'",
+  ],
+  "pos": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence or 'thatfoo' AST to match snapshot 1`] = `
 [
-  "c",
-  "de",
+  "that",
+  "foo",
 ]
+`;
+
+exports[`sequence or 'this' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'foo'",
+  ],
+  "pos": {
+    "column": 5,
+    "index": 4,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence or 'thisfoo' AST to match snapshot 1`] = `
+[
+  "this",
+  "foo",
+]
+`;
+
+exports[`sequence trim '' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence trim 'a' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
 `;
 
 exports[`sequence trim 'b  a b' AST to match snapshot 1`] = `
@@ -193,6 +223,19 @@ exports[`sequence trim 'b abb' Error to match snapshot 1`] = `
   "pos": {
     "column": 5,
     "index": 4,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence trim 'b' Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
     "line": 1,
   },
 }

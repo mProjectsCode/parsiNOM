@@ -47,30 +47,39 @@ export class P_UTILS {
 	static digit() {
 		return P.regexp(/^[0-9]/).describe('a digit');
 	}
+
 	static digits() {
 		return P.regexp(/^[0-9]+/).describe('optional digits');
 	}
+
 	static letter() {
 		return P.regexp(/^[a-z]/i).describe('a letter');
 	}
+
 	static letters() {
 		return P.regexp(/^[a-z]+/i).describe('optional letters');
 	}
+
 	static optionalWhitespace() {
 		return P.regexp(/^\s*/).describe('optional whitespace');
 	}
+
 	static whitespace() {
 		return P.regexp(/^\s+/).describe('whitespace');
 	}
+
 	static cr() {
 		return P.string('\r');
 	}
+
 	static lf() {
 		return P.string('\n');
 	}
+
 	static crlf() {
 		return P.string('\r\n');
 	}
+
 	static newline() {
 		return P.or(this.crlf(), this.lf(), this.cr()).describe('newline');
 	}

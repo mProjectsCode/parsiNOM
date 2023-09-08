@@ -27,3 +27,12 @@ describe.each([
 		});
 	}
 });
+
+describe('many infinite loop', () => {
+	test('infinite loop to throw error', () => {
+		expect(() => {
+			const parser = P.string('').many();
+			parser.parse('foo');
+		}).toThrow('infinite loop');
+	});
+});

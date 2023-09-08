@@ -60,3 +60,15 @@ describe('recursive parser 3 test', () => {
 		});
 	}
 });
+
+describe('recursive parser language def fail', () => {
+	test('invalid rule access to fail', () => {
+		expect(() => {
+			P.createLanguage<Rec3Lang>({
+				number: () => P.regexp(/^[0-9]+/),
+				a: (l, r) => P.or(l.number, l.b.wrap(lParen, rParen)),
+				b: l => l.a.wrap(lBracket, rBracket),
+			});
+		}).toThrow("Can not access rule 'b' in language");
+	});
+});

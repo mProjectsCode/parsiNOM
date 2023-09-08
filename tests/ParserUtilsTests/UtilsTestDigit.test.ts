@@ -1,4 +1,3 @@
-import { P } from '../../src/ParsiNOM';
 import { P_UTILS } from '../../src/ParserUtils';
 
 describe.each([

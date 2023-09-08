@@ -27,3 +27,17 @@ describe.each([
 		});
 	}
 });
+
+describe('regexp invalid flag', () => {
+	test(`'g' flag to be invalid`, () => {
+		expect(() => {
+			P.regexp(/a/g);
+		}).toThrow('not allowed');
+	});
+
+	test(`'y' flag to be invalid`, () => {
+		expect(() => {
+			P.regexp(/a/y);
+		}).toThrow('not allowed');
+	});
+});

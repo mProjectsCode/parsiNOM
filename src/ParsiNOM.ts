@@ -8,7 +8,6 @@ import {
 	ParseFunction,
 	ParseResult,
 	ParserRef,
-	ParsingPosition,
 	STypeBase,
 	TupleToUnion,
 } from './HelperTypes';
@@ -79,18 +78,29 @@ export class P {
 	 * @param parsers
 	 */
 	static createLanguage<const RulesType extends object>(parsers: NomLanguageRules<RulesType>): NomLanguage<RulesType> {
-		const language: NomLanguagePartial<RulesType> = {} as NomLanguagePartial<RulesType>;
+		const language: NomLanguage<RulesType> = {} as NomLanguage<RulesType>;
+		const languageProxy: NomLanguagePartial<RulesType> = {} as NomLanguagePartial<RulesType>;
 		const languageRef: NomLanguageRef<RulesType> = {} as NomLanguageRef<RulesType>;
 
 		for (const key in parsers) {
 			languageRef[key] = P.reference(() => parsers[key](language, languageRef));
+			// use getters on language proxy, so that we can throw errors when accessing later rules.
+			Object.defineProperty(languageProxy, key, {
+				get: () => {
+					if (language[key] !== undefined) {
+						return language[key];
+					} else {
+						throw new Error(`Can not access rule '${key}' in language. Rule is not yet defined. Try to access it via 'ref'.`);
+					}
+				},
+			});
 		}
 
 		for (const key in parsers) {
-			language[key] = parsers[key](language, languageRef);
+			language[key] = parsers[key](languageProxy, languageRef);
 		}
 
-		return language as NomLanguage<RulesType>;
+		return language;
 	}
 
 	/**

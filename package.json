@@ -1,6 +1,6 @@
 {
 	"name": "@lemons_dev/parsinom",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "",
 	"main": "ParsiNOM.js",
 	"scripts": {

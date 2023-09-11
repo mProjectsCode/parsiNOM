@@ -67,28 +67,32 @@ exports[`followedBy 'this' Error to match snapshot 1`] = `
 
 exports[`followedBy 'thisthat' AST to match snapshot 1`] = `
 {
-  "end": {
-    "column": 5,
-    "index": 4,
-    "line": 1,
-  },
   "name": "after",
-  "start": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-  "value": {
-    "end": {
+  "range": {
+    "from": {
+      "column": 1,
+      "index": 0,
+      "line": 1,
+    },
+    "to": {
       "column": 5,
       "index": 4,
       "line": 1,
     },
+  },
+  "value": {
     "name": "before",
-    "start": {
-      "column": 1,
-      "index": 0,
-      "line": 1,
+    "range": {
+      "from": {
+        "column": 1,
+        "index": 0,
+        "line": 1,
+      },
+      "to": {
+        "column": 5,
+        "index": 4,
+        "line": 1,
+      },
     },
     "value": "this",
   },

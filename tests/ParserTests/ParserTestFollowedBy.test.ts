@@ -8,7 +8,7 @@ describe.each([
 	['thatthis', false],
 	['foo', false],
 ])(`followedBy '%s'`, (str, expected) => {
-	const parser = P.string('this').node('before').followedBy(P.string('that')).node('after');
+	const parser = P.string('this').namedMarker('before').followedBy(P.string('that')).namedMarker('after');
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

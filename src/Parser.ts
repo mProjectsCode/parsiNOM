@@ -1,5 +1,5 @@
 import { ParserContext } from './ParserContext';
-import { ParseFailure, ParseFunction, ParseResult, ParsingMarker, ParsingNode, STypeBase } from './HelperTypes';
+import { NamedParsingMarker, ParseFailure, ParseFunction, ParseResult, ParsingMarker, ParsingRange, STypeBase } from './HelperTypes';
 import { P } from './ParsiNOM';
 import { P_HELPERS, validateRange } from './Helpers';
 import { P_UTILS } from './ParserUtils';
@@ -11,11 +11,21 @@ export class Parser<const SType extends STypeBase> {
 		this.p = p;
 	}
 
+	/**
+	 * Parses a string, returning a result object.
+	 *
+	 * @param str
+	 */
 	tryParse(str: string): ParseResult<SType> {
 		return this.p(new ParserContext(str, { index: 0, line: 1, column: 1 }));
 	}
 
-	parse(str: string): SType | undefined {
+	/**
+	 * Parses a string, throwing a {@link ParsingError} on failure.
+	 *
+	 * @param str
+	 */
+	parse(str: string): SType {
 		const result = this.tryParse(str);
 		if (result.success) {
 			return result.value;
@@ -24,14 +34,32 @@ export class Parser<const SType extends STypeBase> {
 		}
 	}
 
+	/**
+	 * Tries this parser first and then the second if this one fails.
+	 *
+	 * @param other
+	 */
 	or<OtherSType extends STypeBase>(other: Parser<OtherSType>): Parser<SType | OtherSType> {
 		return P.or(this as Parser<SType>, other);
 	}
 
+	/**
+	 * Wrap this parser with the same parser on both sides.
+	 * `a.trim(b)` is the same as `a.wrap(b, b)`.
+	 *
+	 * @param parser
+	 */
 	trim(parser: Parser<unknown>): Parser<SType> {
 		return this.wrap(parser, parser);
 	}
 
+	/**
+	 * Wrap this parser with two parsers, one on each side.
+	 * `b.wrap(a, c)` is the same as `a.then(b).skip(c)`.
+	 *
+	 * @param leftParser
+	 * @param rightParser
+	 */
 	wrap(leftParser: Parser<unknown>, rightParser: Parser<unknown>): Parser<SType> {
 		return P.sequenceMap(
 			(_l, m: SType, _r) => {
@@ -43,10 +71,29 @@ export class Parser<const SType extends STypeBase> {
 		);
 	}
 
+	/**
+	 * Follow this parser with another parser, but the value of the other parser is returned.
+	 * Similar to {@link Parser.skip}.
+	 *
+	 * @param next
+	 */
 	then<OtherSType extends STypeBase>(next: Parser<OtherSType>): Parser<OtherSType> {
 		return P.sequence(this as Parser<SType>, next).map<OtherSType>(results => results[1] as OtherSType);
 	}
 
+	/**
+	 * Follow this parser with another parser, but the value of this parser is returned.
+	 * Similar to {@link Parser.then}.
+	 *
+	 * @param next
+	 */
+	skip(next: Parser<unknown>): Parser<SType> {
+		return P.sequence(this as Parser<SType>, next).map(value => value[0]);
+	}
+
+	/**
+	 * Matches this parser as often as it can. Potentially zero or infinite times.
+	 */
 	many(): Parser<SType[]> {
 		return new Parser<SType[]>((context): ParseResult<SType[]> => {
 			let result = undefined;
@@ -73,6 +120,13 @@ export class Parser<const SType extends STypeBase> {
 		});
 	}
 
+	/**
+	 * Match this parser at least `min` and at most `max` times.
+	 * If you need only an upper or lower bound see {@link Parser.atLeast} or {@link Parser.atMost}.
+	 *
+	 * @param min
+	 * @param max
+	 */
 	repeat(min: number, max: number): Parser<SType[]> {
 		validateRange(min, max);
 
@@ -113,14 +167,31 @@ export class Parser<const SType extends STypeBase> {
 		});
 	}
 
+	/**
+	 * Change the result of the parser.
+	 *
+	 * @example P.string('true').result(true)
+	 *
+	 * @param value
+	 */
 	result<OtherSType extends STypeBase>(value: OtherSType): Parser<OtherSType> {
 		return this.map(() => value);
 	}
 
+	/**
+	 * Match this parser at most `max` times.
+	 *
+	 * @param max
+	 */
 	atMost(max: number): Parser<SType[]> {
 		return this.repeat(0, max);
 	}
 
+	/**
+	 * Match this parser at least `min` times.
+	 *
+	 * @param min
+	 */
 	atLeast(min: number): Parser<SType[]> {
 		return P.sequenceMap(
 			(part1, part2) => {
@@ -131,6 +202,11 @@ export class Parser<const SType extends STypeBase> {
 		);
 	}
 
+	/**
+	 * Allows for transformation of the return value after the parser has run.
+	 *
+	 * @param fn
+	 */
 	map<const OtherSType extends STypeBase>(fn: (value: SType) => OtherSType): Parser<OtherSType> {
 		return new Parser(context => {
 			const result = this.p(context);
@@ -144,17 +220,15 @@ export class Parser<const SType extends STypeBase> {
 		});
 	}
 
-	skip<const OtherSType extends STypeBase>(next: Parser<OtherSType>): Parser<SType> {
-		return P.sequence(this as Parser<SType>, next).map(value => value[0]);
-	}
-
-	mark(): Parser<ParsingMarker<SType>> {
+	/**
+	 * Wrap the return value if this parser in an object containing the before and after parsing position.
+	 */
+	marker(): Parser<ParsingMarker<SType>> {
 		return P.sequenceMap(
-			(start, value: SType, end) => {
+			(from, value: SType, to) => {
 				return {
-					start: start,
 					value: value,
-					end: end,
+					range: { from, to },
 				};
 			},
 			P_UTILS.position(),
@@ -163,14 +237,18 @@ export class Parser<const SType extends STypeBase> {
 		);
 	}
 
-	node(name: string): Parser<ParsingNode<SType>> {
+	/**
+	 * Same as {@link Parser.marker} but allows for naming of the marker.
+	 *
+	 * @param name
+	 */
+	namedMarker(name: string): Parser<NamedParsingMarker<SType>> {
 		return P.sequenceMap(
-			(start, value: SType, end) => {
+			(from, value: SType, to) => {
 				return {
+					value: value,
 					name: name,
-					start: start,
-					value: value,
-					end: end,
+					range: { from, to },
 				};
 			},
 			P_UTILS.position(),
@@ -179,16 +257,43 @@ export class Parser<const SType extends STypeBase> {
 		);
 	}
 
+	/**
+	 * Similar to {@link Parser.map}, but with additional access to a parsing range.
+	 *
+	 * @param fn
+	 */
+	node<NodeType>(fn: (value: SType, range: ParsingRange) => NodeType): Parser<NodeType> {
+		return P.sequenceMap(
+			(from, value: SType, to) => {
+				return fn(value, { from, to });
+			},
+			P_UTILS.position(),
+			this as Parser<SType>,
+			P_UTILS.position(),
+		);
+	}
+
+	/**
+	 * Same as {@link Parser.separateByNotEmpty}, but it also accepts empty inputs.
+	 *
+	 * @param separator
+	 */
 	separateBy(separator: Parser<unknown>): Parser<SType[]> {
 		return P.separateBy(this, separator);
 	}
 
+	/**
+	 * Matches this parser multiple times, separated by some other parser, e.g. comma seperated values. Does not accept empty input.
+	 *
+	 * @param separator
+	 */
 	separateByNotEmpty(separator: Parser<unknown>): Parser<SType[]> {
 		return P.separateByNotEmpty(this, separator);
 	}
 
 	/**
 	 * Functions like lookahead. Checks if this parser is followed by `next`, but does not advance the parsing position.
+	 * So it is similar to {@link Parser.skip} but it does not advance the parsing position.
 	 *
 	 * @param next
 	 */
@@ -198,6 +303,7 @@ export class Parser<const SType extends STypeBase> {
 
 	/**
 	 * Functions like inverse lookahead. Checks if this parser is **not** followed by `next`, but does not advance the parsing position.
+	 * So it is more or less the inverse of {@link Parser.followedBy}.
 	 *
 	 * @param next
 	 */
@@ -205,6 +311,11 @@ export class Parser<const SType extends STypeBase> {
 		return this.skip(P_HELPERS.notFollowedBy(next));
 	}
 
+	/**
+	 * Lets you provide a customized error message for when the parser fails.
+	 *
+	 * @param expected
+	 */
 	describe(expected: string | string[] = []): Parser<SType> {
 		if (!Array.isArray(expected)) {
 			expected = [expected];
@@ -245,6 +356,9 @@ export class Parser<const SType extends STypeBase> {
 		});
 	}
 
+	/**
+	 * Makes this parser expect that it is at the end of the input after parsing.
+	 */
 	thenEof(): Parser<SType> {
 		return new Parser<SType>(context => {
 			const result: ParseResult<SType> = this.p(context);

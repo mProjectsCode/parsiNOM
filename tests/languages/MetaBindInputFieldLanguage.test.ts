@@ -1,6 +1,7 @@
-import { Parser } from 'src/Parser';
+import { Parser } from '../../src/Parser';
 import { P } from '../../src/ParsiNOM';
 import { P_UTILS } from '../../src/ParserUtils';
+import { ParseFailure } from '../../src/HelperTypes';
 
 interface InputFieldArgument {
 	name: string;
@@ -138,7 +139,7 @@ describe('input fields', () => {
 
 			expect(res.success).toBe(expected);
 			if (!res.success) {
-				console.log(P.createError(testCase, res));
+				console.log(P.createError(testCase, res as ParseFailure));
 			}
 		});
 	}

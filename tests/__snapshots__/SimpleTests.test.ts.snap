@@ -617,15 +617,17 @@ exports[`prefix 'bcaba' Error to match snapshot 1`] = `
 
 exports[`regex '1' AST to match snapshot 1`] = `
 {
-  "end": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
-  "start": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
+  "range": {
+    "from": {
+      "column": 1,
+      "index": 0,
+      "line": 1,
+    },
+    "to": {
+      "column": 2,
+      "index": 1,
+      "line": 1,
+    },
   },
   "value": 1,
 }
@@ -633,15 +635,17 @@ exports[`regex '1' AST to match snapshot 1`] = `
 
 exports[`regex '12' AST to match snapshot 1`] = `
 {
-  "end": {
-    "column": 3,
-    "index": 2,
-    "line": 1,
-  },
-  "start": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
+  "range": {
+    "from": {
+      "column": 1,
+      "index": 0,
+      "line": 1,
+    },
+    "to": {
+      "column": 3,
+      "index": 2,
+      "line": 1,
+    },
   },
   "value": 12,
 }
@@ -649,15 +653,17 @@ exports[`regex '12' AST to match snapshot 1`] = `
 
 exports[`regex '23' AST to match snapshot 1`] = `
 {
-  "end": {
-    "column": 3,
-    "index": 2,
-    "line": 1,
-  },
-  "start": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
+  "range": {
+    "from": {
+      "column": 1,
+      "index": 0,
+      "line": 1,
+    },
+    "to": {
+      "column": 3,
+      "index": 2,
+      "line": 1,
+    },
   },
   "value": 23,
 }
@@ -678,15 +684,17 @@ exports[`regex '234a' Error to match snapshot 1`] = `
 
 exports[`regex '4234' AST to match snapshot 1`] = `
 {
-  "end": {
-    "column": 5,
-    "index": 4,
-    "line": 1,
-  },
-  "start": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
+  "range": {
+    "from": {
+      "column": 1,
+      "index": 0,
+      "line": 1,
+    },
+    "to": {
+      "column": 5,
+      "index": 4,
+      "line": 1,
+    },
   },
   "value": 4234,
 }

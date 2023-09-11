@@ -5,7 +5,7 @@ describe.each([
 	['this', true],
 	['foo', false],
 ])(`mark '%s'`, (str, expected) => {
-	const parser = P.string('this').mark().thenEof();
+	const parser = P.string('this').marker().thenEof();
 	const result = parser.tryParse(str);
 
 	test(`success to be ${expected}`, () => {

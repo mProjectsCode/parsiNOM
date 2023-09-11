@@ -29,17 +29,20 @@ export interface ParsingPosition {
 	readonly column: number;
 }
 
-export interface ParsingMarker<SType extends STypeBase> {
-	start: ParsingPosition;
-	value: SType;
-	end: ParsingPosition;
+export interface ParsingRange {
+	from: ParsingPosition;
+	to: ParsingPosition;
 }
 
-export interface ParsingNode<SType extends STypeBase> {
-	name: string;
-	start: ParsingPosition;
+export interface ParsingMarker<SType extends STypeBase> {
 	value: SType;
-	end: ParsingPosition;
+	range: ParsingRange;
+}
+
+export interface NamedParsingMarker<SType extends STypeBase> {
+	value: SType;
+	name: string;
+	range: ParsingRange;
 }
 
 export type LanguageDef<RuleNames extends object> = {

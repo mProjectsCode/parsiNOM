@@ -235,7 +235,7 @@ describe('regex', () => {
 	const parser = P.regexp(/[0-9]+/)
 		.map(str => Number.parseInt(str))
 		.describe('number')
-		.mark()
+		.marker()
 		.thenEof();
 	const matchingTable: [string, boolean][] = [
 		['1', true],

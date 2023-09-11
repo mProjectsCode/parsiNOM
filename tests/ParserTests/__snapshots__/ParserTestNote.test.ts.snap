@@ -27,17 +27,18 @@ exports[`node 'foo' Error to match snapshot 1`] = `
 `;
 
 exports[`node 'this' AST to match snapshot 1`] = `
-{
-  "end": {
-    "column": 5,
-    "index": 4,
-    "line": 1,
-  },
-  "name": "fancy node",
-  "start": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
+NodeClass {
+  "range": {
+    "from": {
+      "column": 1,
+      "index": 0,
+      "line": 1,
+    },
+    "to": {
+      "column": 5,
+      "index": 4,
+      "line": 1,
+    },
   },
   "value": "this",
 }

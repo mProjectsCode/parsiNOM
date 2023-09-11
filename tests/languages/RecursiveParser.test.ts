@@ -1,4 +1,4 @@
-import { Parser } from 'src/Parser';
+import { Parser } from '../../src/Parser';
 import { P } from '../../src/ParsiNOM';
 
 const number = P.regexp(/^[0-9]+/);

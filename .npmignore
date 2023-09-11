@@ -1,0 +1,6 @@
+.github
+tests
+.prettierignore
+.prettierrc.json
+jest.config.js
+tsconfig.json

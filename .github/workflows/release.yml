@@ -22,6 +22,7 @@ jobs:
         run: npm run test
 
   publish-github:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -38,7 +39,7 @@ jobs:
           prerelease: false
 
   publish-npm:
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

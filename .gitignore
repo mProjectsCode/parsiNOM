@@ -131,3 +131,9 @@ dist
 
 # webstormm
 .idea
+
+# kelonio
+.kelonio.state.json
+
+# build output
+lib

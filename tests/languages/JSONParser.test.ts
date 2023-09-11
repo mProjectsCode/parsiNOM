@@ -1,5 +1,6 @@
 import { P } from '../../src/ParsiNOM';
 import { P_UTILS } from '../../src/ParserUtils';
+import { benchmark } from 'kelonio';
 
 interface JSONLanguage {
 	number: number;
@@ -55,12 +56,20 @@ describe('json parser', () => {
 	const testCases: unknown[] = ['1', [1, '2'], { a: 1, b: ['2', false] }, { a: { b: '1' }, b: null, c: undefined }];
 
 	for (const testCase of testCases) {
+		const str = JSON.stringify(testCase);
+
 		test(JSON.stringify(testCase), () => {
-			const res = jsonParser.tryParse(JSON.stringify(testCase));
+			const res = jsonParser.tryParse(str);
 			console.log(testCase, res);
 
 			// expect(res.success).toBe(true);
 			expect(res.value).toEqual(testCase);
+		});
+
+		it(JSON.stringify(testCase) + ' performance', async () => {
+			await benchmark.record(['JSON parser', str], () => {
+				jsonParser.tryParse(str);
+			});
 		});
 	}
 });

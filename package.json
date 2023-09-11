@@ -1,22 +1,30 @@
 {
-	"name": "parsinom",
+	"name": "@lemons_dev/parsinom",
 	"version": "0.0.1",
 	"description": "",
-	"main": "index.js",
+	"main": "ParsiNOM.js",
 	"scripts": {
+		"build": "tsc",
 		"test": "jest",
+		"performance": "jest --testPathPattern=tests/languages --runInBand",
 		"snapshots": "jest --updateSnapshot",
 		"format": "prettier --write ."
 	},
 	"keywords": [],
 	"author": "Moritz Jung",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mProjectsCode/parsiNOM.git"
+	},
 	"devDependencies": {
 		"@types/jest": "^29.5.4",
 		"jest": "^29.6.4",
 		"jest-environment-jsdom": "^29.6.4",
+		"kelonio": "^0.9.0",
 		"prettier": "^3.0.3",
 		"ts-jest": "^29.1.1",
+		"tslib": "^2.6.2",
 		"typescript": "^5.2.2"
 	}
 }

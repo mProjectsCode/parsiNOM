@@ -5,15 +5,13 @@ export type STypeBase = any;
 
 export interface ParseSuccess<SType extends STypeBase> {
 	success: true;
-	position: ParsingPosition;
 	value: SType;
-	furthest: ParsingPosition;
-	expected: string[];
+	furthest: ParsingPosition | undefined;
+	expected: string[] | undefined;
 }
 
 export interface ParseFailure {
 	success: false;
-	position: ParsingPosition;
 	value: unknown | undefined;
 	furthest: ParsingPosition;
 	expected: string[];
@@ -24,9 +22,9 @@ export type ParseResult<SType extends STypeBase> = ParseSuccess<SType> | ParseFa
 export type ParseFunction<SType extends STypeBase> = (context: ParserContext) => ParseResult<SType>;
 
 export interface ParsingPosition {
-	readonly index: number;
-	readonly line: number;
-	readonly column: number;
+	index: number;
+	line: number;
+	column: number;
 }
 
 export interface ParsingRange {

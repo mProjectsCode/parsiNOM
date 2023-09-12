@@ -1,7 +1,17 @@
 import { ParseResult, STypeBase } from './HelperTypes';
 import { Parser } from './Parser';
 
-export function arrayUnion(a: string[] | never[], b: string[] | never[]): string[] {
+export function arrayUnion(a: string[] | undefined, b: string[] | undefined): string[] {
+	if (a === undefined && b === undefined) {
+		return [];
+	}
+	if (a === undefined) {
+		return (b as string[]).sort();
+	}
+	if (b === undefined) {
+		return (a as string[]).sort();
+	}
+
 	const ret: string[] = [...a];
 	for (const bElement of b) {
 		let alreadyIncluded = false;
@@ -50,7 +60,7 @@ export class ParserHelpers {
 	followedBy<SType extends STypeBase>(x: Parser<SType>): Parser<SType> {
 		return new Parser<SType>(function _followedBy(context): ParseResult<SType> {
 			const result = x.p(context.copy());
-			result.position = context.position;
+			// result.position = context.position; TODO: can this be removed?
 			return result;
 		});
 	}

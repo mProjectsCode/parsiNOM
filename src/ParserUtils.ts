@@ -8,7 +8,7 @@ export class P_UTILS {
 	 */
 	static position(): Parser<ParsingPosition> {
 		return new Parser<ParsingPosition>(context => {
-			return context.succeed(context.position);
+			return context.succeed(context.getPosition());
 		});
 	}
 

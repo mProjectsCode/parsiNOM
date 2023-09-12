@@ -8,6 +8,7 @@ export interface JSONLanguage {
 	null: null;
 
 	array: unknown[];
+	objectEntry: { key: string; value: unknown };
 	object: Record<string, unknown>;
 
 	value: number | string | boolean | unknown[] | unknown;
@@ -15,38 +16,32 @@ export interface JSONLanguage {
 
 export const jsonLanguage = P.createLanguage<JSONLanguage>({
 	number: () =>
-		P.sequenceMap(
-			(a, b) => (b === undefined ? Number(a) : Number(a + b[0] + b[1])),
-			P_UTILS.digits(),
-			P.sequence(P.string('.'), P_UTILS.digits()).optional(),
-		).describe('number'),
+		P.sequenceMap((a, b) => (b === undefined ? Number(a) : Number(a + b[0] + b[1])), P_UTILS.digits(), P.sequence(P.string('.'), P_UTILS.digits()).optional()),
 	string: () =>
 		P.noneOf('"')
 			.many()
 			.map(x => x.join(''))
 			.trim(P.string('"')),
-	boolean: () => P.or(P.string('true').result(true), P.string('false').result(false)).describe('boolean'),
-	null: () => P.string('null').result(null).describe('null'),
+	boolean: () => P.or(P.string('true').result(true), P.string('false').result(false)),
+	null: () => P.string('null').result(null),
 
 	array: (_, ref) => ref.value.separateBy(P.string(',')).wrap(P.string('['), P.string(']')),
-	object: (language, ref) =>
+	objectEntry: (language, ref) =>
 		P.sequenceMap(
-			(_1, key, _2, _3, value) => {
-				return { key: key, value: value };
-			},
+			(_1, key, _2, _3, value) => ({ key, value }),
 			P_UTILS.optionalWhitespace(),
-			language.string.describe('key'),
+			language.string,
 			P_UTILS.optionalWhitespace(),
 			P.string(':'),
 			ref.value,
-		)
+		),
+	object: (language, ref) =>
+		language.objectEntry
 			.separateBy(P.string(','))
 			.map(x => {
-				const obj: Record<string, unknown> = {};
-				for (const kvPair of x) {
-					if (kvPair.value !== undefined) {
-						obj[kvPair.key] = kvPair.value;
-					}
+				const obj = {} as Record<string, unknown>;
+				for (const element of x) {
+					obj[element.key] = element.value;
 				}
 				return obj;
 			})

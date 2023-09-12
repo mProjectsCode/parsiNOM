@@ -37,7 +37,9 @@ describe('json parser', () => {
 		});
 	}
 
-	// version 0.0.6 ~ 8.4 ms
+	// result optimizations ~ 8.4 ms
+	// index optimizations ~ 7.3 ms
+	// parser optimizations ~ 7.2 ms
 	it('big performance', async () => {
 		await benchmark.record(['big JSON parser'], () => {
 			jsonParser.tryParse(JsonData.data);

@@ -3,6 +3,9 @@ import { ParseResult, ParsingPosition, STypeBase } from './HelperTypes';
 
 export class ParserContext {
 	readonly input: string;
+	/**
+	 * The current parsing position. This will be modified during parsing.
+	 */
 	position: ParsingPosition;
 
 	constructor(input: string, position: ParsingPosition) {
@@ -23,46 +26,40 @@ export class ParserContext {
 		});
 	}
 
+	/**
+	 * Returns a copy of the current position.
+	 * Use this is you want to hold on to the position object.
+	 */
+	getPosition(): ParsingPosition {
+		return {
+			index: this.position.index,
+			column: this.position.column,
+			line: this.position.line,
+		};
+	}
+
 	atEOF(): boolean {
 		return this.position.index >= this.input.length;
 	}
 
-	// OPTIMIZATION: only create a new position when needed, otherwise mutate
-	private advanceTo(index: number): ParsingPosition {
+	private advanceTo(index: number): void {
 		if (index < this.position.index) {
 			throw new Error(`Can not advance backwards. Current pos ${this.position.index}. Advance target index ${index}.`);
 		}
 		if (index === this.position.index) {
-			return this.position;
+			return;
 		}
-
-		let line = this.position.line;
-		let column = this.position.column;
 
 		for (let i = this.position.index; i < index; i++) {
 			if (this.input[i] === '\n') {
-				line += 1;
-				column = 1;
+				this.position.line += 1;
+				this.position.column = 1;
 			} else {
-				column += 1;
+				this.position.column += 1;
 			}
 		}
 
-		this.position = {
-			index: index,
-			line: line,
-			column: column,
-		};
-
-		return this.position;
-	}
-
-	private invalidPosition(): ParsingPosition {
-		return {
-			index: -1,
-			line: -1,
-			column: -1,
-		};
+		this.position.index = index;
 	}
 
 	sliceTo(endIndex: number): string {
@@ -86,21 +83,23 @@ export class ParserContext {
 	}
 
 	succeedAt<SType extends STypeBase>(index: number, value: SType): ParseResult<SType> {
+		this.advanceTo(index);
+
 		return {
 			success: true,
-			position: this.advanceTo(index),
 			value: value,
-			furthest: this.invalidPosition(),
-			expected: [],
+			furthest: undefined,
+			expected: undefined,
 		};
 	}
 
 	failAt<SType extends STypeBase>(index: number, expected: string | string[]): ParseResult<SType> {
+		this.advanceTo(index);
+
 		return {
 			success: false,
-			position: this.invalidPosition(),
 			value: null,
-			furthest: this.advanceTo(index),
+			furthest: this.position,
 			expected: Array.isArray(expected) ? expected : [expected],
 		};
 	}
@@ -110,14 +109,18 @@ export class ParserContext {
 			return b;
 		}
 
-		if (b.furthest.index > a.furthest.index) {
+		if (this.getIndex(b.furthest) > this.getIndex(a.furthest)) {
 			return b;
 		}
 
-		const expected: string[] = b.furthest.index === a.furthest.index ? arrayUnion(a.expected, b.expected) : a.expected;
+		const expected = this.getIndex(b.furthest) === this.getIndex(a.furthest) ? arrayUnion(a.expected, b.expected) : a.expected;
 
 		b.furthest = a.furthest;
 		b.expected = expected;
 		return b;
+	}
+
+	private getIndex(position: ParsingPosition | undefined): number {
+		return position === undefined ? -1 : position.index;
 	}
 }

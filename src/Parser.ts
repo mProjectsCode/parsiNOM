@@ -108,7 +108,7 @@ export class Parser<const SType extends STypeBase> {
 				result = context.merge(result, newResult);
 
 				if (result.success) {
-					if (result.position.index === startIndex) {
+					if (contextCopy.position.index === startIndex) {
 						throw new Error('infinite loop in many() parser detected');
 					}
 

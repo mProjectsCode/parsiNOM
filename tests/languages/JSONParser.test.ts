@@ -1,59 +1,11 @@
 import { P } from '../../src/ParsiNOM';
-import { P_UTILS } from '../../src/ParserUtils';
+import * as JsonData from './__data__/JsonData';
+import { ParseFailure } from '../../src/HelperTypes';
+import { jsonParser } from '../../profiling/Json';
 import { benchmark } from 'kelonio';
 
-interface JSONLanguage {
-	number: number;
-	string: string;
-	boolean: boolean;
-	null: null;
-
-	array: unknown[];
-	object: Record<string, unknown>;
-
-	value: number | string | boolean | unknown[] | unknown;
-}
-
-const jsonLanguage = P.createLanguage<JSONLanguage>({
-	number: () =>
-		P_UTILS.digits()
-			.map(x => Number(x))
-			.describe('number'),
-	string: () => P.noneOf('"').trim(P.string('"')).describe('string'),
-	boolean: () => P.or(P.string('true').result(true), P.string('false').result(false)).describe('boolean'),
-	null: () => P.string('null').result(null).describe('null'),
-
-	array: (_, ref) => ref.value.separateBy(P.string(',')).wrap(P.string('['), P.string(']')),
-	object: (language, ref) =>
-		P.sequenceMap(
-			(_1, key, _2, _3, value) => {
-				return { key: key, value: value };
-			},
-			P_UTILS.optionalWhitespace(),
-			language.string.describe('key'),
-			P_UTILS.optionalWhitespace(),
-			P.string(':'),
-			ref.value,
-		)
-			.separateBy(P.string(','))
-			.map(x => {
-				const obj: Record<string, unknown> = {};
-				for (const kvPair of x) {
-					if (kvPair.value !== undefined) {
-						obj[kvPair.key] = kvPair.value;
-					}
-				}
-				return obj;
-			})
-			.wrap(P.string('{'), P.string('}')),
-	value: language =>
-		P.or(language.number, language.string, language.boolean, language.array, language.object, language.null).trim(P_UTILS.optionalWhitespace()),
-});
-
-const jsonParser = jsonLanguage.value;
-
 describe('json parser', () => {
-	const testCases: unknown[] = ['1', [1, '2'], { a: 1, b: ['2', false] }, { a: { b: '1' }, b: null, c: undefined }];
+	const testCases: unknown[] = ['1', [1, '2'], { a: 1, b: ['2', false] }, { a: { foo: '1' }, b: null, c: undefined }];
 
 	for (const testCase of testCases) {
 		const str = JSON.stringify(testCase);
@@ -66,10 +18,63 @@ describe('json parser', () => {
 			expect(res.value).toEqual(testCase);
 		});
 
+		test(JSON.stringify(testCase) + ' multi line', () => {
+			const res = jsonParser.tryParse(JSON.stringify(testCase, null, 4));
+			console.log(testCase, res);
+
+			// expect(res.success).toBe(true);
+			expect(res.value).toEqual(testCase);
+		});
+
 		it(JSON.stringify(testCase) + ' performance', async () => {
 			await benchmark.record(['JSON parser', str], () => {
 				jsonParser.tryParse(str);
 			});
+
+			await benchmark.record(['js JSON parser', str], () => {
+				JSON.parse(str);
+			});
 		});
 	}
+
+	// version 0.0.6 ~ 8.4 ms
+	it('big performance', async () => {
+		await benchmark.record(['big JSON parser'], () => {
+			jsonParser.tryParse(JsonData.data);
+		});
+
+		await benchmark.record(['big js JSON parser'], () => {
+			JSON.parse(JsonData.data);
+		});
+	});
+
+	describe('json file', () => {
+		test('normal data', () => {
+			const res = jsonParser.tryParse(JsonData.data);
+
+			expect(res.success).toEqual(true);
+			expect(res.value).toEqual(JSON.parse(JsonData.data));
+		});
+
+		test('minified data', () => {
+			const res = jsonParser.tryParse(JsonData.data_min);
+
+			expect(res.success).toEqual(true);
+			expect(res.value).toEqual(JSON.parse(JsonData.data_min));
+		});
+
+		test('invalid data 1', () => {
+			const res = jsonParser.tryParse(JsonData.data_invalid_1);
+
+			expect(res.success).toEqual(false);
+			console.log(P.createError(JsonData.data_invalid_1, res as ParseFailure));
+		});
+
+		test('invalid data 2', () => {
+			const res = jsonParser.tryParse(JsonData.data_invalid_2);
+
+			expect(res.success).toEqual(false);
+			console.log(P.createError(JsonData.data_invalid_2, res as ParseFailure));
+		});
+	});
 });

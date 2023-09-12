@@ -48,7 +48,7 @@ export function validateRegexFlags(flags: string): void {
 
 export class ParserHelpers {
 	followedBy<SType extends STypeBase>(x: Parser<SType>): Parser<SType> {
-		return new Parser<SType>(context => {
+		return new Parser<SType>(function _followedBy(context): ParseResult<SType> {
 			const result = x.p(context.copy());
 			result.position = context.position;
 			return result;
@@ -62,7 +62,7 @@ export class ParserHelpers {
 	 * @param parser
 	 */
 	notFollowedBy(parser: Parser<unknown>): Parser<undefined> {
-		return new Parser((context): ParseResult<undefined> => {
+		return new Parser(function _notFollowedBy(context): ParseResult<undefined> {
 			const contextCopy = context.copy();
 			const result = parser.p(contextCopy);
 			const text = context.sliceTo(contextCopy.position.index);
@@ -76,7 +76,7 @@ export class ParserHelpers {
 	 * @param fn
 	 */
 	test(fn: (char: string) => boolean): Parser<string> {
-		return new Parser<string>((context): ParseResult<string> => {
+		return new Parser<string>(function _test(context): ParseResult<string> {
 			const char = context.input[context.position.index];
 			if (!context.atEOF() && fn(char)) {
 				return context.succeedOffset(1, char);

@@ -29,7 +29,7 @@ export class P {
 	 * @param parsers
 	 */
 	static sequence<const SType extends STypeBase, ParserArr extends readonly Parser<SType>[]>(...parsers: ParserArr): Parser<DeParserArray<ParserArr>> {
-		return new Parser<DeParserArray<ParserArr>>((context): ParseResult<DeParserArray<ParserArr>> => {
+		return new Parser<DeParserArray<ParserArr>>(function _sequence(context): ParseResult<DeParserArray<ParserArr>> {
 			let result = undefined;
 			const value: SType[] = new Array(parsers.length);
 
@@ -63,10 +63,8 @@ export class P {
 		fn: (...value: DeParserArray<ParserArr>) => OtherSType,
 		...parsers: ParserArr
 	): Parser<OtherSType> {
-		return this.sequence(...parsers).map<OtherSType>(function (results) {
-			const res = fn(...results);
-			// console.log('seq map', res);
-			return res;
+		return this.sequence(...parsers).map<OtherSType>(function _sequenceMap(results): OtherSType {
+			return fn(...results);
 		});
 	}
 
@@ -113,7 +111,7 @@ export class P {
 			throw new Error('or must have at least one alternative');
 		}
 
-		return new Parser<TupleToUnion<DeParserArray<ParserArr>>>((context): ParseResult<TupleToUnion<DeParserArray<ParserArr>>> => {
+		return new Parser<TupleToUnion<DeParserArray<ParserArr>>>(function _or(context): ParseResult<TupleToUnion<DeParserArray<ParserArr>>> {
 			let result = undefined;
 
 			for (let i = 0; i < parsers.length; i++) {
@@ -151,7 +149,7 @@ export class P {
 	 */
 	static separateByNotEmpty<SType extends STypeBase>(parser: Parser<SType>, separator: Parser<unknown>): Parser<SType[]> {
 		return this.sequenceMap(
-			(part1, part2) => {
+			function _separateBy(part1, part2): SType[] {
 				// console.log('sep', [part1, ...part2]);
 				return [part1, ...part2];
 			},
@@ -170,7 +168,7 @@ export class P {
 	static string(str: string): Parser<string> {
 		const expected = "'" + str + "'";
 
-		return new Parser<string>(context => {
+		return new Parser<string>(function _string(context): ParseResult<string> {
 			const endIndex = context.position.index + str.length;
 			const subInput = context.sliceTo(endIndex);
 			// console.log('str', str, subInput, context, endIndex);
@@ -194,7 +192,7 @@ export class P {
 
 		const expected = regexp.source;
 
-		return new Parser<string>(context => {
+		return new Parser<string>(function _regexp(context): ParseResult<string> {
 			const subInput = context.input.slice(context.position.index);
 			const match = regexp.exec(subInput);
 
@@ -222,7 +220,7 @@ export class P {
 	 * @param value
 	 */
 	static succeed<SType extends STypeBase>(value: SType): Parser<SType> {
-		return new Parser<SType>(context => {
+		return new Parser<SType>(function _succeed(context): ParseResult<SType> {
 			return context.succeed(value);
 		});
 	}
@@ -233,7 +231,7 @@ export class P {
 	 * @param expected
 	 */
 	static fail<SType extends STypeBase>(expected: string): Parser<SType> {
-		return new Parser<SType>(context => {
+		return new Parser<SType>(function _fail(context): ParseResult<SType> {
 			return context.fail(expected);
 		});
 	}
@@ -244,7 +242,7 @@ export class P {
 	 * @param str
 	 */
 	static oneOf(str: string): Parser<string> {
-		return P_HELPERS.test((char: string) => {
+		return P_HELPERS.test(function _oneOf(char: string): boolean {
 			return str.includes(char);
 		}).describe(`one character of '${str}'`);
 	}
@@ -264,7 +262,7 @@ export class P {
 	 * @param str
 	 */
 	static noneOf(str: string): Parser<string> {
-		return P_HELPERS.test(function (char: string) {
+		return P_HELPERS.test(function _noneOf(char: string): boolean {
 			return !str.includes(char);
 		}).describe(`no character of '${str}'`);
 	}
@@ -287,7 +285,7 @@ export class P {
 	static range(begin: string, end: string): Parser<string> {
 		const beginCharCode = begin.charCodeAt(0);
 		const endCharCode = end.charCodeAt(0);
-		return P_HELPERS.test(char => {
+		return P_HELPERS.test(function _range(char): boolean {
 			const charCode = char.charCodeAt(0);
 			return beginCharCode <= charCode && charCode <= endCharCode;
 		}).describe(`${begin}-${end}`);
@@ -299,7 +297,7 @@ export class P {
 	 * @param fn
 	 */
 	static takeWhile(fn: (char: string) => boolean): Parser<string> {
-		return new Parser(context => {
+		return new Parser(function _takeWhile(context): ParseResult<string> {
 			let endIndex = context.position.index;
 			while (endIndex < context.input.length && fn(context.input[endIndex])) {
 				endIndex++;
@@ -315,7 +313,7 @@ export class P {
 	 * @param fn
 	 */
 	static reference<SType extends STypeBase>(fn: () => Parser<SType>): ParserRef<SType> {
-		return new Parser<SType>(context => {
+		return new Parser<SType>(function _reference(context): ParseResult<SType> {
 			return fn().p(context);
 		});
 	}

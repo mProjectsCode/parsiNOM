@@ -30,7 +30,7 @@ export class Parser<const SType extends STypeBase> {
 		if (result.success) {
 			return result.value;
 		} else {
-			throw P.createError(str, result);
+			throw P.createError(str, result as ParseFailure);
 		}
 	}
 
@@ -62,7 +62,7 @@ export class Parser<const SType extends STypeBase> {
 	 */
 	wrap(leftParser: Parser<unknown>, rightParser: Parser<unknown>): Parser<SType> {
 		return P.sequenceMap(
-			(_l, m: SType, _r) => {
+			function _wrap(_l, m: SType, _r): SType {
 				return m;
 			},
 			leftParser,
@@ -95,14 +95,15 @@ export class Parser<const SType extends STypeBase> {
 	 * Matches this parser as often as it can. Potentially zero or infinite times.
 	 */
 	many(): Parser<SType[]> {
-		return new Parser<SType[]>((context): ParseResult<SType[]> => {
+		const _this = this;
+		return new Parser<SType[]>(function _many(context): ParseResult<SType[]> {
 			let result = undefined;
 			const startIndex = context.position.index;
 			const value: SType[] = [];
 
 			while (true) {
 				const contextCopy = context.copy();
-				const newResult = this.p(contextCopy);
+				const newResult = _this.p(contextCopy);
 
 				result = context.merge(result, newResult);
 
@@ -129,15 +130,16 @@ export class Parser<const SType extends STypeBase> {
 	 */
 	repeat(min: number, max: number): Parser<SType[]> {
 		validateRange(min, max);
+		const _this = this;
 
-		return new Parser<SType[]>((context): ParseResult<SType[]> => {
+		return new Parser<SType[]>(function _repeat(context): ParseResult<SType[]> {
 			let newResult = undefined;
 			let result = undefined;
 			const value: SType[] = [];
 			let iteration = 0;
 
 			for (; iteration < min; iteration++) {
-				newResult = this.p(context);
+				newResult = _this.p(context);
 
 				result = context.merge(result, newResult);
 
@@ -150,7 +152,7 @@ export class Parser<const SType extends STypeBase> {
 
 			for (; iteration < max; iteration++) {
 				const contextCopy = context.copy();
-				newResult = this.p(contextCopy);
+				newResult = _this.p(contextCopy);
 
 				result = context.merge(result, newResult);
 
@@ -208,10 +210,11 @@ export class Parser<const SType extends STypeBase> {
 	 * @param fn
 	 */
 	map<const OtherSType extends STypeBase>(fn: (value: SType) => OtherSType): Parser<OtherSType> {
-		return new Parser(context => {
-			const result = this.p(context);
+		const _this = this;
+		return new Parser(function _map(context): ParseResult<OtherSType> {
+			const result = _this.p(context);
 			if (!result.success) {
-				return result;
+				return result as ParseFailure;
 			}
 			// we are kind of changing the generic type of `ParseResult` here and TS does not like it.
 			// return context.mutateResult(result, fn(result.value));
@@ -225,7 +228,7 @@ export class Parser<const SType extends STypeBase> {
 	 */
 	marker(): Parser<ParsingMarker<SType>> {
 		return P.sequenceMap(
-			(from, value: SType, to) => {
+			function _marker(from, value: SType, to): ParsingMarker<SType> {
 				return {
 					value: value,
 					range: { from, to },
@@ -244,7 +247,7 @@ export class Parser<const SType extends STypeBase> {
 	 */
 	namedMarker(name: string): Parser<NamedParsingMarker<SType>> {
 		return P.sequenceMap(
-			(from, value: SType, to) => {
+			function _namedMarker(from, value: SType, to): NamedParsingMarker<SType> {
 				return {
 					value: value,
 					name: name,
@@ -264,7 +267,7 @@ export class Parser<const SType extends STypeBase> {
 	 */
 	node<NodeType>(fn: (value: SType, range: ParsingRange) => NodeType): Parser<NodeType> {
 		return P.sequenceMap(
-			(from, value: SType, to) => {
+			function _node(from, value: SType, to): NodeType {
 				return fn(value, { from, to });
 			},
 			P_UTILS.position(),
@@ -320,9 +323,10 @@ export class Parser<const SType extends STypeBase> {
 		if (!Array.isArray(expected)) {
 			expected = [expected];
 		}
+		const _this = this;
 
-		return new Parser<SType>(context => {
-			const result = this.p(context);
+		return new Parser<SType>(function _describe(context) {
+			const result = _this.p(context);
 			if (!result.success) {
 				result.expected = expected as string[];
 			}
@@ -345,10 +349,12 @@ export class Parser<const SType extends STypeBase> {
 	 * @param fn
 	 */
 	chain<OtherSType extends STypeBase>(fn: (result: SType) => Parser<OtherSType>): Parser<OtherSType> {
-		return new Parser<OtherSType>(context => {
-			const result: ParseResult<SType> = this.p(context);
+		const _this = this;
+
+		return new Parser<OtherSType>(function _chain(context): ParseResult<OtherSType> {
+			const result: ParseResult<SType> = _this.p(context);
 			if (!result.success) {
-				return result;
+				return result as ParseFailure;
 			}
 			const nextParser: Parser<OtherSType> = fn(result.value);
 			const nextResult = nextParser.p(context);
@@ -360,8 +366,10 @@ export class Parser<const SType extends STypeBase> {
 	 * Makes this parser expect that it is at the end of the input after parsing.
 	 */
 	thenEof(): Parser<SType> {
-		return new Parser<SType>(context => {
-			const result: ParseResult<SType> = this.p(context);
+		const _this = this;
+
+		return new Parser<SType>(function _thenEof(context): ParseResult<SType> {
+			const result: ParseResult<SType> = _this.p(context);
 			if (!result.success) {
 				return result;
 			}

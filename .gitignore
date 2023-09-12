@@ -137,3 +137,5 @@ dist
 
 # build output
 lib
+profiling/build
+profiling/logs

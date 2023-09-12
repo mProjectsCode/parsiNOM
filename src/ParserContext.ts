@@ -28,32 +28,30 @@ export class ParserContext {
 	}
 
 	// OPTIMIZATION: only create a new position when needed, otherwise mutate
-	private move(index: number): ParsingPosition {
+	private advanceTo(index: number): ParsingPosition {
 		if (index < this.position.index) {
-			throw new Error(`Can not step backwards using move. Current pos ${JSON.stringify(this.position.index)}. Move index ${index}.`);
+			throw new Error(`Can not advance backwards. Current pos ${this.position.index}. Advance target index ${index}.`);
 		}
 		if (index === this.position.index) {
 			return this.position;
 		}
 
-		const endIndex = index;
-		const inputChunk = this.sliceTo(endIndex);
-		let endLine = this.position.line;
-		let endColumn = this.position.column;
+		let line = this.position.line;
+		let column = this.position.column;
 
-		for (const char of inputChunk) {
-			if (char === '\n') {
-				endLine += 1;
-				endColumn = 1;
+		for (let i = this.position.index; i < index; i++) {
+			if (this.input[i] === '\n') {
+				line += 1;
+				column = 1;
 			} else {
-				endColumn += 1;
+				column += 1;
 			}
 		}
 
 		this.position = {
-			index: endIndex,
-			line: endLine,
-			column: endColumn,
+			index: index,
+			line: line,
+			column: column,
 		};
 
 		return this.position;
@@ -90,7 +88,7 @@ export class ParserContext {
 	succeedAt<SType extends STypeBase>(index: number, value: SType): ParseResult<SType> {
 		return {
 			success: true,
-			position: this.move(index),
+			position: this.advanceTo(index),
 			value: value,
 			furthest: this.invalidPosition(),
 			expected: [],
@@ -102,7 +100,7 @@ export class ParserContext {
 			success: false,
 			position: this.invalidPosition(),
 			value: null,
-			furthest: this.move(index),
+			furthest: this.advanceTo(index),
 			expected: Array.isArray(expected) ? expected : [expected],
 		};
 	}
@@ -116,25 +114,10 @@ export class ParserContext {
 			return b;
 		}
 
-		const expected = b.furthest.index === a.furthest.index ? arrayUnion(a.expected, b.expected) : a.expected;
+		const expected: string[] = b.furthest.index === a.furthest.index ? arrayUnion(a.expected, b.expected) : a.expected;
 
-		// this if does nothing other than to satisfy typescript
-		if (b.success) {
-			return {
-				success: true,
-				position: b.position,
-				value: b.value,
-				furthest: a.furthest,
-				expected: expected,
-			};
-		} else {
-			return {
-				success: false,
-				position: b.position,
-				value: b.value,
-				furthest: a.furthest,
-				expected: expected,
-			};
-		}
+		b.furthest = a.furthest;
+		b.expected = expected;
+		return b;
 	}
 }

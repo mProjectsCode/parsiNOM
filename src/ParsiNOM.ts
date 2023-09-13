@@ -238,6 +238,7 @@ export class P {
 
 	/**
 	 * Returns a parser that yields the next character if it is included in `str`.
+	 * If you want to match multiple characters in a row consider using {@link P.manyOf}.
 	 *
 	 * @param str
 	 */
@@ -245,6 +246,18 @@ export class P {
 		return P_HELPERS.test(function _oneOf(char: string): boolean {
 			return str.includes(char);
 		}).describe(`one character of '${str}'`);
+	}
+
+	/**
+	 * Returns a parser that yields the next character if it is **not** included in `str`.
+	 * If you want to match multiple characters in a row consider using {@link P.manyNotOf}.
+	 *
+	 * @param str
+	 */
+	static noneOf(str: string): Parser<string> {
+		return P_HELPERS.test(function _noneOf(char: string): boolean {
+			return !str.includes(char);
+		}).describe(`no character of '${str}'`);
 	}
 
 	/**
@@ -257,14 +270,42 @@ export class P {
 	}
 
 	/**
-	 * Returns a parser that yields the next character if it is **not** included in `str`.
+	 * Returns a parser that matches as many characters as it can, as long as they are included in `str`.
+	 * `P.manyOf('ab')` is the same and more performant as `P.oneOf('ab').many().map(x => x.join(''))`.
 	 *
 	 * @param str
 	 */
-	static noneOf(str: string): Parser<string> {
-		return P_HELPERS.test(function _noneOf(char: string): boolean {
-			return !str.includes(char);
-		}).describe(`no character of '${str}'`);
+	static manyOf(str: string): Parser<string> {
+		return new Parser<string>(function _manyOf(context): ParseResult<string> {
+			let i = context.position.index;
+			for (; i < context.input.length; i++) {
+				if (!str.includes(context.input[i])) {
+					break;
+				}
+			}
+			return context.succeedAt(i, context.sliceTo(i));
+		});
+	}
+
+	/**
+	 * Returns a parser that matches anything until a character included in `str` is encountered.
+	 * `P.manyNotOf('ab')` is the same and more performant as `P.noneOf('ab').many().map(x => x.join(''))`.
+	 *
+	 * @example A simple string without escape characters.
+	 * P.manyNotOf('"').trim(P.string('"'))
+	 *
+	 * @param str
+	 */
+	static manyNotOf(str: string): Parser<string> {
+		return new Parser<string>(function _manyOf(context): ParseResult<string> {
+			let i = context.position.index;
+			for (; i < context.input.length; i++) {
+				if (str.includes(context.input[i])) {
+					break;
+				}
+			}
+			return context.succeedAt(i, context.sliceTo(i));
+		});
 	}
 
 	/**

@@ -1,5 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`manyOf '' AST to match snapshot 1`] = `""`;
+
+exports[`manyOf 'a' AST to match snapshot 1`] = `"a"`;
+
+exports[`manyOf 'aa' AST to match snapshot 1`] = `"aa"`;
+
+exports[`manyOf 'abcabc' AST to match snapshot 1`] = `"abcabc"`;
+
+exports[`manyOf 'afoo' AST to match snapshot 1`] = `"a"`;
+
+exports[`manyOf 'b' AST to match snapshot 1`] = `"b"`;
+
+exports[`manyOf 'bafoo' AST to match snapshot 1`] = `"ba"`;
+
+exports[`manyOf 'c' AST to match snapshot 1`] = `"c"`;
+
+exports[`manyOf 'foo' AST to match snapshot 1`] = `""`;
+
 exports[`oneOf '' Error to match snapshot 1`] = `
 {
   "expected": [

@@ -40,6 +40,8 @@ describe('json parser', () => {
 	// result optimizations ~ 8.4 ms
 	// index optimizations ~ 7.3 ms
 	// parser optimizations ~ 7.2 ms
+	// replace number and string parsing with regexp ~ 3.6 ms
+	// replace string parsing with manyNotOf ~ 5 ms
 	it('big performance', async () => {
 		await benchmark.record(['big JSON parser'], () => {
 			jsonParser.tryParse(JsonData.data);

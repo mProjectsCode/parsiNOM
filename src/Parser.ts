@@ -172,7 +172,8 @@ export class Parser<const SType extends STypeBase> {
 	/**
 	 * Change the result of the parser.
 	 *
-	 * @example P.string('true').result(true)
+	 * @example A parser that matches the string 'true' but yields the boolean value 'true'.
+	 * P.string('true').result(true)
 	 *
 	 * @param value
 	 */

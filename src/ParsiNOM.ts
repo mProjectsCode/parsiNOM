@@ -40,14 +40,11 @@ export class P {
 				result = context.merge(result, newResult);
 
 				if (!result.success) {
-					// console.log('sequence failed', result);
 					return result;
 				}
 
 				value[i] = result.value;
 			}
-
-			// console.log('sequence', value);
 
 			return context.merge(result, context.succeed(value as DeParserArray<ParserArr>));
 		});
@@ -63,8 +60,26 @@ export class P {
 		fn: (...value: DeParserArray<ParserArr>) => OtherSType,
 		...parsers: ParserArr
 	): Parser<OtherSType> {
-		return this.sequence(...parsers).map<OtherSType>(function _sequenceMap(results): OtherSType {
-			return fn(...results);
+		return new Parser<OtherSType>(function _sequenceMap(context): ParseResult<OtherSType> {
+			let result = undefined;
+			const value: SType[] = new Array(parsers.length);
+
+			for (let i = 0; i < parsers.length; i++) {
+				const p = parsers[i];
+
+				const newResult = p.p(context);
+				result = context.merge(result, newResult);
+
+				if (!result.success) {
+					return result;
+				}
+
+				value[i] = result.value;
+			}
+
+			const retValue = fn(...(value as DeParserArray<ParserArr>));
+
+			return context.merge(result, context.succeed(retValue));
 		});
 	}
 

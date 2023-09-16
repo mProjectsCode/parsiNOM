@@ -89,10 +89,18 @@ export class P_UTILS {
 		nextParser: Parser<OtherSType>,
 		combine: (a: OperatorSType, b: OtherSType | ReturnSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
-		const parser: Parser<OtherSType | ReturnSType> = P.reference(() => {
-			return P.sequenceMap(combine, operatorsParser, parser).or(nextParser);
-		});
-		return parser;
+		// const parser: Parser<OtherSType | ReturnSType> = P.reference(() => {
+		// 	return P.sequenceMap(combine, operatorsParser, parser).or(nextParser);
+		// });
+		// return parser;
+
+		return P.sequenceMap(
+			(prefixes, x) => {
+				return prefixes.reduce<OtherSType | ReturnSType>((acc, y) => combine(y, acc), x);
+			},
+			operatorsParser.many(),
+			nextParser,
+		);
 	}
 
 	static postfix<OperatorSType, OtherSType, ReturnSType>(
@@ -111,29 +119,35 @@ export class P_UTILS {
 
 	static binaryRight<OperatorSType, OtherSType, ReturnSType>(
 		operatorsParser: Parser<OperatorSType>,
-		nextParser: Parser<OtherSType>,
+		operandParser: Parser<OtherSType>,
 		combine: (a: OtherSType, b: OperatorSType, c: OtherSType | ReturnSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
-		const parser: Parser<OtherSType | ReturnSType> = P.reference(() =>
-			P.sequenceMap(combine, nextParser, operatorsParser.trim(this.optionalWhitespace()), parser).or(nextParser),
+		return P.sequenceMap(
+			(others, last: OtherSType) => {
+				return others.reverse().reduce<OtherSType | ReturnSType>((acc, y) => {
+					const [operand, operator] = y;
+					return combine(operand, operator, acc);
+				}, last);
+			},
+			P.sequence(operandParser, operatorsParser.trim(this.optionalWhitespace())).many(),
+			operandParser,
 		);
-		return parser;
 	}
 
 	static binaryLeft<OperatorSType, OtherSType, ReturnSType>(
 		operatorsParser: Parser<OperatorSType>,
-		nextParser: Parser<OtherSType>,
+		operandParser: Parser<OtherSType>,
 		combine: (a: OtherSType | ReturnSType, b: OperatorSType, c: OtherSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		return P.sequenceMap(
 			(first: OtherSType, others) => {
 				return others.reduce<OtherSType | ReturnSType>((acc, y) => {
-					const [operator, next] = y;
-					return combine(acc, operator, next);
+					const [operator, operand] = y;
+					return combine(acc, operator, operand);
 				}, first);
 			},
-			nextParser,
-			P.sequence(operatorsParser.trim(this.optionalWhitespace()), nextParser).many(),
+			operandParser,
+			P.sequence(operatorsParser.trim(this.optionalWhitespace()), operandParser).many(),
 		);
 	}
 

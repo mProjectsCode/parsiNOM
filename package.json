@@ -6,7 +6,8 @@
 	"scripts": {
 		"build": "tsc",
 		"test": "jest",
-		"performance": "jest --testPathPattern=tests/languages --runInBand",
+		"json_perf": "jest --testPathPattern=tests/languages/JSONParser.test.ts --runInBand",
+		"op_perf": "jest --testPathPattern=tests/ParserUtilsTests/UtilsTestOperators.test.ts --runInBand",
 		"snapshots": "jest --updateSnapshot",
 		"format": "prettier --write ."
 	},

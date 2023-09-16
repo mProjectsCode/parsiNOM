@@ -1,5 +1,15 @@
 import { ParserContext } from './ParserContext';
-import { NamedParsingMarker, ParseFailure, ParseFunction, ParseResult, ParsingMarker, ParsingRange, STypeBase } from './HelperTypes';
+import {
+	DeParserArray,
+	NamedParsingMarker,
+	ParseFailure,
+	ParseFunction,
+	ParseResult,
+	ParsingMarker,
+	ParsingPosition,
+	ParsingRange,
+	STypeBase,
+} from './HelperTypes';
 import { P } from './ParsiNOM';
 import { P_HELPERS, validateRange } from './Helpers';
 import { P_UTILS } from './ParserUtils';
@@ -61,14 +71,26 @@ export class Parser<const SType extends STypeBase> {
 	 * @param rightParser
 	 */
 	wrap(leftParser: Parser<unknown>, rightParser: Parser<unknown>): Parser<SType> {
-		return P.sequenceMap(
-			function _wrap(_l, m: SType, _r): SType {
-				return m;
-			},
-			leftParser,
-			this as Parser<SType>,
-			rightParser,
-		);
+		const _this = this;
+
+		return new Parser<SType>(function _wrap(context): ParseResult<SType> {
+			const leftResult = leftParser.p(context);
+			if (!leftResult.success) {
+				return leftResult as ParseFailure;
+			}
+
+			const thisResult = context.merge(leftResult, _this.p(context));
+			if (!thisResult.success) {
+				return thisResult as ParseFailure;
+			}
+
+			const rightResult = context.merge(thisResult, rightParser.p(context));
+			if (!rightResult.success) {
+				return rightResult as ParseFailure;
+			}
+
+			return context.merge(rightResult, context.succeed(thisResult.value));
+		});
 	}
 
 	/**
@@ -78,7 +100,21 @@ export class Parser<const SType extends STypeBase> {
 	 * @param next
 	 */
 	then<OtherSType extends STypeBase>(next: Parser<OtherSType>): Parser<OtherSType> {
-		return P.sequence(this as Parser<SType>, next).map<OtherSType>(results => results[1] as OtherSType);
+		const _this = this;
+
+		return new Parser<OtherSType>(function _then(context) {
+			const firstResult = _this.p(context);
+			if (!firstResult.success) {
+				return firstResult as ParseFailure;
+			}
+
+			const secondResult = context.merge(firstResult, next.p(context));
+			if (!secondResult.success) {
+				return secondResult as ParseFailure;
+			}
+
+			return secondResult;
+		});
 	}
 
 	/**
@@ -88,7 +124,31 @@ export class Parser<const SType extends STypeBase> {
 	 * @param next
 	 */
 	skip(next: Parser<unknown>): Parser<SType> {
-		return P.sequence(this as Parser<SType>, next).map(value => value[0]);
+		const _this = this;
+
+		return new Parser<SType>(function _skip(context) {
+			const firstResult = _this.p(context);
+			if (!firstResult.success) {
+				return firstResult as ParseFailure;
+			}
+
+			const secondResult = context.merge(firstResult, next.p(context));
+			if (!secondResult.success) {
+				return secondResult as ParseFailure;
+			}
+
+			return context.merge(secondResult, context.succeed(firstResult.value));
+		});
+	}
+
+	/**
+	 * Follow this parser with another parser.
+	 * If you chain more than two parser use {@link P.sequence}.
+	 *
+	 * @param next
+	 */
+	and<OtherSType extends STypeBase>(next: Parser<OtherSType>): Parser<[SType, OtherSType]> {
+		return P.sequence(this as Parser<SType>, next);
 	}
 
 	/**
@@ -170,18 +230,6 @@ export class Parser<const SType extends STypeBase> {
 	}
 
 	/**
-	 * Change the result of the parser.
-	 *
-	 * @example A parser that matches the string 'true' but yields the boolean value 'true'.
-	 * P.string('true').result(true)
-	 *
-	 * @param value
-	 */
-	result<OtherSType extends STypeBase>(value: OtherSType): Parser<OtherSType> {
-		return this.map(() => value);
-	}
-
-	/**
 	 * Match this parser at most `max` times.
 	 *
 	 * @param max
@@ -206,6 +254,36 @@ export class Parser<const SType extends STypeBase> {
 	}
 
 	/**
+	 * Same as {@link Parser.separateByNotEmpty}, but it also accepts empty inputs.
+	 *
+	 * @param separator
+	 */
+	separateBy(separator: Parser<unknown>): Parser<SType[]> {
+		return P.separateBy(this, separator);
+	}
+
+	/**
+	 * Matches this parser multiple times, separated by some other parser, e.g. comma seperated values. Does not accept empty input.
+	 *
+	 * @param separator
+	 */
+	separateByNotEmpty(separator: Parser<unknown>): Parser<SType[]> {
+		return P.separateByNotEmpty(this, separator);
+	}
+
+	/**
+	 * Change the result of the parser.
+	 *
+	 * @example A parser that matches the string 'true' but yields the boolean value 'true'.
+	 * P.string('true').result(true)
+	 *
+	 * @param value
+	 */
+	result<OtherSType extends STypeBase>(value: OtherSType): Parser<OtherSType> {
+		return this.map(() => value);
+	}
+
+	/**
 	 * Allows for transformation of the return value after the parser has run.
 	 *
 	 * @param fn
@@ -217,9 +295,6 @@ export class Parser<const SType extends STypeBase> {
 			if (!result.success) {
 				return result as ParseFailure;
 			}
-			// we are kind of changing the generic type of `ParseResult` here and TS does not like it.
-			// return context.mutateResult(result, fn(result.value));
-
 			return context.merge(result, context.succeed(fn(result.value)));
 		});
 	}
@@ -275,24 +350,6 @@ export class Parser<const SType extends STypeBase> {
 			this as Parser<SType>,
 			P_UTILS.position(),
 		);
-	}
-
-	/**
-	 * Same as {@link Parser.separateByNotEmpty}, but it also accepts empty inputs.
-	 *
-	 * @param separator
-	 */
-	separateBy(separator: Parser<unknown>): Parser<SType[]> {
-		return P.separateBy(this, separator);
-	}
-
-	/**
-	 * Matches this parser multiple times, separated by some other parser, e.g. comma seperated values. Does not accept empty input.
-	 *
-	 * @param separator
-	 */
-	separateByNotEmpty(separator: Parser<unknown>): Parser<SType[]> {
-		return P.separateByNotEmpty(this, separator);
 	}
 
 	/**
@@ -377,6 +434,43 @@ export class Parser<const SType extends STypeBase> {
 			if (!context.atEOF()) {
 				return context.merge(result, context.fail('eof'));
 			}
+			return result;
+		});
+	}
+
+	/**
+	 * Makes this parser remember previous calls on the same string.
+	 * This introduces quite a bit of overhead, but it can be worth it if the parser is called multiple times on the same position because the parser backtracks.
+	 */
+	memorize(): Parser<SType> {
+		const _this = this;
+		let memoInput: string = '';
+		const memoTable: Map<number, ParseResult<SType>> = new Map<number, ParseResult<SType>>();
+		const positionTable: Map<number, ParsingPosition> = new Map<number, ParsingPosition>();
+
+		return new Parser<SType>(function _thenEof(context): ParseResult<SType> {
+			const index = context.position.index;
+
+			if (context.input !== memoInput) {
+				memoInput = context.input;
+
+				memoTable.clear();
+				positionTable.clear();
+			} else {
+				const memoResult = memoTable.get(index);
+				const posResult = positionTable.get(index);
+
+				if (memoResult !== undefined && posResult !== undefined) {
+					context.moveToPosition({ ...posResult });
+					return { ...memoResult };
+				}
+			}
+
+			const result: ParseResult<SType> = _this.p(context);
+
+			memoTable.set(index, { ...result });
+			positionTable.set(index, context.getPosition());
+
 			return result;
 		});
 	}

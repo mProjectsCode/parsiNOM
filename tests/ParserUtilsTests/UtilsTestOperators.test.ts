@@ -48,8 +48,6 @@ describe.each([
 	const parser = P_UTILS.binaryRight(P.string('+'), P.oneStringOf(['a', 'b', 'c']), (a, b, c) => [a, b, c]).thenEof();
 	const result = parser.tryParse(str);
 
-	console.log(str, result);
-
 	test(`success to be ${expected}`, () => {
 		expect(result.success).toBe(expected);
 	});
@@ -164,7 +162,7 @@ describe('binary perf', () => {
 
 	const str = '1 + 20 + 3 + 40 + 5 + 60 + 7 + 80 + 9 + 100';
 
-	it('big performance', async () => {
+	it('long expression', async () => {
 		await benchmark.record(
 			['binary left'],
 			() => {

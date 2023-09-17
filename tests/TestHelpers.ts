@@ -1,4 +1,6 @@
 import { Parser } from '../src/Parser';
+// @ts-ignore
+import { test, expect, describe } from "bun:test";
 
 export function testParse(parser: Parser<unknown>, str: string, expected: boolean) {
 	const result = parser.tryParse(str);

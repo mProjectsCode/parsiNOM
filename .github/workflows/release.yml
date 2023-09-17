@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: 16
+          bun-version: latest
       - working-directory: .
-        run: npm ci
+        run: bun install
       - working-directory: .
-        run: npm run test
+        run: bun run test
 
   publish-github:
     needs: test
@@ -47,10 +47,13 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
       - working-directory: .
-        run: npm ci
+        run: bun install
       - working-directory: .
-        run: npm run build
+        run: bun run build
       - working-directory: .
         run: npm publish --access public
         env:

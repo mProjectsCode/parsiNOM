@@ -1,5 +1,5 @@
 import { P } from '../../src/ParsiNOM';
-
+import {testParser} from '../TestHelpers';
 describe.each([
 	['', false],
 	['a', true],
@@ -13,24 +13,7 @@ describe.each([
 	['M', false],
 	['N', false],
 	['Z', false],
-])(`sequence '%s'`, (str, expected) => {
+])(`sequence '%s'`, (str, shouldSucceed) => {
 	const parser = P.range('a', 'm');
-	const result = parser.tryParse(str);
-
-	test(`success to be ${expected}`, () => {
-		expect(result.success).toBe(expected);
-	});
-
-	if (expected) {
-		test(`AST to match snapshot`, () => {
-			expect(result.value).toMatchSnapshot();
-		});
-	} else {
-		test(`Error to match snapshot`, () => {
-			expect({
-				pos: result.furthest,
-				expected: result.expected,
-			}).toMatchSnapshot();
-		});
-	}
+	testParser(parser, str, shouldSucceed);
 });

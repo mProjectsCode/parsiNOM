@@ -1,5 +1,5 @@
 import { P } from '../../src/ParsiNOM';
-
+import {testParser} from '../TestHelpers';
 describe.each([
 	['', false],
 	['this', true],
@@ -7,26 +7,9 @@ describe.each([
 	['that', false],
 	['thatthis', false],
 	['foo', false],
-])(`optional value '%s'`, (str, expected) => {
+])(`optional value '%s'`, (str, shouldSucceed) => {
 	const parser = P.string('this').then(P.string('that').optional()).thenEof();
-	const result = parser.tryParse(str);
-
-	test(`success to be ${expected}`, () => {
-		expect(result.success).toBe(expected);
-	});
-
-	if (expected) {
-		test(`AST to match snapshot`, () => {
-			expect(result.value).toMatchSnapshot();
-		});
-	} else {
-		test(`Error to match snapshot`, () => {
-			expect({
-				pos: result.furthest,
-				expected: result.expected,
-			}).toMatchSnapshot();
-		});
-	}
+	testParser(parser, str, shouldSucceed);
 });
 
 describe.each([
@@ -36,24 +19,7 @@ describe.each([
 	['that', false],
 	['thatthis', false],
 	['foo', false],
-])(`optional no value '%s'`, (str, expected) => {
+])(`optional no value '%s'`, (str, shouldSucceed) => {
 	const parser = P.string('this').then(P.string('that').optional('some fallback')).thenEof();
-	const result = parser.tryParse(str);
-
-	test(`success to be ${expected}`, () => {
-		expect(result.success).toBe(expected);
-	});
-
-	if (expected) {
-		test(`AST to match snapshot`, () => {
-			expect(result.value).toMatchSnapshot();
-		});
-	} else {
-		test(`Error to match snapshot`, () => {
-			expect({
-				pos: result.furthest,
-				expected: result.expected,
-			}).toMatchSnapshot();
-		});
-	}
+	testParser(parser, str, shouldSucceed);
 });

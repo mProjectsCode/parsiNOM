@@ -1,5 +1,5 @@
 import { P } from '../../src/ParsiNOM';
-
+import {testParser} from '../TestHelpers';
 describe.each([
 	['', true],
 	['a', true],
@@ -7,24 +7,7 @@ describe.each([
 	['aab', true],
 	['baa', true],
 	['foo', true],
-])(`sequence '%s'`, (str, expected) => {
+])(`sequence '%s'`, (str, shouldSucceed) => {
 	const parser = P.takeWhile(char => char === 'a');
-	const result = parser.tryParse(str);
-
-	test(`success to be ${expected}`, () => {
-		expect(result.success).toBe(expected);
-	});
-
-	if (expected) {
-		test(`AST to match snapshot`, () => {
-			expect(result.value).toMatchSnapshot();
-		});
-	} else {
-		test(`Error to match snapshot`, () => {
-			expect({
-				pos: result.furthest,
-				expected: result.expected,
-			}).toMatchSnapshot();
-		});
-	}
+	testParser(parser, str, shouldSucceed);
 });

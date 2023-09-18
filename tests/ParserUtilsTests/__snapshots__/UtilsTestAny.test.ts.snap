@@ -1,14 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`any '
-' AST to match snapshot 1`] = `
-"
-"
-`;
-
-exports[`any ' ' AST to match snapshot 1`] = `" "`;
-
-exports[`any '' Error to match snapshot 1`] = `
+exports[`any '' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "any character",
@@ -21,6 +13,14 @@ exports[`any '' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`any 'a' AST to match snapshot 1`] = `"a"`;
+exports[`any 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
 
-exports[`any 'b' AST to match snapshot 1`] = `"b"`;
+exports[`any 'b' conditional success tests AST to match snapshot 1`] = `"b"`;
+
+exports[`any ' ' conditional success tests AST to match snapshot 1`] = `" "`;
+
+exports[`any '
+' conditional success tests AST to match snapshot 1`] = `
+"
+"
+`;

@@ -1,31 +1,14 @@
 import { P } from '../../src/ParsiNOM';
-
+import {testParser} from '../TestHelpers';
 describe.each([
 	['', false],
 	['this', true],
 	['thisthat', true],
 	['2thisthat', false],
 	['&foo', false],
-])(`regexp '%s'`, (str, expected) => {
+])(`regexp '%s'`, (str, shouldSucceed) => {
 	const parser = P.regexp(/^[a-z]+/);
-	const result = parser.tryParse(str);
-
-	test(`success to be ${expected}`, () => {
-		expect(result.success).toBe(expected);
-	});
-
-	if (expected) {
-		test(`AST to match snapshot`, () => {
-			expect(result.value).toMatchSnapshot();
-		});
-	} else {
-		test(`Error to match snapshot`, () => {
-			expect({
-				pos: result.furthest,
-				expected: result.expected,
-			}).toMatchSnapshot();
-		});
-	}
+	testParser(parser, str, shouldSucceed);
 });
 
 describe('regexp invalid flag', () => {

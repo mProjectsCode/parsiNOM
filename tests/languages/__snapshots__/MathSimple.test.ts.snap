@@ -1,8 +1,22 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`math test (1 + 2) * 3 1`] = `
+exports[`math test 1 + 2 1`] = `
 [
-  "Multiply",
+  "Add",
+  [
+    "Number",
+    1,
+  ],
+  [
+    "Number",
+    2,
+  ],
+]
+`;
+
+exports[`math test 1 + 2 + 3 1`] = `
+[
+  "Add",
   [
     "Add",
     [
@@ -38,6 +52,65 @@ exports[`math test 1 * 2 + 3 1`] = `
   [
     "Number",
     3,
+  ],
+]
+`;
+
+exports[`math test 1 + 2 * 3 1`] = `
+[
+  "Add",
+  [
+    "Number",
+    1,
+  ],
+  [
+    "Multiply",
+    [
+      "Number",
+      2,
+    ],
+    [
+      "Number",
+      3,
+    ],
+  ],
+]
+`;
+
+exports[`math test (1 + 2) * 3 1`] = `
+[
+  "Multiply",
+  [
+    "Add",
+    [
+      "Number",
+      1,
+    ],
+    [
+      "Number",
+      2,
+    ],
+  ],
+  [
+    "Number",
+    3,
+  ],
+]
+`;
+
+exports[`math test 1 + -2 1`] = `
+[
+  "Add",
+  [
+    "Number",
+    1,
+  ],
+  [
+    "Negate",
+    [
+      "Number",
+      2,
+    ],
   ],
 ]
 `;
@@ -89,79 +162,6 @@ exports[`math test 1 + -2 ^ 2! 1`] = `
         2,
       ],
     ],
-  ],
-]
-`;
-
-exports[`math test 1 + -2 1`] = `
-[
-  "Add",
-  [
-    "Number",
-    1,
-  ],
-  [
-    "Negate",
-    [
-      "Number",
-      2,
-    ],
-  ],
-]
-`;
-
-exports[`math test 1 + 2 * 3 1`] = `
-[
-  "Add",
-  [
-    "Number",
-    1,
-  ],
-  [
-    "Multiply",
-    [
-      "Number",
-      2,
-    ],
-    [
-      "Number",
-      3,
-    ],
-  ],
-]
-`;
-
-exports[`math test 1 + 2 + 3 1`] = `
-[
-  "Add",
-  [
-    "Add",
-    [
-      "Number",
-      1,
-    ],
-    [
-      "Number",
-      2,
-    ],
-  ],
-  [
-    "Number",
-    3,
-  ],
-]
-`;
-
-exports[`math test 1 + 2 1`] = `
-[
-  "Add",
-  [
-    "Number",
-    1,
-  ],
-  [
-    "Number",
-    2,
   ],
 ]
 `;

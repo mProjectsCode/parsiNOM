@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`wrap '' Error to match snapshot 1`] = `
+exports[`wrap '' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "'('",
@@ -13,7 +13,22 @@ exports[`wrap '' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`wrap '(this' Error to match snapshot 1`] = `
+exports[`wrap '(this)' conditional success tests AST to match snapshot 1`] = `"this"`;
+
+exports[`wrap 'this)' conditional failure tests Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'('",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`wrap '(this' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "')'",
@@ -26,9 +41,7 @@ exports[`wrap '(this' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`wrap '(this)' AST to match snapshot 1`] = `"this"`;
-
-exports[`wrap ')this(' Error to match snapshot 1`] = `
+exports[`wrap ')this(' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "'('",
@@ -41,20 +54,7 @@ exports[`wrap ')this(' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`wrap 'foo' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'('",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`wrap 'this)' Error to match snapshot 1`] = `
+exports[`wrap 'foo' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "'('",

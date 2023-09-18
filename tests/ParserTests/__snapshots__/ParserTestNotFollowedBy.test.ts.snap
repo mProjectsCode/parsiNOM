@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`notFollowedBy '' Error to match snapshot 1`] = `
+exports[`notFollowedBy '' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -13,46 +13,7 @@ exports[`notFollowedBy '' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`notFollowedBy 'foo' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'this'",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`notFollowedBy 'that' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'this'",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`notFollowedBy 'thatthis' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'this'",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`notFollowedBy 'this' AST to match snapshot 1`] = `
+exports[`notFollowedBy 'this' conditional success tests AST to match snapshot 1`] = `
 {
   "name": "after",
   "range": {
@@ -86,7 +47,7 @@ exports[`notFollowedBy 'this' AST to match snapshot 1`] = `
 }
 `;
 
-exports[`notFollowedBy 'thisfoo' AST to match snapshot 1`] = `
+exports[`notFollowedBy 'thisfoo' conditional success tests AST to match snapshot 1`] = `
 {
   "name": "after",
   "range": {
@@ -120,7 +81,7 @@ exports[`notFollowedBy 'thisfoo' AST to match snapshot 1`] = `
 }
 `;
 
-exports[`notFollowedBy 'thisthat' Error to match snapshot 1`] = `
+exports[`notFollowedBy 'thisthat' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "not 'that'",
@@ -128,6 +89,45 @@ exports[`notFollowedBy 'thisthat' Error to match snapshot 1`] = `
   "pos": {
     "column": 5,
     "index": 4,
+    "line": 1,
+  },
+}
+`;
+
+exports[`notFollowedBy 'that' conditional failure tests Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`notFollowedBy 'thatthis' conditional failure tests Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`notFollowedBy 'foo' conditional failure tests Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
     "line": 1,
   },
 }

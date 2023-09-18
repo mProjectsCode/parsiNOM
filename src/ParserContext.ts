@@ -98,7 +98,7 @@ export class ParserContext {
 
 		return {
 			success: false,
-			value: null,
+			value: undefined,
 			furthest: this.position,
 			expected: Array.isArray(expected) ? expected : [expected],
 		};

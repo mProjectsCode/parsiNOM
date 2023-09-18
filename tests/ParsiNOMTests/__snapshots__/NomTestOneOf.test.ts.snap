@@ -1,24 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`manyOf '' AST to match snapshot 1`] = `""`;
-
-exports[`manyOf 'a' AST to match snapshot 1`] = `"a"`;
-
-exports[`manyOf 'aa' AST to match snapshot 1`] = `"aa"`;
-
-exports[`manyOf 'abcabc' AST to match snapshot 1`] = `"abcabc"`;
-
-exports[`manyOf 'afoo' AST to match snapshot 1`] = `"a"`;
-
-exports[`manyOf 'b' AST to match snapshot 1`] = `"b"`;
-
-exports[`manyOf 'bafoo' AST to match snapshot 1`] = `"ba"`;
-
-exports[`manyOf 'c' AST to match snapshot 1`] = `"c"`;
-
-exports[`manyOf 'foo' AST to match snapshot 1`] = `""`;
-
-exports[`oneOf '' Error to match snapshot 1`] = `
+exports[`oneOf '' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "one character of 'abc'",
@@ -31,15 +13,15 @@ exports[`oneOf '' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`oneOf 'a' AST to match snapshot 1`] = `"a"`;
+exports[`oneOf 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
 
-exports[`oneOf 'afoo' AST to match snapshot 1`] = `"a"`;
+exports[`oneOf 'b' conditional success tests AST to match snapshot 1`] = `"b"`;
 
-exports[`oneOf 'b' AST to match snapshot 1`] = `"b"`;
+exports[`oneOf 'c' conditional success tests AST to match snapshot 1`] = `"c"`;
 
-exports[`oneOf 'c' AST to match snapshot 1`] = `"c"`;
+exports[`oneOf 'afoo' conditional success tests AST to match snapshot 1`] = `"a"`;
 
-exports[`oneOf 'foo' Error to match snapshot 1`] = `
+exports[`oneOf 'foo' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "one character of 'abc'",
@@ -51,3 +33,21 @@ exports[`oneOf 'foo' Error to match snapshot 1`] = `
   },
 }
 `;
+
+exports[`manyOf '' conditional success tests AST to match snapshot 1`] = `""`;
+
+exports[`manyOf 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
+
+exports[`manyOf 'b' conditional success tests AST to match snapshot 1`] = `"b"`;
+
+exports[`manyOf 'c' conditional success tests AST to match snapshot 1`] = `"c"`;
+
+exports[`manyOf 'aa' conditional success tests AST to match snapshot 1`] = `"aa"`;
+
+exports[`manyOf 'abcabc' conditional success tests AST to match snapshot 1`] = `"abcabc"`;
+
+exports[`manyOf 'afoo' conditional success tests AST to match snapshot 1`] = `"a"`;
+
+exports[`manyOf 'bafoo' conditional success tests AST to match snapshot 1`] = `"ba"`;
+
+exports[`manyOf 'foo' conditional success tests AST to match snapshot 1`] = `""`;

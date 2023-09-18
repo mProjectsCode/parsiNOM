@@ -1,5 +1,5 @@
 import { P } from '../../src/ParsiNOM';
-
+import {testParser} from '../TestHelpers';
 describe.each([
 	['', false],
 	['this', false],
@@ -7,24 +7,7 @@ describe.each([
 	['thisthat', false],
 	['thisthatfoo', false],
 	['foo', false],
-])(`fail '%s'`, (str, expected) => {
+])(`fail '%s'`, (str, shouldSucceed) => {
 	const parser = P.fail('expected');
-	const result = parser.tryParse(str);
-
-	test(`success to be ${expected}`, () => {
-		expect(result.success).toBe(expected);
-	});
-
-	if (expected) {
-		test(`AST to match snapshot`, () => {
-			expect(result.value).toMatchSnapshot();
-		});
-	} else {
-		test(`Error to match snapshot`, () => {
-			expect({
-				pos: result.furthest,
-				expected: result.expected,
-			}).toMatchSnapshot();
-		});
-	}
+	testParser(parser, str, shouldSucceed);
 });

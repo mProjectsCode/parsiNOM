@@ -1,22 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`manyNotOf '' AST to match snapshot 1`] = `""`;
-
-exports[`manyNotOf 'a' AST to match snapshot 1`] = `""`;
-
-exports[`manyNotOf 'abcabc' AST to match snapshot 1`] = `""`;
-
-exports[`manyNotOf 'afoo' AST to match snapshot 1`] = `""`;
-
-exports[`manyNotOf 'b' AST to match snapshot 1`] = `""`;
-
-exports[`manyNotOf 'c' AST to match snapshot 1`] = `""`;
-
-exports[`manyNotOf 'foo' AST to match snapshot 1`] = `"foo"`;
-
-exports[`manyNotOf 'fooa' AST to match snapshot 1`] = `"foo"`;
-
-exports[`noneOf '' Error to match snapshot 1`] = `
+exports[`noneOf '' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "no character of 'abc'",
@@ -29,7 +13,7 @@ exports[`noneOf '' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`noneOf 'a' Error to match snapshot 1`] = `
+exports[`noneOf 'a' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "no character of 'abc'",
@@ -42,7 +26,7 @@ exports[`noneOf 'a' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`noneOf 'afoo' Error to match snapshot 1`] = `
+exports[`noneOf 'b' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "no character of 'abc'",
@@ -55,7 +39,7 @@ exports[`noneOf 'afoo' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`noneOf 'b' Error to match snapshot 1`] = `
+exports[`noneOf 'c' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "no character of 'abc'",
@@ -68,7 +52,7 @@ exports[`noneOf 'b' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`noneOf 'c' Error to match snapshot 1`] = `
+exports[`noneOf 'afoo' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "no character of 'abc'",
@@ -81,4 +65,20 @@ exports[`noneOf 'c' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`noneOf 'foo' AST to match snapshot 1`] = `"f"`;
+exports[`noneOf 'foo' conditional success tests AST to match snapshot 1`] = `"f"`;
+
+exports[`manyNotOf '' conditional success tests AST to match snapshot 1`] = `""`;
+
+exports[`manyNotOf 'a' conditional success tests AST to match snapshot 1`] = `""`;
+
+exports[`manyNotOf 'b' conditional success tests AST to match snapshot 1`] = `""`;
+
+exports[`manyNotOf 'c' conditional success tests AST to match snapshot 1`] = `""`;
+
+exports[`manyNotOf 'abcabc' conditional success tests AST to match snapshot 1`] = `""`;
+
+exports[`manyNotOf 'afoo' conditional success tests AST to match snapshot 1`] = `""`;
+
+exports[`manyNotOf 'foo' conditional success tests AST to match snapshot 1`] = `"foo"`;
+
+exports[`manyNotOf 'fooa' conditional success tests AST to match snapshot 1`] = `"foo"`;

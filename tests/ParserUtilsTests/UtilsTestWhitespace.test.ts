@@ -1,4 +1,5 @@
 import { P_UTILS } from '../../src/ParserUtils';
+import {testParser} from '../TestHelpers';
 
 describe.each([
 	['', false],
@@ -8,27 +9,11 @@ describe.each([
 	['\r\n', true],
 	['\r\n  \n', true],
 	['b', false],
-])(`whitespace '%#'`, (str, expected) => {
+])(`whitespace '%#'`, (str, shouldSucceed) => {
 	const parser = P_UTILS.whitespace().thenEof();
-	const result = parser.tryParse(str);
-
-	test(`success to be ${expected}`, () => {
-		expect(result.success).toBe(expected);
-	});
-
-	if (expected) {
-		test(`AST to match snapshot`, () => {
-			expect(result.value).toMatchSnapshot();
-		});
-	} else {
-		test(`Error to match snapshot`, () => {
-			expect({
-				pos: result.furthest,
-				expected: result.expected,
-			}).toMatchSnapshot();
-		});
-	}
+	testParser(parser, str, shouldSucceed);
 });
+
 
 describe.each([
 	['', true],
@@ -38,26 +23,9 @@ describe.each([
 	['\r\n', true],
 	['\r\n  \n', true],
 	['b', false],
-])(`optional whitespace '%#'`, (str, expected) => {
+])(`optional whitespace '%#'`, (str, shouldSucceed) => {
 	const parser = P_UTILS.optionalWhitespace().thenEof();
-	const result = parser.tryParse(str);
-
-	test(`success to be ${expected}`, () => {
-		expect(result.success).toBe(expected);
-	});
-
-	if (expected) {
-		test(`AST to match snapshot`, () => {
-			expect(result.value).toMatchSnapshot();
-		});
-	} else {
-		test(`Error to match snapshot`, () => {
-			expect({
-				pos: result.furthest,
-				expected: result.expected,
-			}).toMatchSnapshot();
-		});
-	}
+	testParser(parser, str, shouldSucceed);
 });
 
 describe.each([
@@ -68,24 +36,7 @@ describe.each([
 	['\r\n', true],
 	['\r\n  \n', false],
 	['b', false],
-])(`newline '%#'`, (str, expected) => {
+])(`newline '%#'`, (str, shouldSucceed) => {
 	const parser = P_UTILS.newline().thenEof();
-	const result = parser.tryParse(str);
-
-	test(`success to be ${expected}`, () => {
-		expect(result.success).toBe(expected);
-	});
-
-	if (expected) {
-		test(`AST to match snapshot`, () => {
-			expect(result.value).toMatchSnapshot();
-		});
-	} else {
-		test(`Error to match snapshot`, () => {
-			expect({
-				pos: result.furthest,
-				expected: result.expected,
-			}).toMatchSnapshot();
-		});
-	}
+	testParser(parser, str, shouldSucceed);
 });

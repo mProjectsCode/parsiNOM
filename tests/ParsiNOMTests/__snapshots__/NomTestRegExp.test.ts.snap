@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`regexp '&foo' Error to match snapshot 1`] = `
+exports[`regexp '' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "^[a-z]+",
@@ -13,7 +13,11 @@ exports[`regexp '&foo' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`regexp '' Error to match snapshot 1`] = `
+exports[`regexp 'this' conditional success tests AST to match snapshot 1`] = `"this"`;
+
+exports[`regexp 'thisthat' conditional success tests AST to match snapshot 1`] = `"thisthat"`;
+
+exports[`regexp '2thisthat' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "^[a-z]+",
@@ -26,7 +30,7 @@ exports[`regexp '' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`regexp '2thisthat' Error to match snapshot 1`] = `
+exports[`regexp '&foo' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "^[a-z]+",
@@ -38,7 +42,3 @@ exports[`regexp '2thisthat' Error to match snapshot 1`] = `
   },
 }
 `;
-
-exports[`regexp 'this' AST to match snapshot 1`] = `"this"`;
-
-exports[`regexp 'thisthat' AST to match snapshot 1`] = `"thisthat"`;

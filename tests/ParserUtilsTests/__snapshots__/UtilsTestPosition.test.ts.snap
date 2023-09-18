@@ -1,15 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`position 'a
-ab' AST to match snapshot 1`] = `
-{
-  "column": 2,
-  "index": 3,
-  "line": 2,
-}
-`;
-
-exports[`position 'a' AST to match snapshot 1`] = `
+exports[`position 'a' conditional success tests AST to match snapshot 1`] = `
 {
   "column": 2,
   "index": 1,
@@ -17,7 +8,15 @@ exports[`position 'a' AST to match snapshot 1`] = `
 }
 `;
 
-exports[`position 'aab' AST to match snapshot 1`] = `
+exports[`position 'b' conditional success tests AST to match snapshot 1`] = `
+{
+  "column": 1,
+  "index": 0,
+  "line": 1,
+}
+`;
+
+exports[`position 'aab' conditional success tests AST to match snapshot 1`] = `
 {
   "column": 3,
   "index": 2,
@@ -25,10 +24,11 @@ exports[`position 'aab' AST to match snapshot 1`] = `
 }
 `;
 
-exports[`position 'b' AST to match snapshot 1`] = `
+exports[`position 'a
+ab' conditional success tests AST to match snapshot 1`] = `
 {
-  "column": 1,
-  "index": 0,
-  "line": 1,
+  "column": 2,
+  "index": 3,
+  "line": 2,
 }
 `;

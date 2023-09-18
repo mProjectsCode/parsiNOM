@@ -38,25 +38,25 @@ describe('json parser', () => {
 	}
 
 
-	describe('json perf', () => {
-		// JEST:
-		// result optimizations ~ 8.4 ms
-		// index optimizations ~ 7.3 ms
-		// parser optimizations ~ 7.2 ms
-		// replace number and string parsing with regexp ~ 3.6 ms
-		// replace string parsing with manyNotOf ~ 5 ms
-		// skip and then optimizations ~ 4.7 ms
-		// wrap optimizations ~ 4.2 ms
-		it('big json file', async () => {
-			await benchmark.record(['parsiNOM parser'], () => {
-				jsonParser.tryParse(JsonData.data);
-			});
-
-			await benchmark.record(['builtin parser'], () => {
-				JSON.parse(JsonData.data);
-			});
-		});
-	});
+	// describe('json perf', () => {
+	// 	// JEST:
+	// 	// result optimizations ~ 8.4 ms
+	// 	// index optimizations ~ 7.3 ms
+	// 	// parser optimizations ~ 7.2 ms
+	// 	// replace number and string parsing with regexp ~ 3.6 ms
+	// 	// replace string parsing with manyNotOf ~ 5 ms
+	// 	// skip and then optimizations ~ 4.7 ms
+	// 	// wrap optimizations ~ 4.2 ms
+	// 	it('big json file', async () => {
+	// 		await benchmark.record(['parsiNOM parser'], () => {
+	// 			jsonParser.tryParse(JsonData.data);
+	// 		});
+	//
+	// 		await benchmark.record(['builtin parser'], () => {
+	// 			JSON.parse(JsonData.data);
+	// 		});
+	// 	});
+	// });
 
 	describe('json file', () => {
 		test('normal data', () => {

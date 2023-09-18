@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fail '' Error to match snapshot 1`] = `
+exports[`fail '' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "expected",
@@ -13,7 +13,7 @@ exports[`fail '' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`fail 'foo' Error to match snapshot 1`] = `
+exports[`fail 'this' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "expected",
@@ -26,7 +26,7 @@ exports[`fail 'foo' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`fail 'that' Error to match snapshot 1`] = `
+exports[`fail 'that' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "expected",
@@ -39,7 +39,7 @@ exports[`fail 'that' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`fail 'this' Error to match snapshot 1`] = `
+exports[`fail 'thisthat' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "expected",
@@ -52,7 +52,7 @@ exports[`fail 'this' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`fail 'thisthat' Error to match snapshot 1`] = `
+exports[`fail 'thisthatfoo' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "expected",
@@ -65,7 +65,7 @@ exports[`fail 'thisthat' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`fail 'thisthatfoo' Error to match snapshot 1`] = `
+exports[`fail 'foo' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "expected",

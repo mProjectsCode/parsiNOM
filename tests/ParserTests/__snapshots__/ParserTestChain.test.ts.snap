@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`chain '' Error to match snapshot 1`] = `
+exports[`chain '' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -14,63 +14,11 @@ exports[`chain '' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`chain '1' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'bar'",
-  ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
-}
-`;
+exports[`chain 'thisthat' conditional success tests AST to match snapshot 1`] = `"that"`;
 
-exports[`chain '1bar' AST to match snapshot 1`] = `"bar"`;
+exports[`chain '1bar' conditional success tests AST to match snapshot 1`] = `"bar"`;
 
-exports[`chain '1that' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'bar'",
-  ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
-}
-`;
-
-exports[`chain 'foo' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'this'",
-    "a digit",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`chain 'thatthis' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'this'",
-    "a digit",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`chain 'this' Error to match snapshot 1`] = `
+exports[`chain 'thisbar' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "'that'",
@@ -83,7 +31,20 @@ exports[`chain 'this' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`chain 'thisbar' Error to match snapshot 1`] = `
+exports[`chain '1that' conditional failure tests Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'bar'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`chain 'this' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "'that'",
@@ -96,4 +57,43 @@ exports[`chain 'thisbar' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`chain 'thisthat' AST to match snapshot 1`] = `"that"`;
+exports[`chain '1' conditional failure tests Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'bar'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`chain 'thatthis' conditional failure tests Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+    "a digit",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`chain 'foo' conditional failure tests Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+    "a digit",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;

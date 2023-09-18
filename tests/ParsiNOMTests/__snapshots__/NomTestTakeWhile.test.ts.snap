@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sequence '' AST to match snapshot 1`] = `""`;
+exports[`sequence '' conditional success tests AST to match snapshot 1`] = `""`;
 
-exports[`sequence 'a' AST to match snapshot 1`] = `"a"`;
+exports[`sequence 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
 
-exports[`sequence 'aa' AST to match snapshot 1`] = `"aa"`;
+exports[`sequence 'aa' conditional success tests AST to match snapshot 1`] = `"aa"`;
 
-exports[`sequence 'aab' AST to match snapshot 1`] = `"aa"`;
+exports[`sequence 'aab' conditional success tests AST to match snapshot 1`] = `"aa"`;
 
-exports[`sequence 'baa' AST to match snapshot 1`] = `""`;
+exports[`sequence 'baa' conditional success tests AST to match snapshot 1`] = `""`;
 
-exports[`sequence 'foo' AST to match snapshot 1`] = `""`;
+exports[`sequence 'foo' conditional success tests AST to match snapshot 1`] = `""`;

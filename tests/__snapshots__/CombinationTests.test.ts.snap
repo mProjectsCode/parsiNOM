@@ -1,34 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sequence many '' AST to match snapshot 1`] = `[]`;
+exports[`sequence many '' conditional success tests AST to match snapshot 1`] = `[]`;
 
-exports[`sequence many 'a' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'b'",
-  ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
-}
-`;
-
-exports[`sequence many 'aa' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'b'",
-  ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
-}
-`;
-
-exports[`sequence many 'ab' AST to match snapshot 1`] = `
+exports[`sequence many 'ab' conditional success tests AST to match snapshot 1`] = `
 [
   [
     "a",
@@ -37,7 +11,46 @@ exports[`sequence many 'ab' AST to match snapshot 1`] = `
 ]
 `;
 
-exports[`sequence many 'aba' Error to match snapshot 1`] = `
+exports[`sequence many 'abab' conditional success tests AST to match snapshot 1`] = `
+[
+  [
+    "a",
+    "b",
+  ],
+  [
+    "a",
+    "b",
+  ],
+]
+`;
+
+exports[`sequence many 'a' conditional failure tests Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence many 'aa' conditional failure tests Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'b'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence many 'aba' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "'b'",
@@ -50,20 +63,7 @@ exports[`sequence many 'aba' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence many 'abab' AST to match snapshot 1`] = `
-[
-  [
-    "a",
-    "b",
-  ],
-  [
-    "a",
-    "b",
-  ],
-]
-`;
-
-exports[`sequence many 'baba' Error to match snapshot 1`] = `
+exports[`sequence many 'baba' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "'a'",
@@ -77,7 +77,7 @@ exports[`sequence many 'baba' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence many 'bcaba' Error to match snapshot 1`] = `
+exports[`sequence many 'bcaba' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "'a'",
@@ -91,11 +91,10 @@ exports[`sequence many 'bcaba' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence or '' Error to match snapshot 1`] = `
+exports[`sequence trim '' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
-    "'that'",
-    "'this'",
+    "'b'",
   ],
   "pos": {
     "column": 1,
@@ -105,11 +104,10 @@ exports[`sequence or '' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence or 'bar' Error to match snapshot 1`] = `
+exports[`sequence trim 'a' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
-    "'that'",
-    "'this'",
+    "'b'",
   ],
   "pos": {
     "column": 1,
@@ -119,44 +117,63 @@ exports[`sequence or 'bar' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence or 'foo' Error to match snapshot 1`] = `
+exports[`sequence trim 'b' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
-    "'that'",
-    "'this'",
+    "'a'",
   ],
   "pos": {
-    "column": 1,
-    "index": 0,
+    "column": 2,
+    "index": 1,
     "line": 1,
   },
 }
 `;
 
-exports[`sequence or 'that' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'foo'",
-  ],
-  "pos": {
-    "column": 5,
-    "index": 4,
-    "line": 1,
-  },
-}
-`;
-
-exports[`sequence or 'thatfoo' AST to match snapshot 1`] = `
+exports[`sequence trim 'bab' conditional success tests AST to match snapshot 1`] = `
 [
-  "that",
-  "foo",
+  "b",
+  "a",
+  "b",
 ]
 `;
 
-exports[`sequence or 'this' Error to match snapshot 1`] = `
+exports[`sequence trim 'ba b' conditional success tests AST to match snapshot 1`] = `
+[
+  "b",
+  "a",
+  "b",
+]
+`;
+
+exports[`sequence trim 'ba  b' conditional success tests AST to match snapshot 1`] = `
+[
+  "b",
+  "a",
+  "b",
+]
+`;
+
+exports[`sequence trim 'b ab' conditional success tests AST to match snapshot 1`] = `
+[
+  "b",
+  "a",
+  "b",
+]
+`;
+
+exports[`sequence trim 'b  a b' conditional success tests AST to match snapshot 1`] = `
+[
+  "b",
+  "a",
+  "b",
+]
+`;
+
+exports[`sequence trim 'b abb' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
-    "'foo'",
+    "eof",
   ],
   "pos": {
     "column": 5,
@@ -166,17 +183,52 @@ exports[`sequence or 'this' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence or 'thisfoo' AST to match snapshot 1`] = `
+exports[`sequence trim 'bcaba' conditional failure tests Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'a'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence or '' conditional failure tests Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'that'",
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`sequence or 'thisfoo' conditional success tests AST to match snapshot 1`] = `
 [
   "this",
   "foo",
 ]
 `;
 
-exports[`sequence trim '' Error to match snapshot 1`] = `
+exports[`sequence or 'thatfoo' conditional success tests AST to match snapshot 1`] = `
+[
+  "that",
+  "foo",
+]
+`;
+
+exports[`sequence or 'foo' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
-    "'b'",
+    "'that'",
+    "'this'",
   ],
   "pos": {
     "column": 1,
@@ -186,39 +238,10 @@ exports[`sequence trim '' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence trim 'a' Error to match snapshot 1`] = `
+exports[`sequence or 'this' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
-    "'b'",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`sequence trim 'b  a b' AST to match snapshot 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
-`;
-
-exports[`sequence trim 'b ab' AST to match snapshot 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
-`;
-
-exports[`sequence trim 'b abb' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "eof",
+    "'foo'",
   ],
   "pos": {
     "column": 5,
@@ -228,51 +251,28 @@ exports[`sequence trim 'b abb' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence trim 'b' Error to match snapshot 1`] = `
+exports[`sequence or 'that' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
-    "'a'",
+    "'foo'",
   ],
   "pos": {
-    "column": 2,
-    "index": 1,
+    "column": 5,
+    "index": 4,
     "line": 1,
   },
 }
 `;
 
-exports[`sequence trim 'ba  b' AST to match snapshot 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
-`;
-
-exports[`sequence trim 'ba b' AST to match snapshot 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
-`;
-
-exports[`sequence trim 'bab' AST to match snapshot 1`] = `
-[
-  "b",
-  "a",
-  "b",
-]
-`;
-
-exports[`sequence trim 'bcaba' Error to match snapshot 1`] = `
+exports[`sequence or 'bar' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
-    "'a'",
+    "'that'",
+    "'this'",
   ],
   "pos": {
-    "column": 2,
-    "index": 1,
+    "column": 1,
+    "index": 0,
     "line": 1,
   },
 }

@@ -1,21 +1,21 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`atMost '' AST to match snapshot 1`] = `[]`;
+exports[`atMost '' conditional success tests AST to match snapshot 1`] = `[]`;
 
-exports[`atMost 'a' AST to match snapshot 1`] = `
+exports[`atMost 'a' conditional success tests AST to match snapshot 1`] = `
 [
   "a",
 ]
 `;
 
-exports[`atMost 'aa' AST to match snapshot 1`] = `
+exports[`atMost 'aa' conditional success tests AST to match snapshot 1`] = `
 [
   "a",
   "a",
 ]
 `;
 
-exports[`atMost 'aaa' Error to match snapshot 1`] = `
+exports[`atMost 'aaa' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "eof",
@@ -28,7 +28,7 @@ exports[`atMost 'aaa' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`atMost 'abaa' Error to match snapshot 1`] = `
+exports[`atMost 'abaa' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "'a'",

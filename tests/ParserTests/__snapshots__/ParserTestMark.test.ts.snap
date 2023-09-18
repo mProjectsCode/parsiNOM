@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mark '' Error to match snapshot 1`] = `
+exports[`mark '' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -13,20 +13,7 @@ exports[`mark '' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`mark 'foo' Error to match snapshot 1`] = `
-{
-  "expected": [
-    "'this'",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`mark 'this' AST to match snapshot 1`] = `
+exports[`mark 'this' conditional success tests AST to match snapshot 1`] = `
 {
   "range": {
     "from": {
@@ -41,5 +28,18 @@ exports[`mark 'this' AST to match snapshot 1`] = `
     },
   },
   "value": "this",
+}
+`;
+
+exports[`mark 'foo' conditional failure tests Error to match snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
 }
 `;

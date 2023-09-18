@@ -1,6 +1,6 @@
 import { P } from '../../src/ParsiNOM';
 import { P_UTILS } from '../../src/ParserUtils';
-
+import {testParser} from '../TestHelpers';
 describe.each([
 	['', false],
 	[' this ', true],
@@ -8,26 +8,9 @@ describe.each([
 	[' this', false],
 	['  this', false],
 	['foo', false],
-])(`trim fixed length '%s'`, (str, expected) => {
+])(`trim fixed length '%s'`, (str, shouldSucceed) => {
 	const parser = P.string('this').trim(P.string(' ')).thenEof();
-	const result = parser.tryParse(str);
-
-	test(`success to be ${expected}`, () => {
-		expect(result.success).toBe(expected);
-	});
-
-	if (expected) {
-		test(`AST to match snapshot`, () => {
-			expect(result.value).toMatchSnapshot();
-		});
-	} else {
-		test(`Error to match snapshot`, () => {
-			expect({
-				pos: result.furthest,
-				expected: result.expected,
-			}).toMatchSnapshot();
-		});
-	}
+	testParser(parser, str, shouldSucceed);
 });
 
 describe.each([
@@ -37,24 +20,7 @@ describe.each([
 	[' this', true],
 	['  this', true],
 	['foo', false],
-])(`trim variable length '%s'`, (str, expected) => {
+])(`trim variable length '%s'`, (str, shouldSucceed) => {
 	const parser = P.string('this').trim(P_UTILS.optionalWhitespace()).thenEof();
-	const result = parser.tryParse(str);
-
-	test(`success to be ${expected}`, () => {
-		expect(result.success).toBe(expected);
-	});
-
-	if (expected) {
-		test(`AST to match snapshot`, () => {
-			expect(result.value).toMatchSnapshot();
-		});
-	} else {
-		test(`Error to match snapshot`, () => {
-			expect({
-				pos: result.furthest,
-				expected: result.expected,
-			}).toMatchSnapshot();
-		});
-	}
+	testParser(parser, str, shouldSucceed);
 });

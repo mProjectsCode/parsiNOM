@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sequence '#' Error to match snapshot 1`] = `
+exports[`sequence '' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -13,7 +13,13 @@ exports[`sequence '#' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence '' Error to match snapshot 1`] = `
+exports[`sequence 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
+
+exports[`sequence 'b' conditional success tests AST to match snapshot 1`] = `"b"`;
+
+exports[`sequence 'm' conditional success tests AST to match snapshot 1`] = `"m"`;
+
+exports[`sequence 'n' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -26,7 +32,7 @@ exports[`sequence '' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'A' Error to match snapshot 1`] = `
+exports[`sequence 'z' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -39,7 +45,7 @@ exports[`sequence 'A' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'B' Error to match snapshot 1`] = `
+exports[`sequence '#' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -52,7 +58,7 @@ exports[`sequence 'B' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'M' Error to match snapshot 1`] = `
+exports[`sequence 'A' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -65,7 +71,7 @@ exports[`sequence 'M' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'N' Error to match snapshot 1`] = `
+exports[`sequence 'B' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -78,7 +84,7 @@ exports[`sequence 'N' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'Z' Error to match snapshot 1`] = `
+exports[`sequence 'M' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -91,13 +97,7 @@ exports[`sequence 'Z' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'a' AST to match snapshot 1`] = `"a"`;
-
-exports[`sequence 'b' AST to match snapshot 1`] = `"b"`;
-
-exports[`sequence 'm' AST to match snapshot 1`] = `"m"`;
-
-exports[`sequence 'n' Error to match snapshot 1`] = `
+exports[`sequence 'N' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -110,7 +110,7 @@ exports[`sequence 'n' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'z' Error to match snapshot 1`] = `
+exports[`sequence 'Z' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "a-m",

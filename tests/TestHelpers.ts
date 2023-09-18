@@ -1,26 +1,35 @@
 import { Parser } from '../src/Parser';
-// @ts-ignore
-import { test, expect, describe } from "bun:test";
+import { describe, test, expect } from 'bun:test';
 
-export function testParse(parser: Parser<unknown>, str: string, expected: boolean) {
+export function testParser(parser: Parser<unknown>, str: string, shouldSucceed: boolean): void {
 	const result = parser.tryParse(str);
 
-	describe(`'${str}'`, () => {
-		test(`success to be ${expected}`, () => {
-			expect(result.success).toBe(expected);
-		});
+	test(`success to be ${shouldSucceed}`, () => {
+		expect(result.success).toBe(shouldSucceed);
+	});
 
-		if (expected) {
+	if (shouldSucceed) {
+
+		describe('conditional success tests', () => {
 			test(`AST to match snapshot`, () => {
 				expect(result.value).toMatchSnapshot();
 			});
-		} else {
+		});
+
+	} else {
+
+		describe('conditional failure tests', () => {
+			test(`AST to be undefined`, () => {
+				expect(result.value).toBe(undefined);
+			});
+
 			test(`Error to match snapshot`, () => {
 				expect({
 					pos: result.furthest,
 					expected: result.expected,
 				}).toMatchSnapshot();
 			});
-		}
-	});
+		});
+
+	}
 }

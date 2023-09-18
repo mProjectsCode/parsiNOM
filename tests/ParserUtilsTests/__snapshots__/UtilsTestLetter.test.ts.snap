@@ -1,6 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`letter ' ' Error to match snapshot 1`] = `
+exports[`letter 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
+
+exports[`letter 'b' conditional success tests AST to match snapshot 1`] = `"b"`;
+
+exports[`letter 'z' conditional success tests AST to match snapshot 1`] = `"z"`;
+
+exports[`letter '#' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "a letter",
@@ -13,7 +19,7 @@ exports[`letter ' ' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`letter '#' Error to match snapshot 1`] = `
+exports[`letter ' ' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "a letter",
@@ -26,7 +32,7 @@ exports[`letter '#' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`letter '' Error to match snapshot 1`] = `
+exports[`letter '' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "a letter",
@@ -39,13 +45,13 @@ exports[`letter '' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`letter 'a' AST to match snapshot 1`] = `"a"`;
+exports[`letters 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
 
-exports[`letter 'b' AST to match snapshot 1`] = `"b"`;
+exports[`letters 'bb' conditional success tests AST to match snapshot 1`] = `"bb"`;
 
-exports[`letter 'z' AST to match snapshot 1`] = `"z"`;
+exports[`letters 'zz' conditional success tests AST to match snapshot 1`] = `"zz"`;
 
-exports[`letters ' ' Error to match snapshot 1`] = `
+exports[`letters '#' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "optional letters",
@@ -58,7 +64,7 @@ exports[`letters ' ' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`letters '#' Error to match snapshot 1`] = `
+exports[`letters ' ' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "optional letters",
@@ -71,7 +77,7 @@ exports[`letters '#' Error to match snapshot 1`] = `
 }
 `;
 
-exports[`letters '' Error to match snapshot 1`] = `
+exports[`letters '' conditional failure tests Error to match snapshot 1`] = `
 {
   "expected": [
     "optional letters",
@@ -83,9 +89,3 @@ exports[`letters '' Error to match snapshot 1`] = `
   },
 }
 `;
-
-exports[`letters 'a' AST to match snapshot 1`] = `"a"`;
-
-exports[`letters 'bb' AST to match snapshot 1`] = `"bb"`;
-
-exports[`letters 'zz' AST to match snapshot 1`] = `"zz"`;

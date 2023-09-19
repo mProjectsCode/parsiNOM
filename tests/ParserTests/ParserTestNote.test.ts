@@ -1,6 +1,6 @@
 import { P } from '../../src/ParsiNOM';
 import { ParsingRange } from '../../src/HelperTypes';
-import {testParser} from '../TestHelpers';
+import { testParser } from '../TestHelpers';
 class NodeClass<T> {
 	value: T;
 	range: ParsingRange;

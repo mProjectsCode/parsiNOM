@@ -12,7 +12,7 @@ export interface ParseSuccess<SType extends STypeBase> {
 
 export interface ParseFailure {
 	success: false;
-	value: unknown | undefined;
+	value: undefined;
 	furthest: ParsingPosition;
 	expected: string[];
 }

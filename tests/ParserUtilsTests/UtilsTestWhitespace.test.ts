@@ -1,5 +1,5 @@
 import { P_UTILS } from '../../src/ParserUtils';
-import {testParser} from '../TestHelpers';
+import { testParser } from '../TestHelpers';
 
 describe.each([
 	['', false],
@@ -13,7 +13,6 @@ describe.each([
 	const parser = P_UTILS.whitespace().thenEof();
 	testParser(parser, str, shouldSucceed);
 });
-
 
 describe.each([
 	['', true],

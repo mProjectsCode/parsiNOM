@@ -1,7 +1,7 @@
 import { P } from '../../src/ParsiNOM';
 import { P_UTILS } from '../../src/ParserUtils';
 import { benchmark } from 'kelonio';
-import {testParser} from '../TestHelpers';
+import { testParser } from '../TestHelpers';
 describe.each([
 	['a', true],
 	['a+a', true],

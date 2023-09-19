@@ -37,7 +37,6 @@ describe('json parser', () => {
 		});
 	}
 
-
 	// describe('json perf', () => {
 	// 	// JEST:
 	// 	// result optimizations ~ 8.4 ms

@@ -1,32 +1,32 @@
 {
-  "name": "@lemons_dev/parsinom",
-  "version": "0.0.8",
-  "description": "",
-  "main": "ParsiNOM.js",
-  "scripts": {
-    "build": "tsc",
-    "test": "bun test",
-    "perf": "bun test -t=perf --runInBand",
-    "snapshots": "bun test --update-snapshots",
-    "format": "prettier --write ."
-  },
-  "keywords": [],
-  "author": "Moritz Jung",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mProjectsCode/parsiNOM.git"
-  },
-  "devDependencies": {
-    "@types/jest": "^29.5.5",
-    "bun-plugin-dts": "^0.1.0",
-    "bun-types": "^1.0.1",
-    "kelonio": "^0.9.0",
-    "prettier": "^3.0.3",
-    "tslib": "^2.6.2",
-    "typescript": "^5.2.2"
-  },
-  "files": [
-    "lib/**/*"
-  ]
+	"name": "@lemons_dev/parsinom",
+	"version": "0.0.8",
+	"description": "",
+	"main": "ParsiNOM.js",
+	"scripts": {
+		"build": "tsc",
+		"test": "bun test",
+		"test-adv": "bun test -t=advanced",
+		"snapshots": "bun test --update-snapshots",
+		"format": "prettier --write ."
+	},
+	"keywords": [],
+	"author": "Moritz Jung",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mProjectsCode/parsiNOM.git"
+	},
+	"devDependencies": {
+		"@types/jest": "^29.5.5",
+		"bun-plugin-dts": "^0.1.0",
+		"bun-types": "^1.0.1",
+		"kelonio": "^0.9.0",
+		"prettier": "^3.0.3",
+		"tslib": "^2.6.2",
+		"typescript": "^5.2.2"
+	},
+	"files": [
+		"lib/**/*"
+	]
 }

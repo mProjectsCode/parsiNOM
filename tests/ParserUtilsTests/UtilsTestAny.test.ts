@@ -1,5 +1,5 @@
 import { P_UTILS } from '../../src/ParserUtils';
-import {testParser} from '../TestHelpers';
+import { testParser } from '../TestHelpers';
 describe.each([
 	['', false],
 	['a', true],

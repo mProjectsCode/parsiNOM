@@ -64,5 +64,9 @@ describe.each<ParserTestData<string>>([
 	const parser = P.string('_')
 		.then(P.or(memoParser.skip(P.string('b')), memoParser.skip(P.string('c')), memoParser.skip(P.string('d'))))
 		.skip(memoParser);
+
+	// since bun test doesn't support it yet, we sadly can't test if memorize actually caches the parser runs
+	// TODO: a solution would be a custom parser (P.custom()) that counts the times it has been called.
+
 	testParserAdvanced(parser, data);
 });

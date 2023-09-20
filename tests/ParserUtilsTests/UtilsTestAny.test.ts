@@ -6,7 +6,7 @@ describe.each([
 	['b', true],
 	[' ', true],
 	['\n', true],
-])(`any '%s'`, (str, shouldSucceed) => {
+])(`any`, (str, shouldSucceed) => {
 	const parser = P_UTILS.any();
 	testParser(parser, str, shouldSucceed);
 });

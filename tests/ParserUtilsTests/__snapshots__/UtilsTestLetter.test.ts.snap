@@ -1,12 +1,12 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`letter 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
+exports[`letter 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
 
-exports[`letter 'b' conditional success tests AST to match snapshot 1`] = `"b"`;
+exports[`letter 'b' conditional success tests AST matches snapshot 1`] = `"b"`;
 
-exports[`letter 'z' conditional success tests AST to match snapshot 1`] = `"z"`;
+exports[`letter 'z' conditional success tests AST matches snapshot 1`] = `"z"`;
 
-exports[`letter '#' conditional failure tests Error to match snapshot 1`] = `
+exports[`letter '#' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a letter",
@@ -19,7 +19,7 @@ exports[`letter '#' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`letter ' ' conditional failure tests Error to match snapshot 1`] = `
+exports[`letter ' ' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a letter",
@@ -32,7 +32,7 @@ exports[`letter ' ' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`letter '' conditional failure tests Error to match snapshot 1`] = `
+exports[`letter '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a letter",
@@ -45,13 +45,13 @@ exports[`letter '' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`letters 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
+exports[`letters 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
 
-exports[`letters 'bb' conditional success tests AST to match snapshot 1`] = `"bb"`;
+exports[`letters 'bb' conditional success tests AST matches snapshot 1`] = `"bb"`;
 
-exports[`letters 'zz' conditional success tests AST to match snapshot 1`] = `"zz"`;
+exports[`letters 'zz' conditional success tests AST matches snapshot 1`] = `"zz"`;
 
-exports[`letters '#' conditional failure tests Error to match snapshot 1`] = `
+exports[`letters '#' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "optional letters",
@@ -64,7 +64,7 @@ exports[`letters '#' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`letters ' ' conditional failure tests Error to match snapshot 1`] = `
+exports[`letters ' ' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "optional letters",
@@ -77,7 +77,7 @@ exports[`letters ' ' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`letters '' conditional failure tests Error to match snapshot 1`] = `
+exports[`letters '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "optional letters",

@@ -150,7 +150,7 @@ describe('math2 test', () => {
 	for (const testCase of testCases) {
 		test(testCase, () => {
 			const res = MathParser.tryParse(testCase);
-			console.log(testCase, res);
+			// console.log(testCase, res);
 
 			expect(res.success).toBe(true);
 		});

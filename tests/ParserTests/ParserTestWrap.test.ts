@@ -7,7 +7,7 @@ describe.each([
 	['(this', false],
 	[')this(', false],
 	['foo', false],
-])(`wrap '%s'`, (str, shouldSucceed) => {
+])(`wrap`, (str, shouldSucceed) => {
 	const parser = P.string('this').wrap(P.string('('), P.string(')')).thenEof();
 	testParser(parser, str, shouldSucceed);
 });

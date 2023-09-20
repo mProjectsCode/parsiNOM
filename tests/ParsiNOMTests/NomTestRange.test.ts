@@ -13,7 +13,7 @@ describe.each([
 	['M', false],
 	['N', false],
 	['Z', false],
-])(`sequence '%s'`, (str, shouldSucceed) => {
+])(`sequence`, (str, shouldSucceed) => {
 	const parser = P.range('a', 'm');
 	testParser(parser, str, shouldSucceed);
 });

@@ -6,7 +6,7 @@ describe.each([
 	['aa', true],
 	['aaa', false],
 	['abaa', false],
-])(`atMost '%s'`, (str, shouldSucceed) => {
+])(`atMost`, (str, shouldSucceed) => {
 	const parser = P.string('a').atMost(2).thenEof();
 	testParser(parser, str, shouldSucceed);
 });

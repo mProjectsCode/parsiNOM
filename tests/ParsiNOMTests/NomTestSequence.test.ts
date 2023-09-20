@@ -8,7 +8,7 @@ describe.each([
 	['thisthat', true],
 	['thisthatfoo', false],
 	['foo', false],
-])(`sequence '%s'`, (str, shouldSucceed) => {
+])(`sequence`, (str, shouldSucceed) => {
 	const parser = P.sequence(P.string('this'), P.string('that'), P_UTILS.eof());
 	testParser(parser, str, shouldSucceed);
 });

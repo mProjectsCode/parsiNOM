@@ -8,7 +8,7 @@ describe.each([
 	[' this', false],
 	['  this', false],
 	['foo', false],
-])(`trim fixed length '%s'`, (str, shouldSucceed) => {
+])(`trim fixed length`, (str, shouldSucceed) => {
 	const parser = P.string('this').trim(P.string(' ')).thenEof();
 	testParser(parser, str, shouldSucceed);
 });
@@ -20,7 +20,7 @@ describe.each([
 	[' this', true],
 	['  this', true],
 	['foo', false],
-])(`trim variable length '%s'`, (str, shouldSucceed) => {
+])(`trim variable length`, (str, shouldSucceed) => {
 	const parser = P.string('this').trim(P_UTILS.optionalWhitespace()).thenEof();
 	testParser(parser, str, shouldSucceed);
 });

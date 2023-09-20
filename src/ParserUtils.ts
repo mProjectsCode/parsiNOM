@@ -1,6 +1,6 @@
 import { Parser } from './Parser';
 import { P } from './ParsiNOM';
-import { ParsingPosition } from './HelperTypes';
+import { ParsingPosition, ParsingRange } from './HelperTypes';
 
 export class P_UTILS {
 	/**
@@ -148,6 +148,42 @@ export class P_UTILS {
 			},
 			operandParser,
 			P.sequence(operatorsParser.trim(this.optionalWhitespace()), operandParser).many(),
+		);
+	}
+
+	static binaryRightRange<OperatorSType, OtherSType, ReturnSType>(
+		operatorsParser: Parser<OperatorSType>,
+		operandParser: Parser<OtherSType>,
+		combine: (range: ParsingRange, a: OtherSType, b: OperatorSType, c: OtherSType | ReturnSType) => ReturnSType,
+	): Parser<OtherSType | ReturnSType> {
+		return P.sequenceMap(
+			(others, last: OtherSType, to) => {
+				return others.reverse().reduce<OtherSType | ReturnSType>((acc, y) => {
+					const [from, operand, operator] = y;
+					return combine({ from, to }, operand, operator, acc);
+				}, last);
+			},
+			P.sequence(P_UTILS.position(), operandParser, operatorsParser.trim(this.optionalWhitespace())).many(),
+			operandParser,
+			P_UTILS.position(),
+		);
+	}
+
+	static binaryLeftRange<OperatorSType, OtherSType, ReturnSType>(
+		operatorsParser: Parser<OperatorSType>,
+		operandParser: Parser<OtherSType>,
+		combine: (range: ParsingRange, a: OtherSType | ReturnSType, b: OperatorSType, c: OtherSType) => ReturnSType,
+	): Parser<OtherSType | ReturnSType> {
+		return P.sequenceMap(
+			(from, first: OtherSType, others) => {
+				return others.reduce<OtherSType | ReturnSType>((acc, y) => {
+					const [operator, operand, to] = y;
+					return combine({ from, to }, acc, operator, operand);
+				}, first);
+			},
+			P_UTILS.position(),
+			operandParser,
+			P.sequence(operatorsParser.trim(this.optionalWhitespace()), operandParser, P_UTILS.position()).many(),
 		);
 	}
 

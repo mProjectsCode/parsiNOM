@@ -4,7 +4,7 @@ describe.each([
 	['', false],
 	['this', true],
 	['foo', false],
-])(`describe '%s'`, (str, shouldSucceed) => {
+])(`describe`, (str, shouldSucceed) => {
 	const parser = P.string('this').describe('some error').thenEof();
 	testParser(parser, str, shouldSucceed);
 });

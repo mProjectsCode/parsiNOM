@@ -1,12 +1,12 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`digit '0' conditional success tests AST to match snapshot 1`] = `"0"`;
+exports[`digit '0' conditional success tests AST matches snapshot 1`] = `"0"`;
 
-exports[`digit '2' conditional success tests AST to match snapshot 1`] = `"2"`;
+exports[`digit '2' conditional success tests AST matches snapshot 1`] = `"2"`;
 
-exports[`digit '9' conditional success tests AST to match snapshot 1`] = `"9"`;
+exports[`digit '9' conditional success tests AST matches snapshot 1`] = `"9"`;
 
-exports[`digit 'a' conditional failure tests Error to match snapshot 1`] = `
+exports[`digit 'a' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a digit",
@@ -19,7 +19,7 @@ exports[`digit 'a' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`digit 'a1' conditional failure tests Error to match snapshot 1`] = `
+exports[`digit 'a1' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a digit",
@@ -32,13 +32,13 @@ exports[`digit 'a1' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`digits '0' conditional success tests AST to match snapshot 1`] = `"0"`;
+exports[`digits '0' conditional success tests AST matches snapshot 1`] = `"0"`;
 
-exports[`digits '22' conditional success tests AST to match snapshot 1`] = `"22"`;
+exports[`digits '22' conditional success tests AST matches snapshot 1`] = `"22"`;
 
-exports[`digits '99' conditional success tests AST to match snapshot 1`] = `"99"`;
+exports[`digits '99' conditional success tests AST matches snapshot 1`] = `"99"`;
 
-exports[`digits 'a' conditional failure tests Error to match snapshot 1`] = `
+exports[`digits 'a' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "optional digits",
@@ -51,7 +51,7 @@ exports[`digits 'a' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`digits 'a12' conditional failure tests Error to match snapshot 1`] = `
+exports[`digits 'a12' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "optional digits",

@@ -6,7 +6,7 @@ describe.each([
 	['thisthat', true],
 	['2thisthat', false],
 	['&foo', false],
-])(`regexp '%s'`, (str, shouldSucceed) => {
+])(`regexp`, (str, shouldSucceed) => {
 	const parser = P.regexp(/^[a-z]+/);
 	testParser(parser, str, shouldSucceed);
 });

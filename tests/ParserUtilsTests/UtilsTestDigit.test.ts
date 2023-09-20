@@ -6,7 +6,7 @@ describe.each([
 	['9', true],
 	['a', false],
 	['a1', false],
-])(`digit '%s'`, (str, shouldSucceed) => {
+])(`digit`, (str, shouldSucceed) => {
 	const parser = P_UTILS.digit();
 	testParser(parser, str, shouldSucceed);
 });
@@ -17,7 +17,7 @@ describe.each([
 	['99', true],
 	['a', false],
 	['a12', false],
-])(`digits '%s'`, (str, shouldSucceed) => {
+])(`digits`, (str, shouldSucceed) => {
 	const parser = P_UTILS.digits();
 	testParser(parser, str, shouldSucceed);
 });

@@ -7,7 +7,7 @@ describe.each([
 	['c', false],
 	['afoo', false],
 	['foo', true],
-])(`noneOf '%s'`, (str, shouldSucceed) => {
+])(`noneOf`, (str, shouldSucceed) => {
 	const parser = P.noneOf('abc');
 	testParser(parser, str, shouldSucceed);
 });
@@ -21,7 +21,7 @@ describe.each([
 	['afoo', true],
 	['foo', true],
 	['fooa', true],
-])(`manyNotOf '%s'`, (str, shouldSucceed) => {
+])(`manyNotOf`, (str, shouldSucceed) => {
 	const parser = P.manyNotOf('abc');
 	testParser(parser, str, shouldSucceed);
 });

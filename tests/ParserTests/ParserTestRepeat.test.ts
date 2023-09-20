@@ -6,7 +6,7 @@ describe.each([
 	['aa', true],
 	['aaa', false],
 	['abaa', false],
-])(`repeat '%s'`, (str, shouldSucceed) => {
+])(`repeat`, (str, shouldSucceed) => {
 	const parser = P.string('a').repeat(1, 2).thenEof();
 	testParser(parser, str, shouldSucceed);
 });

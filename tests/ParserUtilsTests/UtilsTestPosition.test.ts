@@ -6,7 +6,7 @@ describe.each([
 	['b', true],
 	['aab', true],
 	['a\nab', true],
-])(`position '%s'`, (str, shouldSucceed) => {
+])(`position`, (str, shouldSucceed) => {
 	const parser = P.takeWhile(char => char !== 'b').then(P_UTILS.position());
 	testParser(parser, str, shouldSucceed);
 });

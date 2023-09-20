@@ -7,7 +7,7 @@ describe.each([
 	['thisthat', true],
 	['thisthatfoo', true],
 	['foo', true],
-])(`succeed '%s'`, (str, shouldSucceed) => {
+])(`succeed`, (str, shouldSucceed) => {
 	const parser = P.succeed('value');
 	testParser(parser, str, shouldSucceed);
 });

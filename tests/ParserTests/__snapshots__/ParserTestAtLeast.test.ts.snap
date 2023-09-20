@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`atLeast '' conditional failure tests Error to match snapshot 1`] = `
+exports[`atLeast '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a'",
@@ -13,7 +13,7 @@ exports[`atLeast '' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`atLeast 'a' conditional failure tests Error to match snapshot 1`] = `
+exports[`atLeast 'a' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a'",
@@ -26,14 +26,14 @@ exports[`atLeast 'a' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`atLeast 'aa' conditional success tests AST to match snapshot 1`] = `
+exports[`atLeast 'aa' conditional success tests AST matches snapshot 1`] = `
 [
   "a",
   "a",
 ]
 `;
 
-exports[`atLeast 'aaa' conditional success tests AST to match snapshot 1`] = `
+exports[`atLeast 'aaa' conditional success tests AST matches snapshot 1`] = `
 [
   "a",
   "a",
@@ -41,7 +41,7 @@ exports[`atLeast 'aaa' conditional success tests AST to match snapshot 1`] = `
 ]
 `;
 
-exports[`atLeast 'abaa' conditional failure tests Error to match snapshot 1`] = `
+exports[`atLeast 'abaa' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a'",

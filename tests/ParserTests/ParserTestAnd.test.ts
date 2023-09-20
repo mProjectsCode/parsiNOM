@@ -1,13 +1,14 @@
 import { P } from '../../src/ParsiNOM';
 import { testParser } from '../TestHelpers';
+
 describe.each([
 	['', false],
+	['thisthat', true],
 	['this', false],
 	['that', false],
-	['thisthat', false],
-	['thisthatfoo', false],
+	['thatthis', false],
 	['foo', false],
-])(`fail`, (str, shouldSucceed) => {
-	const parser = P.fail('expected');
+])(`then`, (str, shouldSucceed) => {
+	const parser = P.string('this').and(P.string('that')).thenEof();
 	testParser(parser, str, shouldSucceed);
 });

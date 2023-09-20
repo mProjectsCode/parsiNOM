@@ -13,7 +13,12 @@ exports[`then '' conditional failure tests Error matches snapshot 1`] = `
 }
 `;
 
-exports[`then 'thisthat' conditional success tests AST matches snapshot 1`] = `"that"`;
+exports[`then 'thisthat' conditional success tests AST matches snapshot 1`] = `
+[
+  "this",
+  "that",
+]
+`;
 
 exports[`then 'this' conditional failure tests Error matches snapshot 1`] = `
 {

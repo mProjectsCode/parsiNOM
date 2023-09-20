@@ -11,7 +11,7 @@ describe.each([
 	['aba', false],
 	['baba', false],
 	['bcaba', false],
-])(`sequence many '%s'`, (str, shouldSucceed) => {
+])(`sequence many`, (str, shouldSucceed) => {
 	const parser = P.sequence(P.string('a'), P.string('b')).many().thenEof();
 	testParser(parser, str, shouldSucceed);
 });
@@ -27,7 +27,7 @@ describe.each([
 	['b  a b', true],
 	['b abb', false],
 	['bcaba', false],
-])(`sequence trim '%s'`, (str, shouldSucceed) => {
+])(`sequence trim`, (str, shouldSucceed) => {
 	const parser = P.sequence(P.string('b'), P.string('a').trim(P_UTILS.optionalWhitespace()), P.string('b')).thenEof();
 	testParser(parser, str, shouldSucceed);
 });
@@ -40,7 +40,7 @@ describe.each([
 	['this', false],
 	['that', false],
 	['bar', false],
-])(`sequence or '%s'`, (str, shouldSucceed) => {
+])(`sequence or`, (str, shouldSucceed) => {
 	const parser = P.sequence(P.or(P.string('this'), P.string('that')), P.string('foo'));
 	testParser(parser, str, shouldSucceed);
 });

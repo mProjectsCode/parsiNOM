@@ -7,7 +7,7 @@ describe.each([
 	['aab', true],
 	['baa', true],
 	['foo', true],
-])(`sequence '%s'`, (str, shouldSucceed) => {
+])(`sequence`, (str, shouldSucceed) => {
 	const parser = P.takeWhile(char => char === 'a');
 	testParser(parser, str, shouldSucceed);
 });

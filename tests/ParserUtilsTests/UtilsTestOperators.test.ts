@@ -12,7 +12,7 @@ describe.each([
 	['ab+', false],
 	['+ab', false],
 	['bcaba', false],
-])(`binary left '%s'`, (str, shouldSucceed) => {
+])(`binary left`, (str, shouldSucceed) => {
 	const parser = P_UTILS.binaryLeft(P.string('+'), P.oneStringOf(['a', 'b', 'c']), (a, b, c) => [a, b, c]).thenEof();
 	testParser(parser, str, shouldSucceed);
 });
@@ -27,7 +27,7 @@ describe.each([
 	['ab+', false],
 	['+ab', false],
 	['bcaba', false],
-])(`binary right '%s'`, (str, shouldSucceed) => {
+])(`binary right`, (str, shouldSucceed) => {
 	const parser = P_UTILS.binaryRight(P.string('+'), P.oneStringOf(['a', 'b', 'c']), (a, b, c) => [a, b, c]).thenEof();
 	testParser(parser, str, shouldSucceed);
 });
@@ -40,7 +40,7 @@ describe.each([
 	['ab-', false],
 	['-ab', false],
 	['bcaba', false],
-])(`prefix '%s'`, (str, shouldSucceed) => {
+])(`prefix`, (str, shouldSucceed) => {
 	const parser = P_UTILS.prefix(P.string('-'), P.string('a'), (a, b) => [a, b]).thenEof();
 	testParser(parser, str, shouldSucceed);
 });
@@ -53,7 +53,7 @@ describe.each([
 	['ab-', false],
 	['-ab', false],
 	['bcaba', false],
-])(`postfix '%s'`, (str, shouldSucceed) => {
+])(`postfix`, (str, shouldSucceed) => {
 	const parser = P_UTILS.postfix(P.string('-'), P.string('a'), (a, b) => [a, b]).thenEof();
 	testParser(parser, str, shouldSucceed);
 });
@@ -66,7 +66,7 @@ describe.each([
 	['(b)', false],
 	['a b', false],
 	['foo', false],
-])(`function '%s'`, (str, shouldSucceed) => {
+])(`function`, (str, shouldSucceed) => {
 	const parser = P_UTILS.func(P.string('a'), P.string('b'), (a, b) => [a, b]).thenEof();
 	testParser(parser, str, shouldSucceed);
 });

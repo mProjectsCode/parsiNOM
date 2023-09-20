@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`optional value '' conditional failure tests Error to match snapshot 1`] = `
+exports[`optional value '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -13,11 +13,11 @@ exports[`optional value '' conditional failure tests Error to match snapshot 1`]
 }
 `;
 
-exports[`optional value 'this' conditional success tests AST to match snapshot 1`] = `undefined`;
+exports[`optional value 'this' conditional success tests AST matches snapshot 1`] = `undefined`;
 
-exports[`optional value 'thisthat' conditional success tests AST to match snapshot 1`] = `"that"`;
+exports[`optional value 'thisthat' conditional success tests AST matches snapshot 1`] = `"that"`;
 
-exports[`optional value 'that' conditional failure tests Error to match snapshot 1`] = `
+exports[`optional value 'that' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -30,7 +30,7 @@ exports[`optional value 'that' conditional failure tests Error to match snapshot
 }
 `;
 
-exports[`optional value 'thatthis' conditional failure tests Error to match snapshot 1`] = `
+exports[`optional value 'thatthis' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -43,7 +43,7 @@ exports[`optional value 'thatthis' conditional failure tests Error to match snap
 }
 `;
 
-exports[`optional value 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`optional value 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -56,7 +56,7 @@ exports[`optional value 'foo' conditional failure tests Error to match snapshot 
 }
 `;
 
-exports[`optional no value '' conditional failure tests Error to match snapshot 1`] = `
+exports[`optional no value '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -69,11 +69,11 @@ exports[`optional no value '' conditional failure tests Error to match snapshot 
 }
 `;
 
-exports[`optional no value 'this' conditional success tests AST to match snapshot 1`] = `"some fallback"`;
+exports[`optional no value 'this' conditional success tests AST matches snapshot 1`] = `"some fallback"`;
 
-exports[`optional no value 'thisthat' conditional success tests AST to match snapshot 1`] = `"that"`;
+exports[`optional no value 'thisthat' conditional success tests AST matches snapshot 1`] = `"that"`;
 
-exports[`optional no value 'that' conditional failure tests Error to match snapshot 1`] = `
+exports[`optional no value 'that' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -86,7 +86,7 @@ exports[`optional no value 'that' conditional failure tests Error to match snaps
 }
 `;
 
-exports[`optional no value 'thatthis' conditional failure tests Error to match snapshot 1`] = `
+exports[`optional no value 'thatthis' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -99,7 +99,7 @@ exports[`optional no value 'thatthis' conditional failure tests Error to match s
 }
 `;
 
-exports[`optional no value 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`optional no value 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",

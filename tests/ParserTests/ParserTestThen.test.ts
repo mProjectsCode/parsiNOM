@@ -7,7 +7,7 @@ describe.each([
 	['that', false],
 	['thatthis', false],
 	['foo', false],
-])(`then '%s'`, (str, shouldSucceed) => {
+])(`then`, (str, shouldSucceed) => {
 	const parser = P.string('this').then(P.string('that')).thenEof();
 	testParser(parser, str, shouldSucceed);
 });

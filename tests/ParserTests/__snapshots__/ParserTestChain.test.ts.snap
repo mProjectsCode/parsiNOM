@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`chain '' conditional failure tests Error to match snapshot 1`] = `
+exports[`chain '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -14,11 +14,11 @@ exports[`chain '' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`chain 'thisthat' conditional success tests AST to match snapshot 1`] = `"that"`;
+exports[`chain 'thisthat' conditional success tests AST matches snapshot 1`] = `"that"`;
 
-exports[`chain '1bar' conditional success tests AST to match snapshot 1`] = `"bar"`;
+exports[`chain '1bar' conditional success tests AST matches snapshot 1`] = `"bar"`;
 
-exports[`chain 'thisbar' conditional failure tests Error to match snapshot 1`] = `
+exports[`chain 'thisbar' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'that'",
@@ -31,7 +31,7 @@ exports[`chain 'thisbar' conditional failure tests Error to match snapshot 1`] =
 }
 `;
 
-exports[`chain '1that' conditional failure tests Error to match snapshot 1`] = `
+exports[`chain '1that' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'bar'",
@@ -44,7 +44,7 @@ exports[`chain '1that' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`chain 'this' conditional failure tests Error to match snapshot 1`] = `
+exports[`chain 'this' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'that'",
@@ -57,7 +57,7 @@ exports[`chain 'this' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`chain '1' conditional failure tests Error to match snapshot 1`] = `
+exports[`chain '1' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'bar'",
@@ -70,7 +70,7 @@ exports[`chain '1' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`chain 'thatthis' conditional failure tests Error to match snapshot 1`] = `
+exports[`chain 'thatthis' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -84,7 +84,7 @@ exports[`chain 'thatthis' conditional failure tests Error to match snapshot 1`] 
 }
 `;
 
-exports[`chain 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`chain 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",

@@ -1,8 +1,8 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`binary left 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
+exports[`binary left 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
 
-exports[`binary left 'a+a' conditional success tests AST to match snapshot 1`] = `
+exports[`binary left 'a+a' conditional success tests AST matches snapshot 1`] = `
 [
   "a",
   "+",
@@ -10,7 +10,7 @@ exports[`binary left 'a+a' conditional success tests AST to match snapshot 1`] =
 ]
 `;
 
-exports[`binary left 'a + a' conditional success tests AST to match snapshot 1`] = `
+exports[`binary left 'a + a' conditional success tests AST matches snapshot 1`] = `
 [
   "a",
   "+",
@@ -18,7 +18,7 @@ exports[`binary left 'a + a' conditional success tests AST to match snapshot 1`]
 ]
 `;
 
-exports[`binary left 'a + b' conditional success tests AST to match snapshot 1`] = `
+exports[`binary left 'a + b' conditional success tests AST matches snapshot 1`] = `
 [
   "a",
   "+",
@@ -26,7 +26,7 @@ exports[`binary left 'a + b' conditional success tests AST to match snapshot 1`]
 ]
 `;
 
-exports[`binary left 'a + b+c' conditional success tests AST to match snapshot 1`] = `
+exports[`binary left 'a + b+c' conditional success tests AST matches snapshot 1`] = `
 [
   [
     "a",
@@ -38,7 +38,7 @@ exports[`binary left 'a + b+c' conditional success tests AST to match snapshot 1
 ]
 `;
 
-exports[`binary left 'a + b + c' conditional success tests AST to match snapshot 1`] = `
+exports[`binary left 'a + b + c' conditional success tests AST matches snapshot 1`] = `
 [
   [
     "a",
@@ -50,7 +50,7 @@ exports[`binary left 'a + b + c' conditional success tests AST to match snapshot
 ]
 `;
 
-exports[`binary left 'ab+' conditional failure tests Error to match snapshot 1`] = `
+exports[`binary left 'ab+' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'+'",
@@ -64,7 +64,7 @@ exports[`binary left 'ab+' conditional failure tests Error to match snapshot 1`]
 }
 `;
 
-exports[`binary left '+ab' conditional failure tests Error to match snapshot 1`] = `
+exports[`binary left '+ab' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a' or 'b' or 'c'",
@@ -77,7 +77,7 @@ exports[`binary left '+ab' conditional failure tests Error to match snapshot 1`]
 }
 `;
 
-exports[`binary left 'bcaba' conditional failure tests Error to match snapshot 1`] = `
+exports[`binary left 'bcaba' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'+'",
@@ -91,9 +91,9 @@ exports[`binary left 'bcaba' conditional failure tests Error to match snapshot 1
 }
 `;
 
-exports[`binary right 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
+exports[`binary right 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
 
-exports[`binary right 'a+a' conditional success tests AST to match snapshot 1`] = `
+exports[`binary right 'a+a' conditional success tests AST matches snapshot 1`] = `
 [
   "a",
   "+",
@@ -101,7 +101,7 @@ exports[`binary right 'a+a' conditional success tests AST to match snapshot 1`] 
 ]
 `;
 
-exports[`binary right 'a + a' conditional success tests AST to match snapshot 1`] = `
+exports[`binary right 'a + a' conditional success tests AST matches snapshot 1`] = `
 [
   "a",
   "+",
@@ -109,7 +109,7 @@ exports[`binary right 'a + a' conditional success tests AST to match snapshot 1`
 ]
 `;
 
-exports[`binary right 'a + b' conditional success tests AST to match snapshot 1`] = `
+exports[`binary right 'a + b' conditional success tests AST matches snapshot 1`] = `
 [
   "a",
   "+",
@@ -117,7 +117,7 @@ exports[`binary right 'a + b' conditional success tests AST to match snapshot 1`
 ]
 `;
 
-exports[`binary right 'a + b+c' conditional success tests AST to match snapshot 1`] = `
+exports[`binary right 'a + b+c' conditional success tests AST matches snapshot 1`] = `
 [
   "a",
   "+",
@@ -129,7 +129,7 @@ exports[`binary right 'a + b+c' conditional success tests AST to match snapshot 
 ]
 `;
 
-exports[`binary right 'a + b + c' conditional success tests AST to match snapshot 1`] = `
+exports[`binary right 'a + b + c' conditional success tests AST matches snapshot 1`] = `
 [
   "a",
   "+",
@@ -141,7 +141,7 @@ exports[`binary right 'a + b + c' conditional success tests AST to match snapsho
 ]
 `;
 
-exports[`binary right 'ab+' conditional failure tests Error to match snapshot 1`] = `
+exports[`binary right 'ab+' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'+'",
@@ -155,7 +155,7 @@ exports[`binary right 'ab+' conditional failure tests Error to match snapshot 1`
 }
 `;
 
-exports[`binary right '+ab' conditional failure tests Error to match snapshot 1`] = `
+exports[`binary right '+ab' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a' or 'b' or 'c'",
@@ -168,7 +168,7 @@ exports[`binary right '+ab' conditional failure tests Error to match snapshot 1`
 }
 `;
 
-exports[`binary right 'bcaba' conditional failure tests Error to match snapshot 1`] = `
+exports[`binary right 'bcaba' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'+'",
@@ -182,16 +182,16 @@ exports[`binary right 'bcaba' conditional failure tests Error to match snapshot 
 }
 `;
 
-exports[`prefix 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
+exports[`prefix 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
 
-exports[`prefix '-a' conditional success tests AST to match snapshot 1`] = `
+exports[`prefix '-a' conditional success tests AST matches snapshot 1`] = `
 [
   "-",
   "a",
 ]
 `;
 
-exports[`prefix '--a' conditional success tests AST to match snapshot 1`] = `
+exports[`prefix '--a' conditional success tests AST matches snapshot 1`] = `
 [
   "-",
   [
@@ -201,7 +201,7 @@ exports[`prefix '--a' conditional success tests AST to match snapshot 1`] = `
 ]
 `;
 
-exports[`prefix 'a - b' conditional failure tests Error to match snapshot 1`] = `
+exports[`prefix 'a - b' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "eof",
@@ -214,7 +214,7 @@ exports[`prefix 'a - b' conditional failure tests Error to match snapshot 1`] = 
 }
 `;
 
-exports[`prefix 'ab-' conditional failure tests Error to match snapshot 1`] = `
+exports[`prefix 'ab-' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "eof",
@@ -227,7 +227,7 @@ exports[`prefix 'ab-' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`prefix '-ab' conditional failure tests Error to match snapshot 1`] = `
+exports[`prefix '-ab' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "eof",
@@ -240,7 +240,7 @@ exports[`prefix '-ab' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`prefix 'bcaba' conditional failure tests Error to match snapshot 1`] = `
+exports[`prefix 'bcaba' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'-'",
@@ -254,16 +254,16 @@ exports[`prefix 'bcaba' conditional failure tests Error to match snapshot 1`] = 
 }
 `;
 
-exports[`postfix 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
+exports[`postfix 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
 
-exports[`postfix 'a-' conditional success tests AST to match snapshot 1`] = `
+exports[`postfix 'a-' conditional success tests AST matches snapshot 1`] = `
 [
   "-",
   "a",
 ]
 `;
 
-exports[`postfix 'a--' conditional success tests AST to match snapshot 1`] = `
+exports[`postfix 'a--' conditional success tests AST matches snapshot 1`] = `
 [
   "-",
   [
@@ -273,7 +273,7 @@ exports[`postfix 'a--' conditional success tests AST to match snapshot 1`] = `
 ]
 `;
 
-exports[`postfix 'a- b' conditional failure tests Error to match snapshot 1`] = `
+exports[`postfix 'a- b' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'-'",
@@ -287,7 +287,7 @@ exports[`postfix 'a- b' conditional failure tests Error to match snapshot 1`] = 
 }
 `;
 
-exports[`postfix 'ab-' conditional failure tests Error to match snapshot 1`] = `
+exports[`postfix 'ab-' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'-'",
@@ -301,7 +301,7 @@ exports[`postfix 'ab-' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`postfix '-ab' conditional failure tests Error to match snapshot 1`] = `
+exports[`postfix '-ab' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a'",
@@ -314,7 +314,7 @@ exports[`postfix '-ab' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`postfix 'bcaba' conditional failure tests Error to match snapshot 1`] = `
+exports[`postfix 'bcaba' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a'",
@@ -327,7 +327,7 @@ exports[`postfix 'bcaba' conditional failure tests Error to match snapshot 1`] =
 }
 `;
 
-exports[`function 'a' conditional failure tests Error to match snapshot 1`] = `
+exports[`function 'a' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'('",
@@ -340,7 +340,7 @@ exports[`function 'a' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`function 'a()' conditional failure tests Error to match snapshot 1`] = `
+exports[`function 'a()' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'b'",
@@ -353,14 +353,14 @@ exports[`function 'a()' conditional failure tests Error to match snapshot 1`] = 
 }
 `;
 
-exports[`function 'a(b)' conditional success tests AST to match snapshot 1`] = `
+exports[`function 'a(b)' conditional success tests AST matches snapshot 1`] = `
 [
   "a",
   "b",
 ]
 `;
 
-exports[`function 'a (b)' conditional failure tests Error to match snapshot 1`] = `
+exports[`function 'a (b)' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'('",
@@ -373,7 +373,7 @@ exports[`function 'a (b)' conditional failure tests Error to match snapshot 1`] 
 }
 `;
 
-exports[`function '(b)' conditional failure tests Error to match snapshot 1`] = `
+exports[`function '(b)' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a'",
@@ -386,7 +386,7 @@ exports[`function '(b)' conditional failure tests Error to match snapshot 1`] = 
 }
 `;
 
-exports[`function 'a b' conditional failure tests Error to match snapshot 1`] = `
+exports[`function 'a b' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'('",
@@ -399,7 +399,7 @@ exports[`function 'a b' conditional failure tests Error to match snapshot 1`] = 
 }
 `;
 
-exports[`function 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`function 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a'",

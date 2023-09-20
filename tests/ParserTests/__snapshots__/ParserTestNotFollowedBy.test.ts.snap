@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`notFollowedBy '' conditional failure tests Error to match snapshot 1`] = `
+exports[`notFollowedBy '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -13,7 +13,7 @@ exports[`notFollowedBy '' conditional failure tests Error to match snapshot 1`] 
 }
 `;
 
-exports[`notFollowedBy 'this' conditional success tests AST to match snapshot 1`] = `
+exports[`notFollowedBy 'this' conditional success tests AST matches snapshot 1`] = `
 {
   "name": "after",
   "range": {
@@ -47,7 +47,7 @@ exports[`notFollowedBy 'this' conditional success tests AST to match snapshot 1`
 }
 `;
 
-exports[`notFollowedBy 'thisfoo' conditional success tests AST to match snapshot 1`] = `
+exports[`notFollowedBy 'thisfoo' conditional success tests AST matches snapshot 1`] = `
 {
   "name": "after",
   "range": {
@@ -81,7 +81,7 @@ exports[`notFollowedBy 'thisfoo' conditional success tests AST to match snapshot
 }
 `;
 
-exports[`notFollowedBy 'thisthat' conditional failure tests Error to match snapshot 1`] = `
+exports[`notFollowedBy 'thisthat' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "not 'that'",
@@ -94,7 +94,7 @@ exports[`notFollowedBy 'thisthat' conditional failure tests Error to match snaps
 }
 `;
 
-exports[`notFollowedBy 'that' conditional failure tests Error to match snapshot 1`] = `
+exports[`notFollowedBy 'that' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -107,7 +107,7 @@ exports[`notFollowedBy 'that' conditional failure tests Error to match snapshot 
 }
 `;
 
-exports[`notFollowedBy 'thatthis' conditional failure tests Error to match snapshot 1`] = `
+exports[`notFollowedBy 'thatthis' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -120,7 +120,7 @@ exports[`notFollowedBy 'thatthis' conditional failure tests Error to match snaps
 }
 `;
 
-exports[`notFollowedBy 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`notFollowedBy 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",

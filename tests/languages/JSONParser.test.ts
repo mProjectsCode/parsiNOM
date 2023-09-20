@@ -12,7 +12,7 @@ describe('json parser', () => {
 
 		test(JSON.stringify(testCase), () => {
 			const res = jsonParser.tryParse(str);
-			console.log(testCase, res);
+			// console.log(testCase, res);
 
 			// expect(res.success).toBe(true);
 			expect(res.value).toEqual(testCase);
@@ -20,7 +20,7 @@ describe('json parser', () => {
 
 		test(JSON.stringify(testCase) + ' multi line', () => {
 			const res = jsonParser.tryParse(JSON.stringify(testCase, null, 4));
-			console.log(testCase, res);
+			// console.log(testCase, res);
 
 			// expect(res.success).toBe(true);
 			expect(res.value).toEqual(testCase);
@@ -76,14 +76,14 @@ describe('json parser', () => {
 			const res = jsonParser.tryParse(JsonData.data_invalid_1);
 
 			expect(res.success).toEqual(false);
-			console.log(P.createError(JsonData.data_invalid_1, res as ParseFailure));
+			// console.log(P.createError(JsonData.data_invalid_1, res as ParseFailure));
 		});
 
 		test('invalid data 2', () => {
 			const res = jsonParser.tryParse(JsonData.data_invalid_2);
 
 			expect(res.success).toEqual(false);
-			console.log(P.createError(JsonData.data_invalid_2, res as ParseFailure));
+			// console.log(P.createError(JsonData.data_invalid_2, res as ParseFailure));
 		});
 	});
 });

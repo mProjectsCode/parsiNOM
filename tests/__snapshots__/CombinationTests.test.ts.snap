@@ -1,8 +1,8 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sequence many '' conditional success tests AST to match snapshot 1`] = `[]`;
+exports[`sequence many '' conditional success tests AST matches snapshot 1`] = `[]`;
 
-exports[`sequence many 'ab' conditional success tests AST to match snapshot 1`] = `
+exports[`sequence many 'ab' conditional success tests AST matches snapshot 1`] = `
 [
   [
     "a",
@@ -11,7 +11,7 @@ exports[`sequence many 'ab' conditional success tests AST to match snapshot 1`] 
 ]
 `;
 
-exports[`sequence many 'abab' conditional success tests AST to match snapshot 1`] = `
+exports[`sequence many 'abab' conditional success tests AST matches snapshot 1`] = `
 [
   [
     "a",
@@ -24,7 +24,7 @@ exports[`sequence many 'abab' conditional success tests AST to match snapshot 1`
 ]
 `;
 
-exports[`sequence many 'a' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence many 'a' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'b'",
@@ -37,7 +37,7 @@ exports[`sequence many 'a' conditional failure tests Error to match snapshot 1`]
 }
 `;
 
-exports[`sequence many 'aa' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence many 'aa' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'b'",
@@ -50,7 +50,7 @@ exports[`sequence many 'aa' conditional failure tests Error to match snapshot 1`
 }
 `;
 
-exports[`sequence many 'aba' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence many 'aba' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'b'",
@@ -63,7 +63,7 @@ exports[`sequence many 'aba' conditional failure tests Error to match snapshot 1
 }
 `;
 
-exports[`sequence many 'baba' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence many 'baba' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a'",
@@ -77,7 +77,7 @@ exports[`sequence many 'baba' conditional failure tests Error to match snapshot 
 }
 `;
 
-exports[`sequence many 'bcaba' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence many 'bcaba' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a'",
@@ -91,7 +91,7 @@ exports[`sequence many 'bcaba' conditional failure tests Error to match snapshot
 }
 `;
 
-exports[`sequence trim '' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence trim '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'b'",
@@ -104,7 +104,7 @@ exports[`sequence trim '' conditional failure tests Error to match snapshot 1`] 
 }
 `;
 
-exports[`sequence trim 'a' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence trim 'a' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'b'",
@@ -117,7 +117,7 @@ exports[`sequence trim 'a' conditional failure tests Error to match snapshot 1`]
 }
 `;
 
-exports[`sequence trim 'b' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence trim 'b' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a'",
@@ -130,7 +130,7 @@ exports[`sequence trim 'b' conditional failure tests Error to match snapshot 1`]
 }
 `;
 
-exports[`sequence trim 'bab' conditional success tests AST to match snapshot 1`] = `
+exports[`sequence trim 'bab' conditional success tests AST matches snapshot 1`] = `
 [
   "b",
   "a",
@@ -138,7 +138,7 @@ exports[`sequence trim 'bab' conditional success tests AST to match snapshot 1`]
 ]
 `;
 
-exports[`sequence trim 'ba b' conditional success tests AST to match snapshot 1`] = `
+exports[`sequence trim 'ba b' conditional success tests AST matches snapshot 1`] = `
 [
   "b",
   "a",
@@ -146,7 +146,7 @@ exports[`sequence trim 'ba b' conditional success tests AST to match snapshot 1`
 ]
 `;
 
-exports[`sequence trim 'ba  b' conditional success tests AST to match snapshot 1`] = `
+exports[`sequence trim 'ba  b' conditional success tests AST matches snapshot 1`] = `
 [
   "b",
   "a",
@@ -154,7 +154,7 @@ exports[`sequence trim 'ba  b' conditional success tests AST to match snapshot 1
 ]
 `;
 
-exports[`sequence trim 'b ab' conditional success tests AST to match snapshot 1`] = `
+exports[`sequence trim 'b ab' conditional success tests AST matches snapshot 1`] = `
 [
   "b",
   "a",
@@ -162,7 +162,7 @@ exports[`sequence trim 'b ab' conditional success tests AST to match snapshot 1`
 ]
 `;
 
-exports[`sequence trim 'b  a b' conditional success tests AST to match snapshot 1`] = `
+exports[`sequence trim 'b  a b' conditional success tests AST matches snapshot 1`] = `
 [
   "b",
   "a",
@@ -170,7 +170,7 @@ exports[`sequence trim 'b  a b' conditional success tests AST to match snapshot 
 ]
 `;
 
-exports[`sequence trim 'b abb' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence trim 'b abb' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "eof",
@@ -183,7 +183,7 @@ exports[`sequence trim 'b abb' conditional failure tests Error to match snapshot
 }
 `;
 
-exports[`sequence trim 'bcaba' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence trim 'bcaba' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a'",
@@ -196,7 +196,7 @@ exports[`sequence trim 'bcaba' conditional failure tests Error to match snapshot
 }
 `;
 
-exports[`sequence or '' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence or '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'that'",
@@ -210,21 +210,21 @@ exports[`sequence or '' conditional failure tests Error to match snapshot 1`] = 
 }
 `;
 
-exports[`sequence or 'thisfoo' conditional success tests AST to match snapshot 1`] = `
+exports[`sequence or 'thisfoo' conditional success tests AST matches snapshot 1`] = `
 [
   "this",
   "foo",
 ]
 `;
 
-exports[`sequence or 'thatfoo' conditional success tests AST to match snapshot 1`] = `
+exports[`sequence or 'thatfoo' conditional success tests AST matches snapshot 1`] = `
 [
   "that",
   "foo",
 ]
 `;
 
-exports[`sequence or 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence or 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'that'",
@@ -238,7 +238,7 @@ exports[`sequence or 'foo' conditional failure tests Error to match snapshot 1`]
 }
 `;
 
-exports[`sequence or 'this' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence or 'this' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'foo'",
@@ -251,7 +251,7 @@ exports[`sequence or 'this' conditional failure tests Error to match snapshot 1`
 }
 `;
 
-exports[`sequence or 'that' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence or 'that' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'foo'",
@@ -264,7 +264,7 @@ exports[`sequence or 'that' conditional failure tests Error to match snapshot 1`
 }
 `;
 
-exports[`sequence or 'bar' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence or 'bar' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'that'",

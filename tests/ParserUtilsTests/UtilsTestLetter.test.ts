@@ -7,7 +7,7 @@ describe.each([
 	['#', false],
 	[' ', false],
 	['', false],
-])(`letter '%s'`, (str, shouldSucceed) => {
+])(`letter`, (str, shouldSucceed) => {
 	const parser = P_UTILS.letter();
 	testParser(parser, str, shouldSucceed);
 });
@@ -19,7 +19,7 @@ describe.each([
 	['#', false],
 	[' ', false],
 	['', false],
-])(`letters '%s'`, (str, shouldSucceed) => {
+])(`letters`, (str, shouldSucceed) => {
 	const parser = P_UTILS.letters();
 	testParser(parser, str, shouldSucceed);
 });

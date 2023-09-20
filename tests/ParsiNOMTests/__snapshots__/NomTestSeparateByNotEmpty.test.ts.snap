@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`separateByNotEmpty '' conditional failure tests Error to match snapshot 1`] = `
+exports[`separateByNotEmpty '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -13,20 +13,20 @@ exports[`separateByNotEmpty '' conditional failure tests Error to match snapshot
 }
 `;
 
-exports[`separateByNotEmpty 'this' conditional success tests AST to match snapshot 1`] = `
+exports[`separateByNotEmpty 'this' conditional success tests AST matches snapshot 1`] = `
 [
   "this",
 ]
 `;
 
-exports[`separateByNotEmpty 'this,this' conditional success tests AST to match snapshot 1`] = `
+exports[`separateByNotEmpty 'this,this' conditional success tests AST matches snapshot 1`] = `
 [
   "this",
   "this",
 ]
 `;
 
-exports[`separateByNotEmpty 'this,this,this' conditional success tests AST to match snapshot 1`] = `
+exports[`separateByNotEmpty 'this,this,this' conditional success tests AST matches snapshot 1`] = `
 [
   "this",
   "this",
@@ -34,7 +34,7 @@ exports[`separateByNotEmpty 'this,this,this' conditional success tests AST to ma
 ]
 `;
 
-exports[`separateByNotEmpty 'this, this' conditional failure tests Error to match snapshot 1`] = `
+exports[`separateByNotEmpty 'this, this' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -47,7 +47,7 @@ exports[`separateByNotEmpty 'this, this' conditional failure tests Error to matc
 }
 `;
 
-exports[`separateByNotEmpty 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`separateByNotEmpty 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",

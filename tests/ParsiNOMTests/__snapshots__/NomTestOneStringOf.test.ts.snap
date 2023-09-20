@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`oneStringOf '' conditional failure tests Error to match snapshot 1`] = `
+exports[`oneStringOf '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a' or 'b' or 'c'",
@@ -13,15 +13,15 @@ exports[`oneStringOf '' conditional failure tests Error to match snapshot 1`] = 
 }
 `;
 
-exports[`oneStringOf 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
+exports[`oneStringOf 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
 
-exports[`oneStringOf 'b' conditional success tests AST to match snapshot 1`] = `"b"`;
+exports[`oneStringOf 'b' conditional success tests AST matches snapshot 1`] = `"b"`;
 
-exports[`oneStringOf 'c' conditional success tests AST to match snapshot 1`] = `"c"`;
+exports[`oneStringOf 'c' conditional success tests AST matches snapshot 1`] = `"c"`;
 
-exports[`oneStringOf 'afoo' conditional success tests AST to match snapshot 1`] = `"a"`;
+exports[`oneStringOf 'afoo' conditional success tests AST matches snapshot 1`] = `"a"`;
 
-exports[`oneStringOf 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`oneStringOf 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a' or 'b' or 'c'",

@@ -7,7 +7,7 @@ describe.each([
 	['this,this,this', true],
 	['this, this', false],
 	['foo', false],
-])(`separateByNotEmpty '%s'`, (str, shouldSucceed) => {
+])(`separateByNotEmpty`, (str, shouldSucceed) => {
 	const parser = P.string('this').separateByNotEmpty(P.string(',')).thenEof();
 	testParser(parser, str, shouldSucceed);
 });

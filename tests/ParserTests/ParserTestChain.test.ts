@@ -11,7 +11,7 @@ describe.each([
 	['1', false],
 	['thatthis', false],
 	['foo', false],
-])(`chain '%s'`, (str, shouldSucceed) => {
+])(`chain`, (str, shouldSucceed) => {
 	const parser = P.string('this')
 		.or(P_UTILS.digit().map(x => Number(x)))
 		.chain(res => {

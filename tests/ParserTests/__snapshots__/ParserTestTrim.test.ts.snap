@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`trim fixed length '' conditional failure tests Error to match snapshot 1`] = `
+exports[`trim fixed length '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "' '",
@@ -13,9 +13,9 @@ exports[`trim fixed length '' conditional failure tests Error to match snapshot 
 }
 `;
 
-exports[`trim fixed length ' this ' conditional success tests AST to match snapshot 1`] = `"this"`;
+exports[`trim fixed length ' this ' conditional success tests AST matches snapshot 1`] = `"this"`;
 
-exports[`trim fixed length 'this ' conditional failure tests Error to match snapshot 1`] = `
+exports[`trim fixed length 'this ' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "' '",
@@ -28,7 +28,7 @@ exports[`trim fixed length 'this ' conditional failure tests Error to match snap
 }
 `;
 
-exports[`trim fixed length ' this' conditional failure tests Error to match snapshot 1`] = `
+exports[`trim fixed length ' this' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "' '",
@@ -41,7 +41,7 @@ exports[`trim fixed length ' this' conditional failure tests Error to match snap
 }
 `;
 
-exports[`trim fixed length '  this' conditional failure tests Error to match snapshot 1`] = `
+exports[`trim fixed length '  this' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -54,7 +54,7 @@ exports[`trim fixed length '  this' conditional failure tests Error to match sna
 }
 `;
 
-exports[`trim fixed length 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`trim fixed length 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "' '",
@@ -67,7 +67,7 @@ exports[`trim fixed length 'foo' conditional failure tests Error to match snapsh
 }
 `;
 
-exports[`trim variable length '' conditional failure tests Error to match snapshot 1`] = `
+exports[`trim variable length '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -80,15 +80,15 @@ exports[`trim variable length '' conditional failure tests Error to match snapsh
 }
 `;
 
-exports[`trim variable length ' this ' conditional success tests AST to match snapshot 1`] = `"this"`;
+exports[`trim variable length ' this ' conditional success tests AST matches snapshot 1`] = `"this"`;
 
-exports[`trim variable length 'this ' conditional success tests AST to match snapshot 1`] = `"this"`;
+exports[`trim variable length 'this ' conditional success tests AST matches snapshot 1`] = `"this"`;
 
-exports[`trim variable length ' this' conditional success tests AST to match snapshot 1`] = `"this"`;
+exports[`trim variable length ' this' conditional success tests AST matches snapshot 1`] = `"this"`;
 
-exports[`trim variable length '  this' conditional success tests AST to match snapshot 1`] = `"this"`;
+exports[`trim variable length '  this' conditional success tests AST matches snapshot 1`] = `"this"`;
 
-exports[`trim variable length 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`trim variable length 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",

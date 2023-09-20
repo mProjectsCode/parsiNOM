@@ -135,12 +135,12 @@ describe('input fields', () => {
 	for (const [testCase, expected] of testCases) {
 		test(testCase, () => {
 			const res = fullDeclaration.tryParse(testCase);
-			console.log(testCase, JSON.stringify(res, undefined, 4));
+			// console.log(testCase, JSON.stringify(res, undefined, 4));
 
 			expect(res.success).toBe(expected);
-			if (!res.success) {
-				console.log(P.createError(testCase, res as ParseFailure));
-			}
+			// if (!res.success) {
+			// 	console.log(P.createError(testCase, res as ParseFailure));
+			// }
 		});
 	}
 });

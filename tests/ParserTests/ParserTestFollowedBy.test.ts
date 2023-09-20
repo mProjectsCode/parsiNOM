@@ -7,7 +7,7 @@ describe.each([
 	['that', false],
 	['thatthis', false],
 	['foo', false],
-])(`followedBy '%s'`, (str, shouldSucceed) => {
+])(`followedBy`, (str, shouldSucceed) => {
 	const parser = P.string('this').namedMarker('before').followedBy(P.string('that')).namedMarker('after');
 	testParser(parser, str, shouldSucceed);
 });

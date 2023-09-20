@@ -7,7 +7,7 @@ describe.each([
 	['thisthat', false],
 	['thatthis', false],
 	['foo', false],
-])(`or '%s'`, (str, shouldSucceed) => {
+])(`or`, (str, shouldSucceed) => {
 	const parser = P.or(P.string('this'), P.string('that')).thenEof();
 	testParser(parser, str, shouldSucceed);
 });

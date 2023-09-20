@@ -7,7 +7,7 @@ describe.each([
 	['c', true],
 	['afoo', true],
 	['foo', false],
-])(`oneStringOf '%s'`, (str, shouldSucceed) => {
+])(`oneStringOf`, (str, shouldSucceed) => {
 	const parser = P.oneStringOf(['a', 'b', 'c']);
 	testParser(parser, str, shouldSucceed);
 });

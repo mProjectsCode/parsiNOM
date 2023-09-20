@@ -5,7 +5,7 @@ describe.each([
 	['', false],
 	['a', true],
 	['aa', false],
-])(`eof '%s'`, (str, shouldSucceed) => {
+])(`eof`, (str, shouldSucceed) => {
 	const parser = P.string('a').then(P_UTILS.eof());
 	testParser(parser, str, shouldSucceed);
 });

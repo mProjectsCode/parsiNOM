@@ -1,21 +1,21 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`separateBy '' conditional success tests AST to match snapshot 1`] = `[]`;
+exports[`separateBy '' conditional success tests AST matches snapshot 1`] = `[]`;
 
-exports[`separateBy 'this' conditional success tests AST to match snapshot 1`] = `
+exports[`separateBy 'this' conditional success tests AST matches snapshot 1`] = `
 [
   "this",
 ]
 `;
 
-exports[`separateBy 'this,this' conditional success tests AST to match snapshot 1`] = `
+exports[`separateBy 'this,this' conditional success tests AST matches snapshot 1`] = `
 [
   "this",
   "this",
 ]
 `;
 
-exports[`separateBy 'this,this,this' conditional success tests AST to match snapshot 1`] = `
+exports[`separateBy 'this,this,this' conditional success tests AST matches snapshot 1`] = `
 [
   "this",
   "this",
@@ -23,7 +23,7 @@ exports[`separateBy 'this,this,this' conditional success tests AST to match snap
 ]
 `;
 
-exports[`separateBy 'this, this' conditional failure tests Error to match snapshot 1`] = `
+exports[`separateBy 'this, this' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -36,7 +36,7 @@ exports[`separateBy 'this, this' conditional failure tests Error to match snapsh
 }
 `;
 
-exports[`separateBy 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`separateBy 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",

@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`whitespace '0' conditional failure tests Error to match snapshot 1`] = `
+exports[`whitespace '0' '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "whitespace",
@@ -13,30 +13,34 @@ exports[`whitespace '0' conditional failure tests Error to match snapshot 1`] = 
 }
 `;
 
-exports[`whitespace '1' conditional success tests AST to match snapshot 1`] = `" "`;
+exports[`whitespace '1' ' ' conditional success tests AST matches snapshot 1`] = `" "`;
 
-exports[`whitespace '2' conditional success tests AST to match snapshot 1`] = `
+exports[`whitespace '2' '
+' conditional success tests AST matches snapshot 1`] = `
 "
 "
 `;
 
-exports[`whitespace '3' conditional success tests AST to match snapshot 1`] = `
+exports[`whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
 "
 "
 `;
 
-exports[`whitespace '4' conditional success tests AST to match snapshot 1`] = `
+exports[`whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
 "
 "
 `;
 
-exports[`whitespace '5' conditional success tests AST to match snapshot 1`] = `
+exports[`whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
 "
   
 "
 `;
 
-exports[`whitespace '6' conditional failure tests Error to match snapshot 1`] = `
+exports[`whitespace '6' 'b' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "whitespace",
@@ -49,32 +53,36 @@ exports[`whitespace '6' conditional failure tests Error to match snapshot 1`] = 
 }
 `;
 
-exports[`optional whitespace '0' conditional success tests AST to match snapshot 1`] = `""`;
+exports[`optional whitespace '0' '' conditional success tests AST matches snapshot 1`] = `""`;
 
-exports[`optional whitespace '1' conditional success tests AST to match snapshot 1`] = `" "`;
+exports[`optional whitespace '1' ' ' conditional success tests AST matches snapshot 1`] = `" "`;
 
-exports[`optional whitespace '2' conditional success tests AST to match snapshot 1`] = `
+exports[`optional whitespace '2' '
+' conditional success tests AST matches snapshot 1`] = `
 "
 "
 `;
 
-exports[`optional whitespace '3' conditional success tests AST to match snapshot 1`] = `
+exports[`optional whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
 "
 "
 `;
 
-exports[`optional whitespace '4' conditional success tests AST to match snapshot 1`] = `
+exports[`optional whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
 "
 "
 `;
 
-exports[`optional whitespace '5' conditional success tests AST to match snapshot 1`] = `
+exports[`optional whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
 "
   
 "
 `;
 
-exports[`optional whitespace '6' conditional failure tests Error to match snapshot 1`] = `
+exports[`optional whitespace '6' 'b' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "eof",
@@ -87,7 +95,7 @@ exports[`optional whitespace '6' conditional failure tests Error to match snapsh
 }
 `;
 
-exports[`newline '0' conditional failure tests Error to match snapshot 1`] = `
+exports[`newline '0' '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "newline",
@@ -100,7 +108,7 @@ exports[`newline '0' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`newline '1' conditional failure tests Error to match snapshot 1`] = `
+exports[`newline '1' ' ' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "newline",
@@ -113,22 +121,26 @@ exports[`newline '1' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`newline '2' conditional success tests AST to match snapshot 1`] = `
+exports[`newline '2' '
+' conditional success tests AST matches snapshot 1`] = `
 "
 "
 `;
 
-exports[`newline '3' conditional success tests AST to match snapshot 1`] = `
+exports[`newline '3' '' conditional success tests AST matches snapshot 1`] = `
 "
 "
 `;
 
-exports[`newline '4' conditional success tests AST to match snapshot 1`] = `
+exports[`newline '4' '
+' conditional success tests AST matches snapshot 1`] = `
 "
 "
 `;
 
-exports[`newline '5' conditional failure tests Error to match snapshot 1`] = `
+exports[`newline '5' '
+  
+' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "eof",
@@ -141,7 +153,7 @@ exports[`newline '5' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`newline '6' conditional failure tests Error to match snapshot 1`] = `
+exports[`newline '6' 'b' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "newline",
@@ -150,6 +162,326 @@ exports[`newline '6' conditional failure tests Error to match snapshot 1`] = `
     "column": 1,
     "index": 0,
     "line": 1,
+  },
+}
+`;
+
+exports[`whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`optional whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`newline '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '5' '
+  
+' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 2,
+    "line": 2,
+  },
+}
+`;
+
+exports[`whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`optional whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`newline '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '5' '
+  
+' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 2,
+    "line": 2,
+  },
+}
+`;
+
+exports[`whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`optional whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`newline '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '5' '
+  
+' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 2,
+    "line": 2,
+  },
+}
+`;
+
+exports[`whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`optional whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`newline '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '5' '
+  
+' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 2,
+    "line": 2,
+  },
+}
+`;
+
+exports[`whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`optional whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`newline '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '5' '
+  
+' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 2,
+    "line": 2,
   },
 }
 `;

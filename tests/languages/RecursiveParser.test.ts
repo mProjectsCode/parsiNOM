@@ -28,7 +28,7 @@ describe('recursive parser test', () => {
 	for (const testCase of testCases) {
 		test(testCase, () => {
 			const res = recursiveParser.tryParse(testCase);
-			console.log(testCase, res);
+			// console.log(testCase, res);
 
 			expect(res.success).toBe(true);
 		});
@@ -41,7 +41,7 @@ describe('recursive parser 2 test', () => {
 	for (const testCase of testCases) {
 		test(testCase, () => {
 			const res = recursiveParser2.tryParse(testCase);
-			console.log(testCase, res);
+			// console.log(testCase, res);
 
 			expect(res.success).toBe(true);
 		});
@@ -54,7 +54,7 @@ describe('recursive parser 3 test', () => {
 	for (const testCase of testCases) {
 		test(testCase, () => {
 			const res = recursiveParser3.a.tryParse(testCase);
-			console.log(testCase, res);
+			// console.log(testCase, res);
 
 			expect(res.success).toBe(true);
 		});

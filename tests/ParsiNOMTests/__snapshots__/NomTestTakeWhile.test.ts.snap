@@ -1,13 +1,13 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sequence '' conditional success tests AST to match snapshot 1`] = `""`;
+exports[`sequence '' conditional success tests AST matches snapshot 1`] = `""`;
 
-exports[`sequence 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
+exports[`sequence 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
 
-exports[`sequence 'aa' conditional success tests AST to match snapshot 1`] = `"aa"`;
+exports[`sequence 'aa' conditional success tests AST matches snapshot 1`] = `"aa"`;
 
-exports[`sequence 'aab' conditional success tests AST to match snapshot 1`] = `"aa"`;
+exports[`sequence 'aab' conditional success tests AST matches snapshot 1`] = `"aa"`;
 
-exports[`sequence 'baa' conditional success tests AST to match snapshot 1`] = `""`;
+exports[`sequence 'baa' conditional success tests AST matches snapshot 1`] = `""`;
 
-exports[`sequence 'foo' conditional success tests AST to match snapshot 1`] = `""`;
+exports[`sequence 'foo' conditional success tests AST matches snapshot 1`] = `""`;

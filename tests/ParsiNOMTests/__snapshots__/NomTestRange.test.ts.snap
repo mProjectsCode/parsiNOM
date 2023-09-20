@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sequence '' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -13,13 +13,13 @@ exports[`sequence '' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'a' conditional success tests AST to match snapshot 1`] = `"a"`;
+exports[`sequence 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
 
-exports[`sequence 'b' conditional success tests AST to match snapshot 1`] = `"b"`;
+exports[`sequence 'b' conditional success tests AST matches snapshot 1`] = `"b"`;
 
-exports[`sequence 'm' conditional success tests AST to match snapshot 1`] = `"m"`;
+exports[`sequence 'm' conditional success tests AST matches snapshot 1`] = `"m"`;
 
-exports[`sequence 'n' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence 'n' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -32,7 +32,7 @@ exports[`sequence 'n' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'z' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence 'z' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -45,7 +45,7 @@ exports[`sequence 'z' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence '#' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence '#' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -58,7 +58,7 @@ exports[`sequence '#' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'A' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence 'A' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -71,7 +71,7 @@ exports[`sequence 'A' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'B' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence 'B' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -84,7 +84,7 @@ exports[`sequence 'B' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'M' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence 'M' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -97,7 +97,7 @@ exports[`sequence 'M' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'N' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence 'N' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a-m",
@@ -110,7 +110,7 @@ exports[`sequence 'N' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`sequence 'Z' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequence 'Z' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a-m",

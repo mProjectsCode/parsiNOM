@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sequenceMap '' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequenceMap '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -13,7 +13,7 @@ exports[`sequenceMap '' conditional failure tests Error to match snapshot 1`] = 
 }
 `;
 
-exports[`sequenceMap 'this' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequenceMap 'this' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'that'",
@@ -26,7 +26,7 @@ exports[`sequenceMap 'this' conditional failure tests Error to match snapshot 1`
 }
 `;
 
-exports[`sequenceMap 'that' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequenceMap 'that' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -39,9 +39,9 @@ exports[`sequenceMap 'that' conditional failure tests Error to match snapshot 1`
 }
 `;
 
-exports[`sequenceMap 'thisthat' conditional success tests AST to match snapshot 1`] = `"thisthat"`;
+exports[`sequenceMap 'thisthat' conditional success tests AST matches snapshot 1`] = `"thisthat"`;
 
-exports[`sequenceMap 'thisthatfoo' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequenceMap 'thisthatfoo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "eof",
@@ -54,7 +54,7 @@ exports[`sequenceMap 'thisthatfoo' conditional failure tests Error to match snap
 }
 `;
 
-exports[`sequenceMap 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`sequenceMap 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",

@@ -8,7 +8,7 @@ describe.each([
 	['aa', true],
 	['aba', true],
 	['baba', false],
-])(`remaining '%s'`, (str, shouldSucceed) => {
+])(`remaining`, (str, shouldSucceed) => {
 	const parser = P.string('a').then(P_UTILS.remaining()).thenEof();
 	testParser(parser, str, shouldSucceed);
 });

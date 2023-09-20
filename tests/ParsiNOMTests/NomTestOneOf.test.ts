@@ -7,7 +7,7 @@ describe.each([
 	['c', true],
 	['afoo', true],
 	['foo', false],
-])(`oneOf '%s'`, (str, shouldSucceed) => {
+])(`oneOf`, (str, shouldSucceed) => {
 	const parser = P.oneOf('abc');
 	testParser(parser, str, shouldSucceed);
 });
@@ -22,7 +22,7 @@ describe.each([
 	['afoo', true],
 	['bafoo', true],
 	['foo', true],
-])(`manyOf '%s'`, (str, shouldSucceed) => {
+])(`manyOf`, (str, shouldSucceed) => {
 	const parser = P.manyOf('abc');
 	testParser(parser, str, shouldSucceed);
 });

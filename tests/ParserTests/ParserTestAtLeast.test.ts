@@ -6,7 +6,7 @@ describe.each([
 	['aa', true],
 	['aaa', true],
 	['abaa', false],
-])(`atLeast '%s'`, (str, shouldSucceed) => {
+])(`atLeast`, (str, shouldSucceed) => {
 	const parser = P.string('a').atLeast(2).thenEof();
 	testParser(parser, str, shouldSucceed);
 });

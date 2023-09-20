@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`skip '' conditional failure tests Error to match snapshot 1`] = `
+exports[`skip '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -13,9 +13,9 @@ exports[`skip '' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`skip 'this' conditional success tests AST to match snapshot 1`] = `"this"`;
+exports[`skip 'this' conditional success tests AST matches snapshot 1`] = `"this"`;
 
-exports[`skip 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`skip 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",

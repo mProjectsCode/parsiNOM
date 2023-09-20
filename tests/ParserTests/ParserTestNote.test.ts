@@ -15,7 +15,7 @@ describe.each([
 	['', false],
 	['this', true],
 	['foo', false],
-])(`node '%s'`, (str, shouldSucceed) => {
+])(`node`, (str, shouldSucceed) => {
 	const parser = P.string('this')
 		.node((value, range) => new NodeClass(value, range))
 		.thenEof();

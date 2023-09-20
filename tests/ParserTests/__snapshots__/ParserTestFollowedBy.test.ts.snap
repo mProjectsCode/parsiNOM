@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`followedBy '' conditional failure tests Error to match snapshot 1`] = `
+exports[`followedBy '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -13,7 +13,7 @@ exports[`followedBy '' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`followedBy 'thisthat' conditional success tests AST to match snapshot 1`] = `
+exports[`followedBy 'thisthat' conditional success tests AST matches snapshot 1`] = `
 {
   "name": "after",
   "range": {
@@ -47,7 +47,7 @@ exports[`followedBy 'thisthat' conditional success tests AST to match snapshot 1
 }
 `;
 
-exports[`followedBy 'this' conditional failure tests Error to match snapshot 1`] = `
+exports[`followedBy 'this' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'that'",
@@ -60,7 +60,7 @@ exports[`followedBy 'this' conditional failure tests Error to match snapshot 1`]
 }
 `;
 
-exports[`followedBy 'that' conditional failure tests Error to match snapshot 1`] = `
+exports[`followedBy 'that' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -73,7 +73,7 @@ exports[`followedBy 'that' conditional failure tests Error to match snapshot 1`]
 }
 `;
 
-exports[`followedBy 'thatthis' conditional failure tests Error to match snapshot 1`] = `
+exports[`followedBy 'thatthis' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
@@ -86,7 +86,7 @@ exports[`followedBy 'thatthis' conditional failure tests Error to match snapshot
 }
 `;
 
-exports[`followedBy 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`followedBy 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",

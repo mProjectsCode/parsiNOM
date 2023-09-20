@@ -7,7 +7,7 @@ describe.each([
 	['that', false],
 	['thatthis', false],
 	['foo', false],
-])(`optional value '%s'`, (str, shouldSucceed) => {
+])(`optional value`, (str, shouldSucceed) => {
 	const parser = P.string('this').then(P.string('that').optional()).thenEof();
 	testParser(parser, str, shouldSucceed);
 });
@@ -19,7 +19,7 @@ describe.each([
 	['that', false],
 	['thatthis', false],
 	['foo', false],
-])(`optional no value '%s'`, (str, shouldSucceed) => {
+])(`optional no value`, (str, shouldSucceed) => {
 	const parser = P.string('this').then(P.string('that').optional('some fallback')).thenEof();
 	testParser(parser, str, shouldSucceed);
 });

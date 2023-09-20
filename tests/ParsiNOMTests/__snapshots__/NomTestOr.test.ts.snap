@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`or '' conditional failure tests Error to match snapshot 1`] = `
+exports[`or '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'that'",
@@ -14,11 +14,11 @@ exports[`or '' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`or 'this' conditional success tests AST to match snapshot 1`] = `"this"`;
+exports[`or 'this' conditional success tests AST matches snapshot 1`] = `"this"`;
 
-exports[`or 'that' conditional success tests AST to match snapshot 1`] = `"that"`;
+exports[`or 'that' conditional success tests AST matches snapshot 1`] = `"that"`;
 
-exports[`or 'thisthat' conditional failure tests Error to match snapshot 1`] = `
+exports[`or 'thisthat' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "eof",
@@ -31,7 +31,7 @@ exports[`or 'thisthat' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`or 'thatthis' conditional failure tests Error to match snapshot 1`] = `
+exports[`or 'thatthis' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "eof",
@@ -44,7 +44,7 @@ exports[`or 'thatthis' conditional failure tests Error to match snapshot 1`] = `
 }
 `;
 
-exports[`or 'foo' conditional failure tests Error to match snapshot 1`] = `
+exports[`or 'foo' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'that'",

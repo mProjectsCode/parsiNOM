@@ -7,7 +7,7 @@ describe.each([
 	['this,this,this', true],
 	['this, this', false],
 	['foo', false],
-])(`separateBy '%s'`, (str, shouldSucceed) => {
+])(`separateBy`, (str, shouldSucceed) => {
 	const parser = P.string('this').separateBy(P.string(',')).thenEof();
 	testParser(parser, str, shouldSucceed);
 });

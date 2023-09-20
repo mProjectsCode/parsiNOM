@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`position 'a' conditional success tests AST to match snapshot 1`] = `
+exports[`position 'a' conditional success tests AST matches snapshot 1`] = `
 {
   "column": 2,
   "index": 1,
@@ -8,7 +8,7 @@ exports[`position 'a' conditional success tests AST to match snapshot 1`] = `
 }
 `;
 
-exports[`position 'b' conditional success tests AST to match snapshot 1`] = `
+exports[`position 'b' conditional success tests AST matches snapshot 1`] = `
 {
   "column": 1,
   "index": 0,
@@ -16,7 +16,7 @@ exports[`position 'b' conditional success tests AST to match snapshot 1`] = `
 }
 `;
 
-exports[`position 'aab' conditional success tests AST to match snapshot 1`] = `
+exports[`position 'aab' conditional success tests AST matches snapshot 1`] = `
 {
   "column": 3,
   "index": 2,
@@ -25,7 +25,7 @@ exports[`position 'aab' conditional success tests AST to match snapshot 1`] = `
 `;
 
 exports[`position 'a
-ab' conditional success tests AST to match snapshot 1`] = `
+ab' conditional success tests AST matches snapshot 1`] = `
 {
   "column": 2,
   "index": 3,

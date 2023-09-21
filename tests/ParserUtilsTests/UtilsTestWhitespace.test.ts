@@ -9,7 +9,7 @@ describe.each([
 	['\r\n', true],
 	['\r\n  \n', true],
 	['b', false],
-])(`whitespace '%#'`, (str, shouldSucceed) => {
+])(`whitespace`, (str, shouldSucceed) => {
 	const parser = P_UTILS.whitespace().thenEof();
 	testParser(parser, str, shouldSucceed);
 });
@@ -22,7 +22,7 @@ describe.each([
 	['\r\n', true],
 	['\r\n  \n', true],
 	['b', false],
-])(`optional whitespace '%#'`, (str, shouldSucceed) => {
+])(`optional whitespace`, (str, shouldSucceed) => {
 	const parser = P_UTILS.optionalWhitespace().thenEof();
 	testParser(parser, str, shouldSucceed);
 });
@@ -35,7 +35,7 @@ describe.each([
 	['\r\n', true],
 	['\r\n  \n', false],
 	['b', false],
-])(`newline '%#'`, (str, shouldSucceed) => {
+])(`newline`, (str, shouldSucceed) => {
 	const parser = P_UTILS.newline().thenEof();
 	testParser(parser, str, shouldSucceed);
 });

@@ -2,10 +2,12 @@ import { Parser } from '../src/Parser';
 import { describe, test, expect } from 'bun:test';
 import { ParseResult, ParseSuccess, ParsingMarker } from '../src/HelperTypes';
 
-export function testParser(parser: Parser<unknown>, str: string, shouldSucceed: boolean): void {
+export function testParser(parser: Parser<unknown>, str: string, shouldSucceed: boolean, testName?: string): void {
 	const result = parser.tryParse(str);
 
-	describe(`'${str}'`, () => {
+	const name = (testName ?? str).replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
+
+	describe(`'${name}'`, () => {
 		test(`success is ${shouldSucceed}`, () => {
 			expect(result.success).toBe(shouldSucceed);
 		});
@@ -49,13 +51,15 @@ export interface ParserTestFailureData {
 
 export type ParserTestData<T> = ParserTestSuccessData<T> | ParserTestFailureData;
 
-export function testParserAdvanced<T>(parser: Parser<T>, data: Readonly<ParserTestData<T>>): void {
+export function testParserAdvanced<T>(parser: Parser<T>, data: Readonly<ParserTestData<T>>, testName?: string): void {
 	const markedResult: ParseResult<ParsingMarker<unknown>> = parser.marker().tryParse(data.input);
 	const alwaysSucceedMarkerResult: ParseSuccess<ParsingMarker<unknown>> = parser.optional(undefined).marker().tryParse(data.input) as ParseSuccess<
 		ParsingMarker<unknown>
 	>;
 
-	describe(`'${data.input}'`, () => {
+	const name = (testName ?? data.input).replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
+
+	describe(`'${name}'`, () => {
 		test(`success is ${data.shouldSucceed}`, () => {
 			expect(markedResult.success).toBe(data.shouldSucceed);
 		});

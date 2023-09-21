@@ -1,3 +1,7 @@
+<!--
+GENERATED FILE - Source File: /mdsource/README.source.md
+-->
+
 # parsiNOM
 
 parsiNOM is a modern, optimized and typesafe parser combinator library, inspired by [parsimmon](https://github.com/jneen/parsimmon).
@@ -8,12 +12,12 @@ parsiNOM has not yet reached stable, so breaking changes can still occur in mino
 
 The idea behind parser combinator is construct your parser out of a bunch of small parsers.
 This makes building parsers easier and more readable.
-On top of that, parser combinators make testing your parser easier, as every part of the parser, such as the parser for string literals, can be tested individually. 
+On top of that, parser combinators make testing your parser easier, as every part of the parser, such as the parser for string literals, can be tested individually.
 
 ### Important Terms
 - `combinator` a function that usually takes in one ore more parsers and returns a single combined parser
 - `matcher` a matcher is a parser that is not constructed from other parsers
-- `yield`/`yields` in this case `yield` refers to the value that a parser generates from a specific input string, if it can match. In the code a parser is generic over the value that it yields, meaning `Parser<string[]>` will yield an array of strings.  
+- `yield`/`yields` in this case `yield` refers to the value that a parser generates from a specific input string, if it can match. In the code a parser is generic over the value that it yields, meaning `Parser<string[]>` will yield an array of strings.
 
 ### Basic Matchers
 
@@ -25,27 +29,35 @@ parsiNOM provides many matchers, which are documented using doc comments. Here w
 
 `P.string` returns a parser that matches `str` and yields `str`.
 
+<!-- snippet: example-string-matcher -->
+<a id='snippet-example-string-matcher'></a>
 ```ts
 const parser = P.string('foo'); // matches the string foo
 
-parser.parse('foo') // succeeds, yields 'foo'
-parser.parse('foobar') // succeeds, yields 'foo'
+expect(parser.parse('foo')).toEqual('foo'); // succeeds, yields 'foo'
+expect(parser.parse('foobar')).toEqual('foo'); // succeeds, yields 'foo'
 
-parser.parse('') // fails
-parser.parse('bar') // fails
+expect(() => parser.parse('')).toThrow(); // fails
+expect(() => parser.parse('bar')).toThrow(); // fails
 ```
+<sup><a href='/tests/Examples.test.ts#L6-L14' title='Snippet source file'>snippet source</a> | <a href='#snippet-example-string-matcher' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
 
 To assert that the parser is at the end of input after parsing you can use `.thenEof()`.
 
+<!-- snippet: example-string-matcher-then-eof -->
+<a id='snippet-example-string-matcher-then-eof'></a>
 ```ts
 const parser = P.string('foo').thenEof(); // matches the string foo
 
-parser.parse('foo') // succeeds, yields 'foo'
+expect(parser.parse('foo')).toEqual('foo'); // succeeds, yields 'foo'
 
-parser.parse('') // fails
-parser.parse('bar') // fails
-parser.parse('foobar') // fails
+expect(() => parser.parse('')).toThrow(); // fails
+expect(() => parser.parse('bar')).toThrow(); // fails
+expect(() => parser.parse('foobar')).toThrow(); // fails
 ```
+<sup><a href='/tests/Examples.test.ts#L18-L26' title='Snippet source file'>snippet source</a> | <a href='#snippet-example-string-matcher-then-eof' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
 
 #### RegExp
 
@@ -54,15 +66,20 @@ parser.parse('foobar') // fails
 `P.regexp` returns a parser that matches the regexp `regexp` and yields the matched string or optionally a specific capture group.
 Most of the time you want to use `^` to only match at the current parser position.
 
+<!-- snippet: example-regexp-matcher -->
+<a id='snippet-example-regexp-matcher'></a>
 ```ts
 const parser = P.regexp(/^[0-9]+/); // matches multiple digits
 
-parser.parse('1') // succeeds, yields '1' as a string
-parser.parse('123') // succeeds, yields '123' as a string
+expect(parser.parse('1')).toEqual('1'); // succeeds, yields '1'
+expect(parser.parse('123')).toEqual('123'); // succeeds, yields '123'
+expect(parser.parse('123foo')).toEqual('123'); // succeeds, yields '123'
 
-parser.parse('') // fails
-parser.parse('foo') // fails
+expect(() => parser.parse('')).toThrow(); // fails
+expect(() => parser.parse('foo')).toThrow(); // fails
 ```
+<sup><a href='/tests/Examples.test.ts#L30-L39' title='Snippet source file'>snippet source</a> | <a href='#snippet-example-regexp-matcher' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
 
 ### Basic Combinators
 
@@ -73,34 +90,46 @@ The most important parser combinators are `or`, `sequence`, `many` and `map`, bu
 `P.or<ParserArr extends readonly Parser<unknown>[]>(...parsers: ParserArr): Parser<TupleToUnion<DeParserArray<ParserArr>>>`
 
 `P.or` accepts any number of parsers as arguments and yields the value of the first parser that succeeds.
-Because of that the order of the parsers is important. 
+Because of that the order of the parsers is important.
 
+<!-- snippet: example-or -->
+<a id='snippet-example-or'></a>
 ```ts
 const parser = P.or(P.string('a'), P.string('b')).thenEof(); // matches 'a' or 'b'
 
-parser.parse('a') // succeeds, yields 'a'
-parser.parse('b') // succeeds, yields 'b'
+expect(parser.parse('a')).toEqual('a'); // succeeds, yields 'a'
+expect(parser.parse('b')).toEqual('b'); // succeeds, yields 'b'
 
-parser.parse('') // fails
-parser.parse('c') // fails
+expect(() => parser.parse('')).toThrow(); // fails
+expect(() => parser.parse('c')).toThrow(); // fails
 ```
+<sup><a href='/tests/Examples.test.ts#L43-L51' title='Snippet source file'>snippet source</a> | <a href='#snippet-example-or' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
 
 In the following example the order of parsers matters.
 
+<!-- snippet: example-or-order-wrong -->
+<a id='snippet-example-or-order-wrong'></a>
 ```ts
 const parser = P.or(P.string('a'), P.string('ab')).thenEof(); // matches only 'a'
 
-parser.parse('a') // succeeds, yields 'a'
+expect(parser.parse('a')).toEqual('a'); // succeeds, yields 'a'
 
-parser.parse('ab') // fails, since the parser will try to match 'a' first, succeeds and then expects the end of input
+expect(() => parser.parse('ab')).toThrow(); // fails, since the parser will try to match 'a' first, succeeds and then expects the end of input
 ```
+<sup><a href='/tests/Examples.test.ts#L55-L61' title='Snippet source file'>snippet source</a> | <a href='#snippet-example-or-order-wrong' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
 
+<!-- snippet: example-or-order-correct -->
+<a id='snippet-example-or-order-correct'></a>
 ```ts
 const parser = P.or(P.string('ab'), P.string('a')).thenEof(); // matches 'ab' or 'a'
 
-parser.parse('a') // succeeds, yields 'a', the parser will try to match 'ab' first but fails, then it backtracks and tries to match 'a'
-parser.parse('ab') // succeeds, yields 'ab'
+expect(parser.parse('a')).toEqual('a'); // succeeds, yields 'a', the parser will try to match 'ab' first but fails, then it backtracks and tries to match 'a'
+expect(parser.parse('ab')).toEqual('ab'); // succeeds, yields 'ab'
 ```
+<sup><a href='/tests/Examples.test.ts#L65-L70' title='Snippet source file'>snippet source</a> | <a href='#snippet-example-or-order-correct' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
 
 #### Matching a Sequence
 
@@ -108,16 +137,20 @@ parser.parse('ab') // succeeds, yields 'ab'
 
 `P.sequence` accepts any number of parsers as arguments and matches them in order, yielding a tuple pf all of their results.
 
+<!-- snippet: example-sequence -->
+<a id='snippet-example-sequence'></a>
 ```ts
 const parser = P.sequence(P.string('a'), P.string('b')).thenEof(); // matches 'a' then 'b'
 
-parser.parse('ab') // succeeds, yields ['a', 'b']
+expect(parser.parse('ab')).toEqual(['a', 'b']); // succeeds, yields ['a', 'b']
 
-parser.parse('') // fails
-parser.parse('a') // fails
-parser.parse('ba') // fails
-parser.parse('foo') // fails
+expect(() => parser.parse('')).toThrow(); // fails
+expect(() => parser.parse('a')).toThrow(); // fails
+expect(() => parser.parse('ba')).toThrow(); // fails
+expect(() => parser.parse('foo')).toThrow(); // fails
 ```
+<sup><a href='/tests/Examples.test.ts#L74-L83' title='Snippet source file'>snippet source</a> | <a href='#snippet-example-sequence' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
 
 #### Matching Something Many Times
 
@@ -125,16 +158,31 @@ parser.parse('foo') // fails
 
 `Parser.many` makes a parser match itself as many times as it can in a row, yielding an array of the parser's result.
 
+<!-- snippet: example-many -->
+<a id='snippet-example-many'></a>
 ```ts
-const parser = P.string('a').many().thenEof(); // matches 'a' as many times as it can  
+const parser = P.string('a').many().thenEof(); // matches 'a' as many times as it can
 
-parser.parse('') // succeeds, yields []
-parser.parse('a') // succeeds, yields ['a']
-parser.parse('aaa') // succeeds, yields ['a', 'a', 'a']
+expect(parser.parse('')).toEqual([]); // succeeds, yields []
+expect(parser.parse('a')).toEqual(['a']); // succeeds, yields ['a']
+expect(parser.parse('aaa')).toEqual(['a', 'a', 'a']); // succeeds, yields ['a', 'a', 'a']
 
-parser.parse('foo') // fails
-parser.parse('aafoo') // fails
+expect(() => parser.parse('foo')).toThrow(); // fails
+expect(() => parser.parse('aafoo')).toThrow(); // fails
 ```
+<sup><a href='/tests/Examples.test.ts#L87-L96' title='Snippet source file'>snippet source</a> | <a href='#snippet-example-many' title='Start of snippet'>anchor</a></sup>
+<a id='snippet-example-many-1'></a>
+```ts
+const parser = P.regexp(/^[0-9]+/).map(x => Number(x)); // matches a number, yielding the number as a number, not a string
+
+expect(parser.parse('1')).toEqual(1); // succeeds, yields '1' as a number
+expect(parser.parse('123')).toEqual(123); // succeeds, yields '123' as a number
+
+expect(() => parser.parse('')).toThrow(); // fails
+expect(() => parser.parse('foo')).toThrow(); // fails
+```
+<sup><a href='/tests/Examples.test.ts#L100-L108' title='Snippet source file'>snippet source</a> | <a href='#snippet-example-many-1' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
 
 #### Transforming what a Parser Yields
 
@@ -142,15 +190,31 @@ parser.parse('aafoo') // fails
 
 `Parser.map` allows for the transformation of the yielded value of a parser.
 
+<!-- snippet: example-many -->
+<a id='snippet-example-many'></a>
+```ts
+const parser = P.string('a').many().thenEof(); // matches 'a' as many times as it can
+
+expect(parser.parse('')).toEqual([]); // succeeds, yields []
+expect(parser.parse('a')).toEqual(['a']); // succeeds, yields ['a']
+expect(parser.parse('aaa')).toEqual(['a', 'a', 'a']); // succeeds, yields ['a', 'a', 'a']
+
+expect(() => parser.parse('foo')).toThrow(); // fails
+expect(() => parser.parse('aafoo')).toThrow(); // fails
+```
+<sup><a href='/tests/Examples.test.ts#L87-L96' title='Snippet source file'>snippet source</a> | <a href='#snippet-example-many' title='Start of snippet'>anchor</a></sup>
+<a id='snippet-example-many-1'></a>
 ```ts
 const parser = P.regexp(/^[0-9]+/).map(x => Number(x)); // matches a number, yielding the number as a number, not a string
 
-parser.parse('1') // succeeds, yields '1' as a number
-parser.parse('123') // succeeds, yields '123' as a number
+expect(parser.parse('1')).toEqual(1); // succeeds, yields '1' as a number
+expect(parser.parse('123')).toEqual(123); // succeeds, yields '123' as a number
 
-parser.parse('') // fails
-parser.parse('foo') // fails
+expect(() => parser.parse('')).toThrow(); // fails
+expect(() => parser.parse('foo')).toThrow(); // fails
 ```
+<sup><a href='/tests/Examples.test.ts#L100-L108' title='Snippet source file'>snippet source</a> | <a href='#snippet-example-many-1' title='Start of snippet'>anchor</a></sup>
+<!-- endSnippet -->
 
 ### There are More
 

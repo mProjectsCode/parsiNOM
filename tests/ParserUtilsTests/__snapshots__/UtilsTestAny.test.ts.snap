@@ -19,8 +19,7 @@ exports[`any 'b' conditional success tests AST matches snapshot 1`] = `"b"`;
 
 exports[`any ' ' conditional success tests AST matches snapshot 1`] = `" "`;
 
-exports[`any '
-' conditional success tests AST matches snapshot 1`] = `
+exports[`any '\n' conditional success tests AST matches snapshot 1`] = `
 "
 "
 `;

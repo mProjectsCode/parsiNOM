@@ -37,9 +37,9 @@ export type BinaryOperator = ComparisonOperator | ArithmeticOperator;
 class Callable {
 	body: AST_Block;
 	args: AST_TypedIdentifier[];
-	retType: Type;
+	retType: TypeWrapper;
 
-	constructor(body: AST_Block, args: AST_TypedIdentifier[], retType: Type) {
+	constructor(body: AST_Block, args: AST_TypedIdentifier[], retType: TypeWrapper) {
 		this.body = body;
 		this.args = args;
 		this.retType = retType;
@@ -54,7 +54,7 @@ class Callable {
 		return this.body.evaluate();
 	}
 
-	validateType(): Type {
+	validateType(): TypeWrapper {
 		for (let i = 0; i < this.args.length; i++) {
 			this.body.createVar(this.args[i], this.args[i].identifier.name, this.args[i].validateType());
 		}
@@ -66,33 +66,75 @@ class Callable {
 			throw new Error(`callable has defined return type of '${this.retType.type}' but it's body has the return type of '${bodyType.type}'`);
 		}
 
-		return this.retType;
+		return TypeOf(BaseType.CALLABLE, this.retType);
 	}
 }
 
 type Value = null | string | number | boolean | Callable;
 
-const TypeC = {
-	STRING: { type: 'STRING' },
-	NUMBER: { type: 'NUMBER' },
-	BOOL: { type: 'BOOL' },
-	CALLABLE: (ret: Type) => {
-		return { type: 'CALLABLE', retType: ret } as const;
-	},
-	VOID: { type: 'VOID' },
-} as const;
-
-type Type = { type: 'STRING' } | { type: 'NUMBER' } | { type: 'BOOL' } | { type: 'CALLABLE'; retType: any } | { type: 'VOID' };
-const TypeArr: Type[] = [{ type: 'STRING' }, { type: 'NUMBER' }, { type: 'BOOL' }, { type: 'CALLABLE', retType: undefined as any }, { type: 'VOID' }];
-
-function isCallable(type: Type): type is { type: 'CALLABLE'; retType: any } {
-	return typeof type === 'object';
+enum BaseType {
+	STRING = 'STRING',
+	NUMBER = 'NUMBER',
+	BOOL = 'BOOL',
+	NULL = 'NULL',
+	CALLABLE = 'CALLABLE',
 }
 
-function isEqualType(typeA: Type, typeB: Type): boolean {
+interface NonGenericTypeWrapper {
+	type: BaseType;
+	isGeneric: false;
+	generic: undefined;
+}
+
+interface GenericTypeWrapper {
+	type: BaseType;
+	isGeneric: true;
+	generic: TypeWrapper;
+}
+
+type TypeWrapper = GenericTypeWrapper | NonGenericTypeWrapper;
+
+function isGeneric(type: BaseType): boolean {
+	switch (type) {
+		case BaseType.CALLABLE:
+			return true;
+		default:
+			return false;
+	}
+}
+
+function TypeOf(type: BaseType, generic?: TypeWrapper): TypeWrapper {
+	if (generic !== undefined) {
+		if (isGeneric(type)) {
+			return {
+				type: type,
+				isGeneric: true,
+				generic: generic,
+			};
+		} else {
+			throw new Error(`can't create generic type from ${type}, ${type} is not generic`);
+		}
+	} else {
+		if (isGeneric(type)) {
+			throw new Error(`can't create non generic type from ${type}, ${type} is generic`);
+		} else {
+			return {
+				type: type,
+				isGeneric: false,
+				generic: undefined,
+			};
+		}
+	}
+}
+
+function isCallable(type: TypeWrapper): boolean {
+	return type.type === BaseType.CALLABLE;
+}
+
+function isEqualType(typeA: TypeWrapper, typeB: TypeWrapper): boolean {
 	if (typeA.type === typeB.type) {
-		if (typeA.type === 'CALLABLE' && typeB.type === 'CALLABLE') {
-			return isEqualType(typeA.retType, typeB.retType);
+		if (typeA.isGeneric && typeB.isGeneric) {
+			return isEqualType(typeA.generic, typeB.generic);
 		}
 
 		return true;
@@ -103,13 +145,13 @@ function isEqualType(typeA: Type, typeB: Type): boolean {
 
 class Variable {
 	name: string;
-	type: Type;
+	type: TypeWrapper;
 	declared: boolean;
 	value: Value | undefined;
 	declaration: AST_Node;
 	lastWrite: AST_Node | undefined;
 
-	constructor(node: AST_Node, name: string, type: Type) {
+	constructor(node: AST_Node, name: string, type: TypeWrapper) {
 		this.name = name;
 		this.type = type;
 		this.value = undefined;
@@ -189,7 +231,7 @@ abstract class AST_Node {
 
 	abstract evaluate(): Value;
 
-	abstract validateType(): Type;
+	abstract validateType(): TypeWrapper;
 }
 
 class AST_String extends AST_Node {
@@ -204,8 +246,8 @@ class AST_String extends AST_Node {
 		return this.value;
 	}
 
-	public validateType(): Type {
-		return TypeC.STRING;
+	public validateType(): TypeWrapper {
+		return TypeOf(BaseType.STRING);
 	}
 }
 
@@ -221,8 +263,8 @@ class AST_Number extends AST_Node {
 		return this.value;
 	}
 
-	public validateType(): Type {
-		return TypeC.NUMBER;
+	public validateType(): TypeWrapper {
+		return TypeOf(BaseType.NUMBER);
 	}
 }
 
@@ -238,8 +280,8 @@ class AST_Bool extends AST_Node {
 		return this.value;
 	}
 
-	public validateType(): Type {
-		return TypeC.BOOL;
+	public validateType(): TypeWrapper {
+		return TypeOf(BaseType.BOOL);
 	}
 }
 
@@ -257,15 +299,15 @@ class AST_Identifier extends AST_Node {
 		throw new Error('can not evaluate identifier');
 	}
 
-	public validateType(): Type {
-		return TypeC.VOID;
+	public validateType(): TypeWrapper {
+		return TypeOf(BaseType.NULL);
 	}
 }
 
 class AST_TypeAnnotation extends AST_Node {
-	type: Type;
+	type: TypeWrapper;
 
-	constructor(range: ParsingRange, type: Type) {
+	constructor(range: ParsingRange, type: TypeWrapper) {
 		super(range);
 		this.type = type;
 	}
@@ -274,14 +316,14 @@ class AST_TypeAnnotation extends AST_Node {
 		throw new Error('can not evaluate type annotation');
 	}
 
-	public validateType(): Type {
-		for (const entry of TypeArr) {
-			if (isEqualType(entry, this.type)) {
-				return entry;
+	public validateType(): TypeWrapper {
+		for (const entry of Object.values(BaseType)) {
+			if (this.type.type === entry) {
+				return this.type;
 			}
 		}
 
-		throw new Error(`invalid type ${this.type}`);
+		throw new Error(`invalid type ${this.type.type}`);
 	}
 }
 
@@ -302,7 +344,7 @@ class AST_TypedIdentifier extends AST_Node {
 		throw new Error('can not evaluate typed identifier');
 	}
 
-	public validateType(): Type {
+	public validateType(): TypeWrapper {
 		return this.type.validateType();
 	}
 }
@@ -322,7 +364,7 @@ class AST_VarRead extends AST_Node {
 		return scope.readVar(this, this.identifier.name);
 	}
 
-	public validateType(): Type {
+	public validateType(): TypeWrapper {
 		const scope = this.getScope();
 		return scope.readVarType(this.identifier.name);
 	}
@@ -352,25 +394,25 @@ class AST_Binary extends AST_Node {
 
 		switch (this.operator) {
 			case '>':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
 					// @ts-ignore
 					return lvalue > rvalue;
 				}
 				break;
 			case '>=':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
 					// @ts-ignore
 					return lvalue >= rvalue;
 				}
 				break;
 			case '<=':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
 					// @ts-ignore
 					return lvalue <= rvalue;
 				}
 				break;
 			case '<':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
 					// @ts-ignore
 					return lvalue < rvalue;
 				}
@@ -381,54 +423,54 @@ class AST_Binary extends AST_Node {
 				return lvalue !== rvalue;
 			case '+':
 				if (isEqualType(ltype, rtype)) {
-					if (isEqualType(ltype, TypeC.NUMBER)) {
+					if (ltype.type === BaseType.NUMBER) {
 						// @ts-ignore
 						return lvalue + rvalue;
 					}
-					if (isEqualType(ltype, TypeC.STRING)) {
+					if (ltype.type === BaseType.STRING) {
 						// @ts-ignore
 						return lvalue + rvalue;
 					}
 				}
 				break;
 			case '-':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
 					// @ts-ignore
 					return lvalue - rvalue;
 				}
 				break;
 			case '*':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
 					// @ts-ignore
 					return lvalue * rvalue;
 				}
 				break;
 			case '/':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
 					// @ts-ignore
 					return lvalue / rvalue;
 				}
 				break;
 			case '%':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
 					// @ts-ignore
 					return ((lvalue % rvalue) + rvalue) % rvalue;
 				}
 				break;
 			case '^':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
 					// @ts-ignore
 					return lvalue ** rvalue;
 				}
 				break;
 			case '&&':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.BOOL)) {
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.BOOL) {
 					// @ts-ignore
 					return lvalue && rvalue;
 				}
 				break;
 			case '||':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.BOOL)) {
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.BOOL) {
 					// @ts-ignore
 					return lvalue || rvalue;
 				}
@@ -438,78 +480,78 @@ class AST_Binary extends AST_Node {
 		throw new Error(`operator '${this.operator}' is not applicable to '${lvalue}' (${ltype}) and '${rvalue}' (${rtype})`);
 	}
 
-	public validateType(): Type {
+	public validateType(): TypeWrapper {
 		const ltype = this.lhs.validateType();
 		const rtype = this.rhs.validateType();
 
 		switch (this.operator) {
 			case '>':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
-					return TypeC.NUMBER;
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
+					return TypeOf(BaseType.NUMBER);
 				}
 				break;
 			case '>=':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
-					return TypeC.NUMBER;
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
+					return TypeOf(BaseType.NUMBER);
 				}
 				break;
 			case '<=':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
-					return TypeC.NUMBER;
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
+					return TypeOf(BaseType.NUMBER);
 				}
 				break;
 			case '<':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
-					return TypeC.NUMBER;
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
+					return TypeOf(BaseType.NUMBER);
 				}
 				break;
 			case '==':
-				return TypeC.BOOL;
+				return TypeOf(BaseType.BOOL);
 			case '!=':
-				return TypeC.BOOL;
+				return TypeOf(BaseType.BOOL);
 			case '+':
 				if (isEqualType(ltype, rtype)) {
-					if (isEqualType(ltype, TypeC.NUMBER)) {
-						return TypeC.NUMBER;
+					if (ltype.type === BaseType.NUMBER) {
+						return TypeOf(BaseType.NUMBER);
 					}
-					if (isEqualType(ltype, TypeC.STRING)) {
-						return TypeC.STRING;
+					if (ltype.type === BaseType.STRING) {
+						return TypeOf(BaseType.STRING);
 					}
 				}
 				break;
 			case '-':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
-					return TypeC.NUMBER;
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
+					return TypeOf(BaseType.NUMBER);
 				}
 				break;
 			case '*':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
-					return TypeC.NUMBER;
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
+					return TypeOf(BaseType.NUMBER);
 				}
 				break;
 			case '/':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
-					return TypeC.NUMBER;
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
+					return TypeOf(BaseType.NUMBER);
 				}
 				break;
 			case '%':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
-					return TypeC.NUMBER;
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
+					return TypeOf(BaseType.NUMBER);
 				}
 				break;
 			case '^':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.NUMBER)) {
-					return TypeC.NUMBER;
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.NUMBER) {
+					return TypeOf(BaseType.NUMBER);
 				}
 				break;
 			case '&&':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.BOOL)) {
-					return TypeC.BOOL;
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.BOOL) {
+					return TypeOf(BaseType.BOOL);
 				}
 				break;
 			case '||':
-				if (isEqualType(ltype, rtype) && isEqualType(ltype, TypeC.BOOL)) {
-					return TypeC.BOOL;
+				if (isEqualType(ltype, rtype) && ltype.type === BaseType.BOOL) {
+					return TypeOf(BaseType.BOOL);
 				}
 				break;
 		}
@@ -540,8 +582,8 @@ class AST_VarWrite extends AST_Node {
 		return null;
 	}
 
-	public validateType(): Type {
-		return TypeC.VOID;
+	public validateType(): TypeWrapper {
+		return TypeOf(BaseType.NULL);
 	}
 }
 
@@ -565,11 +607,11 @@ class AST_VarDeclaration extends AST_Node {
 		return null;
 	}
 
-	public validateType(): Type {
+	public validateType(): TypeWrapper {
 		const scope = this.getScope();
 		scope.createVar(this, this.identifier.identifier.name, this.identifier.validateType(), this.value);
 
-		return TypeC.VOID;
+		return TypeOf(BaseType.NULL);
 	}
 }
 
@@ -603,14 +645,14 @@ class AST_Block extends AST_Node {
 		return value;
 	}
 
-	public validateType(): Type {
+	public validateType(): TypeWrapper {
 		let value = null;
 		for (const statement of this.statements) {
 			// console.log(`validate statement `);
 			value = statement.validateType();
 		}
 
-		return value ?? TypeC.VOID;
+		return value ?? TypeOf(BaseType.NULL);
 	}
 
 	declareVar(node: AST_Node, name: string, value: Value): void {
@@ -661,7 +703,7 @@ class AST_Block extends AST_Node {
 		return variable;
 	}
 
-	createVar(node: AST_Node, name: string, type: Type, valueNode?: AST_Node): void {
+	createVar(node: AST_Node, name: string, type: TypeWrapper, valueNode?: AST_Node): void {
 		// console.log(`create var ${name}`);
 
 		const variable = new Variable(node, name, type);
@@ -672,7 +714,7 @@ class AST_Block extends AST_Node {
 		this.vars.set(name, variable);
 	}
 
-	readVarType(name: string): Type {
+	readVarType(name: string): TypeWrapper {
 		const variable = this.vars.get(name);
 
 		if (variable === undefined) {
@@ -715,12 +757,12 @@ class AST_FunctionDeclaration extends AST_Node {
 		return null;
 	}
 
-	public validateType(): Type {
+	public validateType(): TypeWrapper {
 		const scope = this.getScope();
 		this.callable = new Callable(this.body, this.args, this.type.validateType());
 		scope.createVar(this, this.name.name, this.callable.validateType());
 
-		return TypeC.VOID;
+		return TypeOf(BaseType.NULL);
 	}
 }
 
@@ -753,7 +795,7 @@ class AST_FunctionCall extends AST_Node {
 		}
 	}
 
-	public validateType(): Type {
+	public validateType(): TypeWrapper {
 		const scope = this.getScope();
 		const varType = scope.readVarType(this.name.name);
 
@@ -775,7 +817,7 @@ class AST_FunctionCall extends AST_Node {
 				}
 			}
 
-			return varType;
+			return (varType as GenericTypeWrapper).generic;
 		} else {
 			throw new Error('can not call non callable');
 		}
@@ -787,7 +829,7 @@ interface LangRules {
 	number: AST_Number;
 	bool: AST_Bool;
 	identifier: AST_Identifier;
-	type: Type;
+	type: TypeWrapper;
 	typeAnnotation: AST_TypeAnnotation;
 	typedIdentifier: AST_TypedIdentifier;
 	functionDeclaration: AST_FunctionDeclaration;
@@ -839,16 +881,16 @@ const lang = P.createLanguage<LangRules>({
 	type: (language, ref) =>
 		P.or(
 			P.sequenceMap(
-				(_1, _2, subType, _3) => TypeC.CALLABLE(subType),
-				P.string(TypeC.CALLABLE(undefined as any).type.toLowerCase()),
+				(_1, _2, subType, _3) => TypeOf(BaseType.CALLABLE, subType),
+				P.string(BaseType.CALLABLE.toLowerCase()),
 				P.string('<'),
 				ref.type,
 				P.string('>'),
 			),
-			P.string(TypeC.STRING.type.toLowerCase()).result(TypeC.STRING),
-			P.string(TypeC.NUMBER.type.toLowerCase()).result(TypeC.NUMBER),
-			P.string(TypeC.BOOL.type.toLowerCase()).result(TypeC.BOOL),
-			P.string(TypeC.VOID.type.toLowerCase()).result(TypeC.VOID),
+			P.string(BaseType.STRING.toLowerCase()).result(TypeOf(BaseType.STRING)),
+			P.string(BaseType.NUMBER.toLowerCase()).result(TypeOf(BaseType.NUMBER)),
+			P.string(BaseType.BOOL.toLowerCase()).result(TypeOf(BaseType.BOOL)),
+			P.string(BaseType.NULL.toLowerCase()).result(TypeOf(BaseType.NULL)),
 		).describe('type'),
 	typeAnnotation: (language, ref) =>
 		P.sequenceMap((_1, _2, _3, type) => type, optW, P.string(':'), optW, language.type).node((x, range) => new AST_TypeAnnotation(range, x)),
@@ -935,7 +977,7 @@ describe('prog lang', () => {
 		const type = ast.validateType();
 		const res = ast.evaluate();
 
-		expect(type).toEqual(TypeC.NUMBER);
+		expect(type.type).toEqual(BaseType.NUMBER);
 		expect(res).toBe(3);
 	});
 
@@ -951,7 +993,7 @@ hello();
 		// console.log('--- evaluate ---');
 		const res = ast.evaluate();
 
-		expect(type).toEqual(TypeC.STRING);
+		expect(type.type).toEqual(BaseType.STRING);
 		expect(res).toBe('hello world');
 	});
 
@@ -969,7 +1011,7 @@ get2squared() + 1;
 		// console.log('--- evaluate ---');
 		const res = ast.evaluate();
 
-		expect(type).toEqual(TypeC.NUMBER);
+		expect(type.type).toEqual(BaseType.NUMBER);
 		expect(res).toBe(5);
 	});
 
@@ -988,7 +1030,7 @@ get2squared() + 1;
 		// console.log('--- evaluate ---');
 		const res = ast.evaluate();
 
-		expect(type).toEqual(TypeC.NUMBER);
+		expect(type.type).toEqual(BaseType.NUMBER);
 		expect(res).toBe(5);
 	});
 

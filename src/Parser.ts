@@ -288,7 +288,7 @@ export class Parser<const SType extends STypeBase> {
 	 *
 	 * @param fn
 	 */
-	map<const OtherSType extends STypeBase>(fn: (value: SType) => OtherSType): Parser<OtherSType> {
+	map<OtherSType extends STypeBase>(fn: (value: SType) => OtherSType): Parser<OtherSType> {
 		const _this = this;
 		return new Parser(function _map(context): ParseResult<OtherSType> {
 			const result = _this.p(context);

@@ -28,10 +28,10 @@ export class P {
 	 *
 	 * @param parsers
 	 */
-	static sequence<const SType extends STypeBase, ParserArr extends readonly Parser<SType>[]>(...parsers: ParserArr): Parser<DeParserArray<ParserArr>> {
+	static sequence<ParserArr extends readonly Parser<unknown>[]>(...parsers: ParserArr): Parser<DeParserArray<ParserArr>> {
 		return new Parser<DeParserArray<ParserArr>>(function _sequence(context): ParseResult<DeParserArray<ParserArr>> {
 			let result = undefined;
-			const value: SType[] = new Array(parsers.length);
+			const value: unknown[] = new Array(parsers.length);
 
 			for (let i = 0; i < parsers.length; i++) {
 				const p = parsers[i];
@@ -56,13 +56,13 @@ export class P {
 	 * @param fn
 	 * @param parsers
 	 */
-	static sequenceMap<const SType extends STypeBase, OtherSType extends STypeBase, ParserArr extends Parser<SType>[]>(
+	static sequenceMap<OtherSType extends STypeBase, ParserArr extends readonly Parser<unknown>[]>(
 		fn: (...value: DeParserArray<ParserArr>) => OtherSType,
 		...parsers: ParserArr
 	): Parser<OtherSType> {
 		return new Parser<OtherSType>(function _sequenceMap(context): ParseResult<OtherSType> {
 			let result = undefined;
-			const value: SType[] = new Array(parsers.length);
+			const value: unknown[] = new Array(parsers.length);
 
 			for (let i = 0; i < parsers.length; i++) {
 				const p = parsers[i];
@@ -121,7 +121,7 @@ export class P {
 	 *
 	 * @param parsers
 	 */
-	static or<const ParserArr extends readonly Parser<unknown>[]>(...parsers: ParserArr): Parser<TupleToUnion<DeParserArray<ParserArr>>> {
+	static or<ParserArr extends readonly Parser<unknown>[]>(...parsers: ParserArr): Parser<TupleToUnion<DeParserArray<ParserArr>>> {
 		if (parsers.length === 0) {
 			throw new Error('or must have at least one alternative');
 		}

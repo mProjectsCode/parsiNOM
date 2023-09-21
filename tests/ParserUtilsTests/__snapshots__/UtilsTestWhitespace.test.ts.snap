@@ -485,3 +485,67 @@ exports[`newline '5' '
   },
 }
 `;
+
+exports[`whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`optional whitespace '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`optional whitespace '5' '
+  
+' conditional success tests AST matches snapshot 1`] = `
+"
+  
+"
+`;
+
+exports[`newline '3' '' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '4' '
+' conditional success tests AST matches snapshot 1`] = `
+"
+"
+`;
+
+exports[`newline '5' '
+  
+' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "eof",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 2,
+    "line": 2,
+  },
+}
+`;

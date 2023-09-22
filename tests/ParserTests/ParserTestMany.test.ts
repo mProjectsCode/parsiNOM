@@ -1,5 +1,6 @@
 import { P } from '../../src/ParsiNOM';
 import { ParserTestData, testParser, testParserAdvanced } from '../TestHelpers';
+
 describe.each([
 	['', true],
 	['a', true],

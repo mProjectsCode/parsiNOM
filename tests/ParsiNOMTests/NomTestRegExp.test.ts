@@ -1,5 +1,7 @@
 import { P } from '../../src/ParsiNOM';
 import { testParser } from '../TestHelpers';
+import { describe } from 'bun:test';
+
 describe.each([
 	['', false],
 	['this', true],

@@ -1,6 +1,4 @@
-import { P } from '../../src/ParsiNOM';
 import * as JsonData from './__data__/JsonData';
-import { ParseFailure } from '../../src/HelperTypes';
 import { jsonParser } from '../../profiling/Json';
 import { benchmark } from 'kelonio';
 

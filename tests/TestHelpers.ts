@@ -1,5 +1,5 @@
 import { Parser } from '../src/Parser';
-import { describe, test, expect } from 'bun:test';
+import { describe, expect, test } from 'bun:test';
 import { ParseResult, ParseSuccess, ParsingMarker } from '../src/HelperTypes';
 
 export function testParser(parser: Parser<unknown>, str: string, shouldSucceed: boolean, testName?: string): void {

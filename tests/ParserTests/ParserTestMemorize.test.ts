@@ -56,11 +56,25 @@ describe.each<ParserTestData<string>>([
 		ast: 'aa',
 		toIndex: 5,
 	},
+	{
+		input: '_aabaa',
+		shouldSucceed: true,
+		ast: 'aa',
+		toIndex: 6,
+	},
+	{
+		input: '_aadaa',
+		shouldSucceed: true,
+		ast: 'aa',
+		toIndex: 6,
+	},
 ])(`memorize advanced`, data => {
-	const memoParser = P.string('a')
+	const baseParser = P.string('a')
 		.atLeast(1)
-		.map(x => x.join(''))
-		.memorize();
+		.map(x => x.join(''));
+
+	const memoParser = baseParser.memorize();
+
 	const parser = P.string('_')
 		.then(P.or(memoParser.skip(P.string('b')), memoParser.skip(P.string('c')), memoParser.skip(P.string('d'))))
 		.skip(memoParser);
@@ -69,4 +83,26 @@ describe.each<ParserTestData<string>>([
 	// TODO: a solution would be a custom parser (P.custom()) that counts the times it has been called.
 
 	testParserAdvanced(parser, data);
+});
+
+describe('memorize validate', () => {
+	const input = '_aadaa';
+
+	const baseParser = P.string('a')
+		.atLeast(1)
+		.map(x => x.join(''));
+	const memoParser = baseParser.memorize();
+
+	const baseParserSpy = spyOn(baseParser, 'p');
+	const memoParserSpy = spyOn(memoParser, 'p');
+
+	const parser = P.string('_')
+		.then(P.or(memoParser.skip(P.string('b')), memoParser.skip(P.string('c')), memoParser.skip(P.string('d'))))
+		.skip(memoParser);
+
+	parser.parse(input);
+
+	// once for the or and once for the skip
+	expect(baseParserSpy).toHaveBeenCalledTimes(2);
+	expect(memoParserSpy).toHaveBeenCalledTimes(4);
 });

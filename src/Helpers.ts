@@ -1,4 +1,4 @@
-import { ParseResult, STypeBase } from './HelperTypes';
+import { ParseResult, ParsingPosition, STypeBase } from './HelperTypes';
 import { Parser } from './Parser';
 
 export function arrayUnion(a: string[] | undefined, b: string[] | undefined): string[] {
@@ -26,6 +26,10 @@ export function arrayUnion(a: string[] | undefined, b: string[] | undefined): st
 	}
 	ret.sort();
 	return ret;
+}
+
+export function getIndex(position: ParsingPosition | undefined): number {
+	return position === undefined ? -1 : position.index;
 }
 
 export function validateRange(min: number, max: number): void {

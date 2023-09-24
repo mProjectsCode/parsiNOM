@@ -5,8 +5,8 @@ describe.each([
 	['', false],
 	['this', true],
 	['foo', false],
-])(`describe`, (str, shouldSucceed) => {
-	const parser = P.string('this').describe('some error');
+])(`box`, (str, shouldSucceed) => {
+	const parser = P.string('this').box('some error');
 	testParser(parser, str, shouldSucceed);
 });
 
@@ -15,13 +15,13 @@ describe.each<ParserTestData<string>>([
 		input: '',
 		shouldSucceed: false,
 		furthest: 0,
-		expected: ['some error'],
+		expected: [`('this' as part of something)`],
 	},
 	{
 		input: 'foo',
 		shouldSucceed: false,
 		furthest: 0,
-		expected: ['some error'],
+		expected: [`('this' as part of something)`],
 	},
 	{
 		input: 'this',
@@ -29,8 +29,8 @@ describe.each<ParserTestData<string>>([
 		ast: 'this',
 		toIndex: 4,
 	},
-])(`describe advanced`, data => {
-	const parser = P.string('this').describe('some error');
+])(`box advanced`, data => {
+	const parser = P.string('this').box('something');
 	testParserAdvanced(parser, data);
 });
 
@@ -39,19 +39,19 @@ describe.each<ParserTestData<string[]>>([
 		input: '',
 		shouldSucceed: false,
 		furthest: 0,
-		expected: ['some error'],
+		expected: [`('this' as part of something)`],
 	},
 	{
 		input: 'this',
 		shouldSucceed: false,
 		furthest: 4,
-		expected: ['some error'],
+		expected: [`('that' as part of something)`],
 	},
 	{
 		input: 'that',
 		shouldSucceed: false,
 		furthest: 0,
-		expected: ['some error'],
+		expected: [`('this' as part of something)`],
 	},
 	{
 		input: 'thisthat',
@@ -69,10 +69,10 @@ describe.each<ParserTestData<string[]>>([
 		input: 'foo',
 		shouldSucceed: false,
 		furthest: 0,
-		expected: ['some error'],
+		expected: [`('this' as part of something)`],
 	},
-])(`describe sequence advanced`, data => {
-	const parser = P.sequence(P.string('this'), P.string('that')).describe('some error');
+])(`box sequence advanced`, data => {
+	const parser = P.sequence(P.string('this'), P.string('that')).box('something');
 	testParserAdvanced(parser, data);
 });
 
@@ -81,7 +81,7 @@ describe.each<ParserTestData<[[string[], string] | undefined, string]>>([
 		input: 'aaaaa',
 		shouldSucceed: false,
 		furthest: 5,
-		expected: ['some error', "'b'"],
+		expected: [`('a' as part of many 'a's)`, "'b'"],
 	},
 	{
 		input: 'aab',
@@ -101,7 +101,7 @@ describe.each<ParserTestData<[[string[], string] | undefined, string]>>([
 		ast: [[['a', 'a'], 'b'], 'c'],
 		toIndex: 4,
 	},
-])(`describe multiple errors advanced`, data => {
-	const parser = P.sequence(P.sequence(P.string('a').many().describe('some error'), P.string('b')).optional(), P.string('c'));
+])(`box multiple errors advanced`, data => {
+	const parser = P.sequence(P.sequence(P.string('a').many().box("many 'a's"), P.string('b')).optional(), P.string('c'));
 	testParserAdvanced(parser, data);
 });

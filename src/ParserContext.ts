@@ -1,4 +1,4 @@
-import { arrayUnion } from './Helpers';
+import { arrayUnion, getIndex } from './Helpers';
 import { ParseResult, ParsingPosition, STypeBase } from './HelperTypes';
 
 export class ParserContext {
@@ -109,18 +109,14 @@ export class ParserContext {
 			return b;
 		}
 
-		if (this.getIndex(b.furthest) > this.getIndex(a.furthest)) {
+		if (getIndex(b.furthest) > getIndex(a.furthest)) {
 			return b;
 		}
 
-		const expected = this.getIndex(b.furthest) === this.getIndex(a.furthest) ? arrayUnion(a.expected, b.expected) : a.expected;
+		const expected = getIndex(b.furthest) === getIndex(a.furthest) ? arrayUnion(a.expected, b.expected) : a.expected;
 
 		b.furthest = a.furthest;
 		b.expected = expected;
 		return b;
-	}
-
-	private getIndex(position: ParsingPosition | undefined): number {
-		return position === undefined ? -1 : position.index;
 	}
 }

@@ -11,7 +11,7 @@ import {
 	STypeBase,
 } from './HelperTypes';
 import { P } from './ParsiNOM';
-import { P_HELPERS, validateRange } from './Helpers';
+import { getIndex, P_HELPERS, validateRange } from './Helpers';
 import { P_UTILS } from './ParserUtils';
 
 export class Parser<const SType extends STypeBase> {
@@ -373,21 +373,45 @@ export class Parser<const SType extends STypeBase> {
 	}
 
 	/**
-	 * Lets you provide a customized error message for when the parser fails.
+	 * Overrides the error message of this parser when it fails.
 	 *
 	 * @param expected
 	 */
-	describe(expected: string | string[] = []): Parser<SType> {
-		if (!Array.isArray(expected)) {
+	describe(expected: string | string[]): Parser<SType> {
+		if (typeof expected === 'string') {
 			expected = [expected];
 		}
+
 		const _this = this;
 
 		return new Parser<SType>(function _describe(context) {
 			const result = _this.p(context);
-			if (!result.success) {
+
+			if (result.expected !== undefined && result.expected.length !== 0) {
 				result.expected = expected as string[];
 			}
+
+			return result;
+		});
+	}
+
+	/**
+	 * Aggregates the error messages of the parser and gives them an overarching description.
+	 *
+	 * a or b => (a or b as part of `expected`)
+	 *
+	 * @param expected
+	 */
+	box(expected: string): Parser<SType> {
+		const _this = this;
+
+		return new Parser<SType>(function _describe(context) {
+			const result = _this.p(context);
+
+			if (result.expected !== undefined && result.expected.length !== 0) {
+				result.expected = [`(${result.expected?.join(' or ')} as part of ${expected})`];
+			}
+
 			return result;
 		});
 	}

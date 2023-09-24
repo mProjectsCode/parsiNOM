@@ -1,6 +1,8 @@
 import { ParserTestData, testParserAdvanced } from '../TestHelpers';
 import { P } from '../../src/ParsiNOM';
+import { test, describe, spyOn, expect } from 'bun:test';
 
+// @ts-ignore
 describe.each<ParserTestData<string>>([
 	{
 		input: '',
@@ -68,7 +70,8 @@ describe.each<ParserTestData<string>>([
 		ast: 'aa',
 		toIndex: 6,
 	},
-])(`memorize advanced`, data => {
+	// @ts-ignore
+])(`memorize advanced`, (data: ParserTestData<string>) => {
 	const baseParser = P.string('a')
 		.atLeast(1)
 		.map(x => x.join(''));
@@ -85,7 +88,7 @@ describe.each<ParserTestData<string>>([
 	testParserAdvanced(parser, data);
 });
 
-describe('memorize validate', () => {
+test('memorize validate', () => {
 	const input = '_aadaa';
 
 	const baseParser = P.string('a')

@@ -1,0 +1,29 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`box '' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "('this' as part of some error)",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`box 'this' conditional success tests AST matches snapshot 1`] = `"this"`;
+
+exports[`box 'foo' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "('this' as part of some error)",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;

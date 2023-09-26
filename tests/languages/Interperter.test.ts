@@ -2,6 +2,7 @@ import { ParsingRange, TupleToUnion } from '../../src/HelperTypes';
 import { P } from '../../src/ParsiNOM';
 import { P_UTILS } from '../../src/ParserUtils';
 import { Parser } from '../../src/Parser';
+import { describe, test, expect } from 'bun:test';
 
 /*
  * ----- INTERPRETER -----

@@ -1,5 +1,6 @@
 import { Parser } from '../../src/Parser';
 import { P } from '../../src/ParsiNOM';
+import { describe, test, expect } from 'bun:test';
 
 const number = P.regexp(/^[0-9]+/);
 const recursiveParser: Parser<string> = P.or(P.reference(() => recursiveParser).wrap(P.string('('), P.string(')')), number);

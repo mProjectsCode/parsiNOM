@@ -1,6 +1,6 @@
 import * as JsonData from './__data__/JsonData';
 import { jsonParser } from '../../profiling/Json';
-import { benchmark } from 'kelonio';
+import { describe, test, expect } from 'bun:test';
 
 describe('json parser', () => {
 	const testCases: unknown[] = ['1', [1, '2'], { a: 1, b: ['2', false] }, { a: { foo: '1' }, b: null, c: undefined }];
@@ -24,15 +24,15 @@ describe('json parser', () => {
 			expect(res.value).toEqual(testCase);
 		});
 
-		it(JSON.stringify(testCase) + ' performance', async () => {
-			await benchmark.record(['JSON parser', str], () => {
-				jsonParser.tryParse(str);
-			});
-
-			await benchmark.record(['js JSON parser', str], () => {
-				JSON.parse(str);
-			});
-		});
+		// it(JSON.stringify(testCase) + ' performance', async () => {
+		// 	await benchmark.record(['JSON parser', str], () => {
+		// 		jsonParser.tryParse(str);
+		// 	});
+		//
+		// 	await benchmark.record(['js JSON parser', str], () => {
+		// 		JSON.parse(str);
+		// 	});
+		// });
 	}
 
 	// describe('json perf', () => {

@@ -1,5 +1,6 @@
 import { P_UTILS } from '../../src/ParserUtils';
 import { testParser } from '../TestHelpers';
+import { describe } from 'bun:test';
 
 describe.each([
 	['', false],

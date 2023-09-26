@@ -2,7 +2,6 @@ import { ParserTestData, testParserAdvanced } from '../TestHelpers';
 import { P } from '../../src/ParsiNOM';
 import { test, describe, spyOn, expect } from 'bun:test';
 
-// @ts-ignore
 describe.each<ParserTestData<string>>([
 	{
 		input: '',
@@ -70,8 +69,7 @@ describe.each<ParserTestData<string>>([
 		ast: 'aa',
 		toIndex: 6,
 	},
-	// @ts-ignore
-])(`memorize advanced`, (data: ParserTestData<string>) => {
+])(`memorize advanced`, data => {
 	const baseParser = P.string('a')
 		.atLeast(1)
 		.map(x => x.join(''));
@@ -81,9 +79,6 @@ describe.each<ParserTestData<string>>([
 	const parser = P.string('_')
 		.then(P.or(memoParser.skip(P.string('b')), memoParser.skip(P.string('c')), memoParser.skip(P.string('d'))))
 		.skip(memoParser);
-
-	// since bun test doesn't support it yet, we sadly can't test if memorize actually caches the parser runs
-	// TODO: a solution would be a custom parser (P.custom()) that counts the times it has been called.
 
 	testParserAdvanced(parser, data);
 });

@@ -1,4 +1,5 @@
 import { P } from '../src/ParsiNOM';
+import { describe, test, expect } from 'bun:test';
 
 describe('examples', () => {
 	describe('readme', () => {

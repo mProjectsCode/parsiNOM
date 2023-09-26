@@ -2,6 +2,7 @@ import { Parser } from '../../src/Parser';
 import { P } from '../../src/ParsiNOM';
 import { STypeBase } from '../../src/HelperTypes';
 import { P_UTILS } from '../../src/ParserUtils';
+import { describe, test, expect } from 'bun:test';
 
 const _ = P_UTILS.optionalWhitespace();
 

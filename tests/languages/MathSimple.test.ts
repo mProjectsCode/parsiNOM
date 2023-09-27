@@ -70,7 +70,7 @@ function binaryLeft<OperatorSType extends STypeBase, OtherSType extends STypeBas
 }
 
 let Num: Parser<readonly ['Number', number]> = P.regexp(/[0-9]+/)
-	.map(str => ['Number', Number.parseInt(str)])
+	.map(str => ['Number', Number.parseInt(str)] as const)
 	.describe('number');
 
 let Basic: Parser<unknown> = P.reference(() => P.string('(').then(Math).skip(P.string(')')).or(Num));

@@ -1,6 +1,6 @@
 {
 	"name": "@lemons_dev/parsinom",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"description": "",
 	"main": "ParsiNOM.js",
 	"scripts": {
@@ -8,6 +8,7 @@
 		"test": "bun test",
 		"test-adv": "bun test -t=advanced",
 		"snapshots": "bun test --update-snapshots",
+		"perf": "bun run profiling/Profiling.ts",
 		"format": "prettier --write ."
 	},
 	"keywords": [],
@@ -18,7 +19,6 @@
 		"url": "https://github.com/mProjectsCode/parsiNOM.git"
 	},
 	"devDependencies": {
-		"@types/jest": "^29.5.5",
 		"bun-plugin-dts": "^0.1.0",
 		"bun-types": "1.0.4-canary.20230926T030205",
 		"kelonio": "^0.9.0",

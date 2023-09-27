@@ -98,7 +98,7 @@ describe('examples', () => {
 		});
 
 		test('map', () => {
-			// begin-snippet: example-many
+			// begin-snippet: example-map
 			const parser = P.regexp(/^[0-9]+/).map(x => Number(x)); // matches a number, yielding the number as a number, not a string
 
 			expect(parser.parse('1')).toEqual(1); // succeeds, yields '1' as a number

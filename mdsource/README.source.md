@@ -82,7 +82,7 @@ snippet: example-many
 
 `Parser.map` allows for the transformation of the yielded value of a parser.
 
-snippet: example-many
+snippet: example-map
 
 ### There are More
 

@@ -1,7 +1,7 @@
 import { describe, test, expect } from 'bun:test';
 import { P } from '../../src/ParsiNOM';
 import { P_UTILS } from '../../src/ParserUtils';
-import { ParsingRange } from '../../src/HelperTypes';
+import { ParseFailure, ParsingRange } from '../../src/HelperTypes';
 
 /*
  * This is a simplified version of the tasks query language.
@@ -95,18 +95,19 @@ interface TasksQueryLanguageDef {
 }
 
 const TasksQueryLanguage = P.createLanguage<TasksQueryLanguageDef>({
-	// an expression is at least on letter in our simplified world
+	// an operator is any value of the TaskExpressionOperator enum
+	operator: () => P.or(...Object.values(TaskExpressionOperator).map(x => P.string(x).result(x))),
+
+	// an expression consists of a letter and then letters and parens
 	expression: () =>
-		P_UTILS.letter()
-			.atLeast(1)
-			.node((value, range) => new TaskQueryExpression(range, value)),
+		P.or(
+			P_UTILS.letter().atLeast(1),
+			P.sequenceMap((_1, exp, _2) => exp, P.string('"'), P.noneOf('"').atLeast(1), P.string('"')),
+		).node((value, range) => new TaskQueryExpression(range, value)),
 
 	// a wrapped expression is either an expression with parens or an operation with parens
 	// we use ref here, since we are referencing a parser that we only define later on
 	wrappedExpression: (language, ref) => P.or(language.expression, ref.operation).trim(P_UTILS.optionalWhitespace()).wrap(P.string('('), P.string(')')),
-
-	// an operator is any value of the TaskExpressionOperator enum
-	operator: () => P.or(...Object.values(TaskExpressionOperator).map(x => P.string(x).result(x))),
 
 	// an operation is a left associative binary expression
 	operation: language =>
@@ -127,7 +128,12 @@ describe('task query language', () => {
 	});
 
 	test('single expression with parens', () => {
-		const result = TasksParser.tryParse('(abc)');
+		const str = '(abc)';
+		const result = TasksParser.tryParse(str);
+
+		if (!result.success) {
+			console.log(P.createError(str, result));
+		}
 
 		expect(result.success).toBe(true);
 		expect(result.value?.evaluate().sort()).toEqual(['a', 'b', 'c']);
@@ -196,5 +202,21 @@ describe('task query language', () => {
 
 		expect(result.success).toBe(true);
 		expect(result.value?.evaluate().sort()).toEqual(['a', 'c']);
+	});
+
+	test('paren is an allowed character', () => {
+		const str = '"ab(c)"';
+		const result = TasksParser.tryParse(str);
+
+		expect(result.success).toBe(true);
+		expect(result.value?.evaluate().sort()).toEqual(['(', ')', 'a', 'b', 'c']);
+	});
+
+	test('parens inside AND', () => {
+		const str = '( "ab(c)" ) AND ( c )';
+		const result = TasksParser.tryParse(str);
+
+		expect(result.success).toBe(true);
+		expect(result.value?.evaluate().sort()).toEqual(['c']);
 	});
 });

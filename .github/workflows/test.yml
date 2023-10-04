@@ -2,8 +2,9 @@ name: Test
 
 on:
   push:
-    paths:
-      - '**.js'
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
 
 jobs:
   test:

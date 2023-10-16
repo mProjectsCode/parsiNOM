@@ -12,7 +12,7 @@ On top of that, parser combinators make testing your parser easier, as every par
 
 ### Important Terms
 
-- `combinator` a function that usually takes in one ore more parsers and returns a single combined parser
+- `combinator` a function that usually takes in one or more parsers and returns a single combined parser
 - `matcher` a matcher is a parser that is not constructed from other parsers
 - `yield`/`yields` in this case `yield` refers to the value that a parser generates from a specific input string, if it can match. In the code a parser is generic over the value that it yields, meaning `Parser<string[]>` will yield an array of strings.
 

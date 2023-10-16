@@ -6,7 +6,7 @@ parsiNOM has not yet reached stable, so breaking changes can still occur in mino
 
 ## What is a Parser Combinator?
 
-The idea behind parser combinator is construct your parser out of a bunch of small parsers.
+The idea behind parser combinator is to construct your parser out of a bunch of small parsers.
 This makes building parsers easier and more readable.
 On top of that, parser combinators make testing your parser easier, as every part of the parser, such as the parser for string literals, can be tested individually.
 

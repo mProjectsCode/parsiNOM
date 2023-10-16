@@ -1,0 +1,211 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Process Tree Testsuite 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
+
+exports[`Process Tree Testsuite '\tau' conditional success tests AST matches snapshot 1`] = `"\tau"`;
+
+exports[`Process Tree Testsuite '\rightarrow(a)' conditional success tests AST matches snapshot 1`] = `
+Operation {
+  "operator": "\rightarrow",
+  "subTrees": [
+    "a",
+  ],
+}
+`;
+
+exports[`Process Tree Testsuite '\rightarrow(\tau)' conditional success tests AST matches snapshot 1`] = `
+Operation {
+  "operator": "\rightarrow",
+  "subTrees": [
+    "\tau",
+  ],
+}
+`;
+
+exports[`Process Tree Testsuite '\rightarrow(a,\circlearrowleft(\rightarrow(\wedge(\times(b, c), d), e ), f ), \times(g, h))' conditional success tests AST matches snapshot 1`] = `
+Operation {
+  "operator": "\rightarrow",
+  "subTrees": [
+    "a",
+    Operation {
+      "operator": "\circlearrowleft",
+      "subTrees": [
+        Operation {
+          "operator": "\rightarrow",
+          "subTrees": [
+            Operation {
+              "operator": "\wedge",
+              "subTrees": [
+                Operation {
+                  "operator": "\times",
+                  "subTrees": [
+                    "b",
+                    "c",
+                  ],
+                },
+                "d",
+              ],
+            },
+            "e",
+          ],
+        },
+        "f",
+      ],
+    },
+    Operation {
+      "operator": "\times",
+      "subTrees": [
+        "g",
+        "h",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`Process Tree Testsuite '' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "'\rightarrow'",
+    "'\tau'",
+    "action name",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`Process Tree Testsuite '1' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "'\rightarrow'",
+    "'\tau'",
+    "action name",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`Process Tree Testsuite '\rightarrow' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "'('",
+  ],
+  "pos": {
+    "column": 12,
+    "index": 11,
+    "line": 1,
+  },
+}
+`;
+
+exports[`Process Tree Testsuite '\rightarrow(' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "')'",
+    "'\circlearrowleft'",
+    "'\rightarrow'",
+    "'\tau'",
+    "'\times'",
+    "'\wedge'",
+    "action name",
+  ],
+  "pos": {
+    "column": 13,
+    "index": 12,
+    "line": 1,
+  },
+}
+`;
+
+exports[`Process Tree Testsuite '\rightarrow)' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "'('",
+  ],
+  "pos": {
+    "column": 12,
+    "index": 11,
+    "line": 1,
+  },
+}
+`;
+
+exports[`Process Tree Testsuite '\rightarrow(a' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "')'",
+    "','",
+  ],
+  "pos": {
+    "column": 14,
+    "index": 13,
+    "line": 1,
+  },
+}
+`;
+
+exports[`Process Tree Testsuite '\rightarrowa)' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "'('",
+  ],
+  "pos": {
+    "column": 12,
+    "index": 11,
+    "line": 1,
+  },
+}
+`;
+
+exports[`Process Tree Testsuite '\wedge(a)' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "'\rightarrow'",
+    "'\tau'",
+    "action name",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`Process Tree Testsuite '\circlearrowleft(a)' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "'\rightarrow'",
+    "'\tau'",
+    "action name",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`Process Tree Testsuite '\times(a)' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "'\rightarrow'",
+    "'\tau'",
+    "action name",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;

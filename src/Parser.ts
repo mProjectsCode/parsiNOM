@@ -64,8 +64,18 @@ export class Parser<const SType extends STypeBase> {
 	}
 
 	/**
+	 * Wrap this parser with the same string on both sides.
+	 * `a.trimString(str)` is the same as `a.trim(P.string(str))` or `a.wrap(P.string(str), P.string(str))` or `a.wrapString(str, str)`.
+	 *
+	 * @param str
+	 */
+	trimString(str: string): Parser<SType> {
+		return this.trim(P.string(str));
+	}
+
+	/**
 	 * Wrap this parser with two parsers, one on each side.
-	 * `b.wrap(a, c)` is the same as `a.then(b).skip(c)`.
+	 * `parser.wrap(leftParser, rightParser)` is the same as `leftParser.then(parser).skip(rightParser)` or `P.sequenceMap((left, middle, right) => middle, leftParser, parser, rightParser)`.
 	 *
 	 * @param leftParser
 	 * @param rightParser
@@ -91,6 +101,17 @@ export class Parser<const SType extends STypeBase> {
 
 			return context.merge(rightResult, context.succeed(thisResult.value));
 		});
+	}
+
+	/**
+	 * Wrap this parser with two strings, one on each side.
+	 * `parser.wrapString(leftStr, rightStr)` is the same as `parser.wrap(P.string(leftStr), P.string(rightStr))`.
+	 *
+	 * @param leftStr
+	 * @param rightStr
+	 */
+	wrapString(leftStr: string, rightStr: string): Parser<SType> {
+		return this.wrap(P.string(leftStr), P.string(rightStr));
 	}
 
 	/**

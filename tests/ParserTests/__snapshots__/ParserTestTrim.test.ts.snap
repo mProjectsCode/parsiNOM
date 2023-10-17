@@ -100,3 +100,70 @@ exports[`trim variable length 'foo' conditional failure tests Error matches snap
   },
 }
 `;
+
+exports[`trim string fixed length '' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "' '",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`trim string fixed length ' this ' conditional success tests AST matches snapshot 1`] = `"this"`;
+
+exports[`trim string fixed length 'this ' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "' '",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`trim string fixed length ' this' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "' '",
+  ],
+  "pos": {
+    "column": 6,
+    "index": 5,
+    "line": 1,
+  },
+}
+`;
+
+exports[`trim string fixed length '  this' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "'this'",
+  ],
+  "pos": {
+    "column": 2,
+    "index": 1,
+    "line": 1,
+  },
+}
+`;
+
+exports[`trim string fixed length 'foo' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "' '",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;

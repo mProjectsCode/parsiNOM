@@ -26,3 +26,15 @@ describe.each([
 	const parser = P.string('this').trim(P_UTILS.optionalWhitespace()).thenEof();
 	testParser(parser, str, shouldSucceed);
 });
+
+describe.each([
+	['', false],
+	[' this ', true],
+	['this ', false],
+	[' this', false],
+	['  this', false],
+	['foo', false],
+])(`trim string fixed length`, (str, shouldSucceed) => {
+	const parser = P.string('this').trimString(' ').thenEof();
+	testParser(parser, str, shouldSucceed);
+});

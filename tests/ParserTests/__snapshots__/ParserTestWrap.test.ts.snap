@@ -66,3 +66,70 @@ exports[`wrap 'foo' conditional failure tests Error matches snapshot 1`] = `
   },
 }
 `;
+
+exports[`wrap string '' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "'('",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`wrap string '(this)' conditional success tests AST matches snapshot 1`] = `"this"`;
+
+exports[`wrap string 'this)' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "'('",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`wrap string '(this' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "')'",
+  ],
+  "pos": {
+    "column": 6,
+    "index": 5,
+    "line": 1,
+  },
+}
+`;
+
+exports[`wrap string ')this(' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "'('",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`wrap string 'foo' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "'('",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;

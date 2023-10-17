@@ -15,26 +15,13 @@ exports[`whitespace '' conditional failure tests Error matches snapshot 1`] = `
 
 exports[`whitespace ' ' conditional success tests AST matches snapshot 1`] = `" "`;
 
-exports[`whitespace '\n' conditional success tests AST matches snapshot 1`] = `
-"
-"
-`;
+exports[`whitespace '/n' conditional success tests AST matches snapshot 1`] = `"/n"`;
 
-exports[`whitespace '\r' conditional success tests AST matches snapshot 1`] = `
-"
-"
-`;
+exports[`whitespace '/r' conditional success tests AST matches snapshot 1`] = `"/r"`;
 
-exports[`whitespace '\r\n' conditional success tests AST matches snapshot 1`] = `
-"
-"
-`;
+exports[`whitespace '/r/n' conditional success tests AST matches snapshot 1`] = `"/r/n"`;
 
-exports[`whitespace '\r\n  \n' conditional success tests AST matches snapshot 1`] = `
-"
-  
-"
-`;
+exports[`whitespace '/r/n  /n' conditional success tests AST matches snapshot 1`] = `"/r/n  /n"`;
 
 exports[`whitespace 'b' conditional failure tests Error matches snapshot 1`] = `
 {
@@ -53,26 +40,13 @@ exports[`optional whitespace '' conditional success tests AST matches snapshot 1
 
 exports[`optional whitespace ' ' conditional success tests AST matches snapshot 1`] = `" "`;
 
-exports[`optional whitespace '\n' conditional success tests AST matches snapshot 1`] = `
-"
-"
-`;
+exports[`optional whitespace '/n' conditional success tests AST matches snapshot 1`] = `"/n"`;
 
-exports[`optional whitespace '\r' conditional success tests AST matches snapshot 1`] = `
-"
-"
-`;
+exports[`optional whitespace '/r' conditional success tests AST matches snapshot 1`] = `"/r"`;
 
-exports[`optional whitespace '\r\n' conditional success tests AST matches snapshot 1`] = `
-"
-"
-`;
+exports[`optional whitespace '/r/n' conditional success tests AST matches snapshot 1`] = `"/r/n"`;
 
-exports[`optional whitespace '\r\n  \n' conditional success tests AST matches snapshot 1`] = `
-"
-  
-"
-`;
+exports[`optional whitespace '/r/n  /n' conditional success tests AST matches snapshot 1`] = `"/r/n  /n"`;
 
 exports[`optional whitespace 'b' conditional failure tests Error matches snapshot 1`] = `
 {
@@ -113,22 +87,13 @@ exports[`newline ' ' conditional failure tests Error matches snapshot 1`] = `
 }
 `;
 
-exports[`newline '\n' conditional success tests AST matches snapshot 1`] = `
-"
-"
-`;
+exports[`newline '/n' conditional success tests AST matches snapshot 1`] = `"/n"`;
 
-exports[`newline '\r' conditional success tests AST matches snapshot 1`] = `
-"
-"
-`;
+exports[`newline '/r' conditional success tests AST matches snapshot 1`] = `"/r"`;
 
-exports[`newline '\r\n' conditional success tests AST matches snapshot 1`] = `
-"
-"
-`;
+exports[`newline '/r/n' conditional success tests AST matches snapshot 1`] = `"/r/n"`;
 
-exports[`newline '\r\n  \n' conditional failure tests Error matches snapshot 1`] = `
+exports[`newline '/r/n  /n' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "eof",

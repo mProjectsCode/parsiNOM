@@ -24,7 +24,7 @@ exports[`position 'aab' conditional success tests AST matches snapshot 1`] = `
 }
 `;
 
-exports[`position 'a\nab' conditional success tests AST matches snapshot 1`] = `
+exports[`position 'a/nab' conditional success tests AST matches snapshot 1`] = `
 {
   "column": 2,
   "index": 3,

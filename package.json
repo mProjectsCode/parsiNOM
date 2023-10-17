@@ -20,13 +20,14 @@
 	},
 	"devDependencies": {
 		"bun-plugin-dts": "^0.1.0",
-		"bun-types": "1.0.4-canary.20230926T030205",
-		"kelonio": "^0.9.0",
+		"bun-types": "1.0.6",
 		"prettier": "^3.0.3",
 		"tslib": "^2.6.2",
-		"typescript": "^5.2.2"
+		"typescript": "^5.2.2",
+		"mitata": "^0.1.6"
 	},
 	"files": [
 		"lib/**/*"
-	]
+	],
+	"dependencies": {}
 }

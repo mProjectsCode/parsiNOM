@@ -2,42 +2,42 @@
 
 exports[`Process Tree Testsuite 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
 
-exports[`Process Tree Testsuite '\tau' conditional success tests AST matches snapshot 1`] = `"\tau"`;
+exports[`Process Tree Testsuite '/tau' conditional success tests AST matches snapshot 1`] = `"/tau"`;
 
-exports[`Process Tree Testsuite '\rightarrow(a)' conditional success tests AST matches snapshot 1`] = `
-Operation {
-  "operator": "\rightarrow",
+exports[`Process Tree Testsuite '/rightarrow(a)' conditional success tests AST matches snapshot 1`] = `
+{
+  "operator": "/rightarrow",
   "subTrees": [
     "a",
   ],
 }
 `;
 
-exports[`Process Tree Testsuite '\rightarrow(\tau)' conditional success tests AST matches snapshot 1`] = `
-Operation {
-  "operator": "\rightarrow",
+exports[`Process Tree Testsuite '/rightarrow(/tau)' conditional success tests AST matches snapshot 1`] = `
+{
+  "operator": "/rightarrow",
   "subTrees": [
-    "\tau",
+    "/tau",
   ],
 }
 `;
 
-exports[`Process Tree Testsuite '\rightarrow(a,\circlearrowleft(\rightarrow(\wedge(\times(b, c), d), e ), f ), \times(g, h))' conditional success tests AST matches snapshot 1`] = `
-Operation {
-  "operator": "\rightarrow",
+exports[`Process Tree Testsuite '/rightarrow(a,/circlearrowleft(/rightarrow(/wedge(/times(b, c), d), e ), f ), /times(g, h))' conditional success tests AST matches snapshot 1`] = `
+{
+  "operator": "/rightarrow",
   "subTrees": [
     "a",
-    Operation {
-      "operator": "\circlearrowleft",
+    {
+      "operator": "/circlearrowleft",
       "subTrees": [
-        Operation {
-          "operator": "\rightarrow",
+        {
+          "operator": "/rightarrow",
           "subTrees": [
-            Operation {
-              "operator": "\wedge",
+            {
+              "operator": "/wedge",
               "subTrees": [
-                Operation {
-                  "operator": "\times",
+                {
+                  "operator": "/times",
                   "subTrees": [
                     "b",
                     "c",
@@ -52,8 +52,8 @@ Operation {
         "f",
       ],
     },
-    Operation {
-      "operator": "\times",
+    {
+      "operator": "/times",
       "subTrees": [
         "g",
         "h",
@@ -66,8 +66,8 @@ Operation {
 exports[`Process Tree Testsuite '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
-    "'\rightarrow'",
-    "'\tau'",
+    "'/rightarrow'",
+    "'/tau'",
     "action name",
   ],
   "pos": {
@@ -81,8 +81,8 @@ exports[`Process Tree Testsuite '' conditional failure tests Error matches snaps
 exports[`Process Tree Testsuite '1' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
-    "'\rightarrow'",
-    "'\tau'",
+    "'/rightarrow'",
+    "'/tau'",
     "action name",
   ],
   "pos": {
@@ -93,7 +93,7 @@ exports[`Process Tree Testsuite '1' conditional failure tests Error matches snap
 }
 `;
 
-exports[`Process Tree Testsuite '\rightarrow' conditional failure tests Error matches snapshot 1`] = `
+exports[`Process Tree Testsuite '/rightarrow' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'('",
@@ -106,15 +106,15 @@ exports[`Process Tree Testsuite '\rightarrow' conditional failure tests Error ma
 }
 `;
 
-exports[`Process Tree Testsuite '\rightarrow(' conditional failure tests Error matches snapshot 1`] = `
+exports[`Process Tree Testsuite '/rightarrow(' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "')'",
-    "'\circlearrowleft'",
-    "'\rightarrow'",
-    "'\tau'",
-    "'\times'",
-    "'\wedge'",
+    "'/circlearrowleft'",
+    "'/rightarrow'",
+    "'/tau'",
+    "'/times'",
+    "'/wedge'",
     "action name",
   ],
   "pos": {
@@ -125,7 +125,7 @@ exports[`Process Tree Testsuite '\rightarrow(' conditional failure tests Error m
 }
 `;
 
-exports[`Process Tree Testsuite '\rightarrow)' conditional failure tests Error matches snapshot 1`] = `
+exports[`Process Tree Testsuite '/rightarrow)' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'('",
@@ -138,7 +138,7 @@ exports[`Process Tree Testsuite '\rightarrow)' conditional failure tests Error m
 }
 `;
 
-exports[`Process Tree Testsuite '\rightarrow(a' conditional failure tests Error matches snapshot 1`] = `
+exports[`Process Tree Testsuite '/rightarrow(a' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "')'",
@@ -152,7 +152,7 @@ exports[`Process Tree Testsuite '\rightarrow(a' conditional failure tests Error 
 }
 `;
 
-exports[`Process Tree Testsuite '\rightarrowa)' conditional failure tests Error matches snapshot 1`] = `
+exports[`Process Tree Testsuite '/rightarrowa)' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'('",
@@ -165,11 +165,11 @@ exports[`Process Tree Testsuite '\rightarrowa)' conditional failure tests Error 
 }
 `;
 
-exports[`Process Tree Testsuite '\wedge(a)' conditional failure tests Error matches snapshot 1`] = `
+exports[`Process Tree Testsuite '/wedge(a)' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
-    "'\rightarrow'",
-    "'\tau'",
+    "'/rightarrow'",
+    "'/tau'",
     "action name",
   ],
   "pos": {
@@ -180,11 +180,11 @@ exports[`Process Tree Testsuite '\wedge(a)' conditional failure tests Error matc
 }
 `;
 
-exports[`Process Tree Testsuite '\circlearrowleft(a)' conditional failure tests Error matches snapshot 1`] = `
+exports[`Process Tree Testsuite '/circlearrowleft(a)' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
-    "'\rightarrow'",
-    "'\tau'",
+    "'/rightarrow'",
+    "'/tau'",
     "action name",
   ],
   "pos": {
@@ -195,11 +195,11 @@ exports[`Process Tree Testsuite '\circlearrowleft(a)' conditional failure tests 
 }
 `;
 
-exports[`Process Tree Testsuite '\times(a)' conditional failure tests Error matches snapshot 1`] = `
+exports[`Process Tree Testsuite '/times(a)' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
-    "'\rightarrow'",
-    "'\tau'",
+    "'/rightarrow'",
+    "'/tau'",
     "action name",
   ],
   "pos": {

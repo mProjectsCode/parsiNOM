@@ -14,7 +14,7 @@ exports[`node '' conditional failure tests Error matches snapshot 1`] = `
 `;
 
 exports[`node 'this' conditional success tests AST matches snapshot 1`] = `
-NodeClass {
+{
   "range": {
     "from": {
       "column": 1,

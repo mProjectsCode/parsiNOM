@@ -1,41 +1,30 @@
 import * as JsonData from '../tests/languages/__data__/JsonData';
 import { jsonParser } from './Json';
-import { Benchmark } from 'kelonio';
-
-let arr = [];
+import { baseline, bench, run } from 'mitata';
 
 function parsiNomJsonTest() {
-	arr = [];
-
-	for (let i = 0; i < 1; i++) {
-		arr.push(jsonParser.tryParse(JsonData.data));
-	}
-
-	// console.log(arr);
+	return jsonParser.tryParse(JsonData.data);
 }
 
 function jsJsonTest() {
-	arr = [];
-
-	for (let i = 0; i < 1; i++) {
-		arr.push(JSON.parse(JsonData.data));
-	}
-
-	// console.log(arr);
+	return JSON.parse(JsonData.data);
 }
 
-async function profile() {
-	const benchmark = new Benchmark();
-
-	await benchmark.record('parsinom', () => {
-		parsiNomJsonTest();
-	});
-
-	await benchmark.record('built-in', () => {
+(async () => {
+	baseline('built-in', () => {
 		jsJsonTest();
 	});
 
-	console.log(benchmark.report());
-}
+	bench('parsinom', () => {
+		parsiNomJsonTest();
+	});
 
-profile();
+	await run({
+		avg: true, // enable/disable avg column (default: true)
+		json: false, // enable/disable json output (default: false)
+		colors: true, // enable/disable colors (default: true)
+		min_max: true, // enable/disable min/max column (default: true)
+		collect: false, // enable/disable collecting returned values into an array during the benchmark (default: false)
+		percentiles: true, // enable/disable percentiles column (default: true)
+	});
+})();

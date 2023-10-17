@@ -2,10 +2,36 @@ import { Parser } from '../src/Parser';
 import { describe, expect, test } from 'bun:test';
 import { ParseResult, ParseSuccess, ParsingMarker } from '../src/HelperTypes';
 
+function escapeString(str: string): string {
+	return str.replace(/\n/g, '/n').replace(/\r/g, '/r').replace(/\t/g, '/t').replace(/\\/g, '/');
+}
+
+function escapeStringInObject(obj: any): any {
+	if (typeof obj === 'string') {
+		return escapeString(obj);
+	}
+	if (typeof obj === 'object') {
+		if (Array.isArray(obj)) {
+			let newArr: any[] = [];
+			for (const objElement of obj) {
+				newArr.push(escapeStringInObject(objElement));
+			}
+			return newArr;
+		} else {
+			let newObj: any = {};
+			for (const [key, value] of Object.entries(obj)) {
+				newObj[key] = escapeStringInObject(value);
+			}
+			return newObj;
+		}
+	}
+	return obj;
+}
+
 export function testParser(parser: Parser<unknown>, str: string, shouldSucceed: boolean, testName?: string): void {
 	const result = parser.tryParse(str);
 
-	const name = (testName ?? str).replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
+	const name = escapeString(testName ?? str);
 
 	describe(`'${name}'`, () => {
 		test(`success is ${shouldSucceed}`, () => {
@@ -15,7 +41,7 @@ export function testParser(parser: Parser<unknown>, str: string, shouldSucceed: 
 		if (shouldSucceed) {
 			describe('conditional success tests', () => {
 				test(`AST matches snapshot`, () => {
-					expect(result.value).toMatchSnapshot();
+					expect(escapeStringInObject(result.value)).toMatchSnapshot();
 				});
 			});
 		} else {
@@ -24,10 +50,12 @@ export function testParser(parser: Parser<unknown>, str: string, shouldSucceed: 
 					expect(result.value).toBe(undefined);
 				});
 
+				console.log(name, result.expected);
+
 				test(`Error matches snapshot`, () => {
 					expect({
 						pos: result.furthest,
-						expected: result.expected,
+						expected: escapeStringInObject(result.expected),
 					}).toMatchSnapshot();
 				});
 			});

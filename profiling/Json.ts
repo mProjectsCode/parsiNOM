@@ -17,7 +17,7 @@ export interface JSONLanguage {
 export const jsonLanguage = P.createLanguage<JSONLanguage>({
 	number: () =>
 		P.or(
-			P.sequenceMap((a, b, c) => Number(a + b + c), P_UTILS.digits(), P.string('.'), P_UTILS.digits()),
+			P.sequence(P_UTILS.digits(), P.string('.'), P_UTILS.digits()).map(([a, b, c]) => Number(a + b + c)),
 			P_UTILS.digits().map(x => Number(x)),
 		),
 	string: () => P.manyNotOf('"').trim(P.string('"')),

@@ -54,7 +54,7 @@ exports[`letters 'zz' conditional success tests AST matches snapshot 1`] = `"zz"
 exports[`letters '#' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
-    "optional letters",
+    "multiple letters",
   ],
   "pos": {
     "column": 1,
@@ -67,7 +67,7 @@ exports[`letters '#' conditional failure tests Error matches snapshot 1`] = `
 exports[`letters ' ' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
-    "optional letters",
+    "multiple letters",
   ],
   "pos": {
     "column": 1,
@@ -80,7 +80,7 @@ exports[`letters ' ' conditional failure tests Error matches snapshot 1`] = `
 exports[`letters '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
-    "optional letters",
+    "multiple letters",
   ],
   "pos": {
     "column": 1,

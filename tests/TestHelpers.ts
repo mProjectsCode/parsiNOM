@@ -50,12 +50,12 @@ export function testParser(parser: Parser<unknown>, str: string, shouldSucceed: 
 					expect(result.value).toBe(undefined);
 				});
 
-				console.log(name, result.expected);
+				// console.log(name, result.expected);
 
 				test(`Error matches snapshot`, () => {
 					expect({
 						pos: result.furthest,
-						expected: escapeStringInObject(result.expected),
+						expected: escapeStringInObject(result.expected?.sort()),
 					}).toMatchSnapshot();
 				});
 			});
@@ -133,7 +133,7 @@ export function testParserAdvanced<T>(parser: Parser<T>, data: Readonly<ParserTe
 
 				// we test that the expected values of the parser match what we expect
 				test(`Expected is ${data.expected}`, () => {
-					expect(markedResult.expected).toEqual(data.expected.sort());
+					expect(markedResult.expected?.sort()).toEqual(data.expected.sort());
 				});
 			});
 		}

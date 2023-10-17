@@ -1,7 +1,7 @@
 import { ParseFailure } from './HelperTypes';
 
 function generateMessage(str: string, parseFailure: ParseFailure, verbose: boolean): string {
-	const expectedMessage = `Expected ${parseFailure.expected.join(' or ')}`;
+	const expectedMessage = `Expected ${parseFailure.expected.sort().join(' or ')}`;
 	let message = `Parse Failure: ${expectedMessage} at index ${parseFailure.furthest.index}, line ${parseFailure.furthest.line}, column ${parseFailure.furthest.column}.`;
 
 	if (verbose) {

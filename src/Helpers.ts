@@ -6,26 +6,18 @@ export function arrayUnion(a: string[] | undefined, b: string[] | undefined): st
 		return [];
 	}
 	if (a === undefined) {
-		return (b as string[]).sort();
+		return b as string[];
 	}
 	if (b === undefined) {
-		return (a as string[]).sort();
+		return a as string[];
 	}
 
-	const ret: string[] = [...a];
 	for (const bElement of b) {
-		let alreadyIncluded = false;
-		for (const retElement of ret) {
-			if (bElement === retElement) {
-				alreadyIncluded = true;
-			}
-		}
-		if (!alreadyIncluded) {
-			ret.push(bElement);
+		if (!a.includes(bElement)) {
+			a.push(bElement);
 		}
 	}
-	ret.sort();
-	return ret;
+	return a;
 }
 
 export function getIndex(position: ParsingPosition | undefined): number {

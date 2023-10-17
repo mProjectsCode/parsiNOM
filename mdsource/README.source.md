@@ -6,13 +6,13 @@ parsiNOM has not yet reached stable, so breaking changes can still occur in mino
 
 ## What is a Parser Combinator?
 
-The idea behind parser combinator is construct your parser out of a bunch of small parsers.
+The idea behind parser combinator is to construct your parser out of a bunch of small parsers.
 This makes building parsers easier and more readable.
 On top of that, parser combinators make testing your parser easier, as every part of the parser, such as the parser for string literals, can be tested individually.
 
 ### Important Terms
 
-- `combinator` a function that usually takes in one ore more parsers and returns a single combined parser
+- `combinator` a function that usually takes in one or more parsers and returns a single combined parser
 - `matcher` a matcher is a parser that is not constructed from other parsers
 - `yield`/`yields` in this case `yield` refers to the value that a parser generates from a specific input string, if it can match. In the code a parser is generic over the value that it yields, meaning `Parser<string[]>` will yield an array of strings.
 

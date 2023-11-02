@@ -312,11 +312,13 @@ export class Parser<const SType extends STypeBase> {
 	map<OtherSType extends STypeBase>(fn: (value: SType) => OtherSType): Parser<OtherSType> {
 		const _this = this;
 		return new Parser(function _map(context): ParseResult<OtherSType> {
-			const result = _this.p(context);
+			// we use any here, because that allows us to change the value of the result later
+			const result: ParseResult<any> = _this.p(context);
 			if (!result.success) {
 				return result as ParseFailure;
 			}
-			return context.merge(result, context.succeed(fn(result.value)));
+			result.value = fn(result.value);
+			return result;
 		});
 	}
 

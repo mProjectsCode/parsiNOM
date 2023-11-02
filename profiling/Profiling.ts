@@ -1,9 +1,9 @@
 import * as JsonData from '../tests/languages/__data__/JsonData';
-import { jsonParser } from './Json';
+import { jsonParserRegexp } from './Json';
 import { baseline, bench, run } from 'mitata';
 
 function parsiNomJsonTest() {
-	return jsonParser.tryParse(JsonData.data);
+	return jsonParserRegexp.tryParse(JsonData.data);
 }
 
 function jsJsonTest() {

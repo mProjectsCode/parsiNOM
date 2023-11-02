@@ -1,9 +1,9 @@
 import { ParseResult, ParsingPosition, STypeBase } from './HelperTypes';
 import { Parser } from './Parser';
 
-export function arrayUnion(a: string[] | undefined, b: string[] | undefined): string[] {
+export function arrayUnion(a: string[] | undefined, b: string[] | undefined): string[] | undefined {
 	if (a === undefined && b === undefined) {
-		return [];
+		return undefined;
 	}
 	if (a === undefined) {
 		return b as string[];
@@ -55,9 +55,7 @@ export function validateRegexFlags(flags: string): void {
 export class ParserHelpers {
 	followedBy<SType extends STypeBase>(x: Parser<SType>): Parser<SType> {
 		return new Parser<SType>(function _followedBy(context): ParseResult<SType> {
-			const result = x.p(context.copy());
-			// result.position = context.position; TODO: can this be removed?
-			return result;
+			return x.p(context.copy());
 		});
 	}
 

@@ -8,7 +8,7 @@ export interface JSONLanguage {
 	null: null;
 
 	array: unknown[];
-	objectEntry: { key: string; value: unknown };
+	objectEntry: [string, unknown];
 	object: Record<string, unknown>;
 
 	value: number | string | boolean | unknown[] | unknown;
@@ -17,7 +17,7 @@ export interface JSONLanguage {
 export const jsonLanguage = P.createLanguage<JSONLanguage>({
 	number: () =>
 		P.or(
-			P.sequence(P_UTILS.digits(), P.string('.'), P_UTILS.digits()).map(([a, b, c]) => Number(a + b + c)),
+			P.sequenceMap((a, b, c) => Number(a + b + c), P_UTILS.digits(), P.string('.'), P_UTILS.digits()),
 			P_UTILS.digits().map(x => Number(x)),
 		),
 	string: () => P.manyNotOf('"').trim(P.string('"')),
@@ -27,26 +27,26 @@ export const jsonLanguage = P.createLanguage<JSONLanguage>({
 	array: (_, ref) => ref.value.separateBy(P.string(',')).wrap(P.string('['), P.string(']')),
 	objectEntry: (language, ref) =>
 		P.sequenceMap(
-			(_1, key, _2, _3, value) => ({ key, value }),
+			(_1, key, _2, _3, value) => [key, value],
 			P_UTILS.optionalWhitespace(),
 			language.string,
 			P_UTILS.optionalWhitespace(),
 			P.string(':'),
 			ref.value,
 		),
-	object: (language, ref) =>
+	object: language =>
 		language.objectEntry
 			.separateBy(P.string(','))
 			.map(x => {
 				const obj = {} as Record<string, unknown>;
 				for (const element of x) {
-					obj[element.key] = element.value;
+					obj[element[0]] = element[1];
 				}
 				return obj;
 			})
 			.wrap(P.string('{'), P.string('}')),
 	value: language =>
-		P.or(language.null, language.boolean, language.number, language.string, language.array, language.object).trim(P_UTILS.optionalWhitespace()),
+		P.or(language.object, language.array, language.string, language.number, language.null, language.boolean).trim(P_UTILS.optionalWhitespace()),
 });
 
 export const jsonLanguageRegexp = P.createLanguage<JSONLanguage>({
@@ -61,26 +61,26 @@ export const jsonLanguageRegexp = P.createLanguage<JSONLanguage>({
 	array: (_, ref) => ref.value.separateBy(P.string(',')).wrap(P.string('['), P.string(']')),
 	objectEntry: (language, ref) =>
 		P.sequenceMap(
-			(_1, key, _2, _3, value) => ({ key, value }),
+			(_1, key, _2, _3, value) => [key, value],
 			P_UTILS.optionalWhitespace(),
 			language.string,
 			P_UTILS.optionalWhitespace(),
 			P.string(':'),
 			ref.value,
 		),
-	object: (language, ref) =>
+	object: language =>
 		language.objectEntry
 			.separateBy(P.string(','))
 			.map(x => {
 				const obj = {} as Record<string, unknown>;
 				for (const element of x) {
-					obj[element.key] = element.value;
+					obj[element[0]] = element[1];
 				}
 				return obj;
 			})
 			.wrap(P.string('{'), P.string('}')),
 	value: language =>
-		P.or(language.null, language.boolean, language.number, language.string, language.array, language.object).trim(P_UTILS.optionalWhitespace()),
+		P.or(language.object, language.array, language.string, language.number, language.null, language.boolean).trim(P_UTILS.optionalWhitespace()),
 });
 
 export const jsonParser = jsonLanguage.value.thenEof();

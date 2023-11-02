@@ -29,6 +29,10 @@ export class P {
 	 * @param parsers
 	 */
 	static sequence<ParserArr extends readonly Parser<unknown>[]>(...parsers: ParserArr): Parser<DeParserArray<ParserArr>> {
+		if (parsers.length === 0) {
+			throw new Error('sequence must have at least one parser argument');
+		}
+
 		return new Parser<DeParserArray<ParserArr>>(function _sequence(context): ParseResult<DeParserArray<ParserArr>> {
 			let result = undefined;
 			const value: unknown[] = new Array(parsers.length);
@@ -46,7 +50,10 @@ export class P {
 				value[i] = result.value;
 			}
 
-			return context.merge(result, context.succeed(value as DeParserArray<ParserArr>));
+			// @ts-ignore
+			result.value = value;
+			// @ts-ignore
+			return result;
 		});
 	}
 
@@ -60,6 +67,10 @@ export class P {
 		fn: (...value: DeParserArray<ParserArr>) => OtherSType,
 		...parsers: ParserArr
 	): Parser<OtherSType> {
+		if (parsers.length === 0) {
+			throw new Error('sequenceMap must have at least one parser argument');
+		}
+
 		return new Parser<OtherSType>(function _sequenceMap(context): ParseResult<OtherSType> {
 			let result = undefined;
 			const value: unknown[] = new Array(parsers.length);
@@ -77,9 +88,10 @@ export class P {
 				value[i] = result.value;
 			}
 
-			const retValue = fn(...(value as DeParserArray<ParserArr>));
-
-			return context.merge(result, context.succeed(retValue));
+			// @ts-ignore
+			result.value = fn(...value);
+			// @ts-ignore
+			return result;
 		});
 	}
 
@@ -142,7 +154,7 @@ export class P {
 				}
 			}
 
-			return result as ParseResult<TupleToUnion<DeParserArray<ParserArr>>>;
+			return result as ParseFailure;
 		});
 	}
 
@@ -166,7 +178,8 @@ export class P {
 		return this.sequenceMap(
 			function _separateBy(part1, part2): SType[] {
 				// console.log('sep', [part1, ...part2]);
-				return [part1, ...part2];
+				part2.unshift(part1);
+				return part2;
 			},
 			parser,
 			separator.then(parser).many(),
@@ -184,15 +197,13 @@ export class P {
 		const expected = "'" + str + "'";
 
 		return new Parser<string>(function _string(context): ParseResult<string> {
-			const endIndex = context.position.index + str.length;
-			const subInput = context.sliceTo(endIndex);
-			// console.log('str', str, subInput, context, endIndex);
-
-			if (subInput === str) {
-				return context.succeedAt(endIndex, subInput);
-			} else {
-				return context.fail(expected);
+			for (let i = 0; i < str.length; i++) {
+				if (context.input[context.position.index + i] !== str[i]) {
+					return context.fail(expected);
+				}
 			}
+
+			return context.succeedAt(context.position.index + str.length, str);
 		});
 	}
 
@@ -207,26 +218,40 @@ export class P {
 
 		const expected = regexp.source;
 
-		return new Parser<string>(function _regexp(context): ParseResult<string> {
-			const subInput = context.input.slice(context.position.index);
-			const match = regexp.exec(subInput);
+		if (group !== undefined) {
+			return new Parser<string>(function _regexp(context): ParseResult<string> {
+				const subInput = context.input.slice(context.position.index);
+				const match = regexp.exec(subInput);
 
-			if (match) {
-				const captureGroup = group ?? 0;
+				if (match !== null) {
+					const captureGroup = group ?? 0;
 
-				if (captureGroup >= 0 && captureGroup <= match.length) {
-					const fullMatch = match[0];
-					const groupMatch = match[captureGroup];
-					// console.log('regexp', expected, fullMatch, context);
-					return context.succeedOffset(fullMatch.length, groupMatch);
+					if (captureGroup >= 0 && captureGroup <= match.length) {
+						const fullMatch = match[0];
+						const groupMatch = match[captureGroup];
+						// console.log('regexp', expected, fullMatch, context);
+						return context.succeedOffset(fullMatch.length, groupMatch);
+					}
+
+					const message = 'expected valid match group (0 to ' + match.length + ') in ' + expected;
+					return context.fail(message);
+				} else {
+					return context.fail(expected);
 				}
+			});
+		} else {
+			return new Parser<string>(function _regexp(context): ParseResult<string> {
+				const subInput = context.input.slice(context.position.index);
+				const match = regexp.exec(subInput);
 
-				const message = 'expected valid match group (0 to ' + match.length + ') in ' + expected;
-				return context.fail(message);
-			} else {
-				return context.fail(expected);
-			}
-		});
+				if (match !== null) {
+					const fullMatch = match[0];
+					return context.succeedOffset(fullMatch.length, fullMatch);
+				} else {
+					return context.fail(expected);
+				}
+			});
+		}
 	}
 
 	/**

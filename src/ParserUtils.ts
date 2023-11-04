@@ -50,29 +50,57 @@ export class P_UTILS {
 	/**
 	 * Matches a single digit.
 	 */
-	static digit() {
+	static digit(): Parser<string> {
 		return P.regexp(/^[0-9]/).describe('a digit');
 	}
 
 	/**
 	 * Matches multiple digits.
 	 */
-	static digits() {
+	static digits(): Parser<string> {
 		return P.regexp(/^[0-9]+/).describe('multiple digits');
 	}
 
 	/**
 	 * Matches a single ascii letter.
 	 */
-	static letter() {
+	static letter(): Parser<string> {
 		return P.regexp(/^[a-z]/i).describe('a letter');
 	}
 
 	/**
 	 * Matches multiple ascii letters.
 	 */
-	static letters() {
+	static letters(): Parser<string> {
 		return P.regexp(/^[a-z]+/i).describe('multiple letters');
+	}
+
+	/**
+	 * Matches a single unicode letter.
+	 */
+	static unicodeLetter(): Parser<string> {
+		return P.regexp(/^\p{L}/iu).describe('a unicode letter');
+	}
+
+	/**
+	 * Matches multiple unicode letters.
+	 */
+	static unicodeLetters(): Parser<string> {
+		return P.regexp(/^\p{L}+/iu).describe('multiple unicode letters');
+	}
+
+	/**
+	 * Matches a single alphanumeric unicode character.
+	 */
+	static unicodeAlphanumeric(): Parser<string> {
+		return P.regexp(/^[\p{L}\p{N}]/iu).describe('a unicode alphanumeric character');
+	}
+
+	/**
+	 * Matches multiple alphanumeric unicode characters.
+	 */
+	static unicodeAlphanumerics(): Parser<string> {
+		return P.regexp(/^[\p{L}\p{N}]+/iu).describe('multiple unicode alphanumeric characters');
 	}
 
 	/**

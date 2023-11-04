@@ -1,17 +1,7 @@
 import { ParserContext } from './ParserContext';
-import {
-	DeParserArray,
-	NamedParsingMarker,
-	ParseFailure,
-	ParseFunction,
-	ParseResult,
-	ParsingMarker,
-	ParsingPosition,
-	ParsingRange,
-	STypeBase,
-} from './HelperTypes';
+import { NamedParsingMarker, ParseFailure, ParseFunction, ParseResult, ParsingMarker, ParsingPosition, ParsingRange, STypeBase } from './HelperTypes';
 import { P } from './ParsiNOM';
-import { getIndex, P_HELPERS, validateRange } from './Helpers';
+import { P_HELPERS, validateRange } from './Helpers';
 import { P_UTILS } from './ParserUtils';
 
 export class Parser<const SType extends STypeBase> {

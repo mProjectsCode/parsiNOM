@@ -19,8 +19,7 @@
 		"url": "https://github.com/mProjectsCode/parsiNOM.git"
 	},
 	"devDependencies": {
-		"bun-plugin-dts": "^0.1.0",
-		"bun-types": "1.0.6",
+		"bun-types": "1.0.8",
 		"prettier": "^3.0.3",
 		"tslib": "^2.6.2",
 		"typescript": "^5.2.2",

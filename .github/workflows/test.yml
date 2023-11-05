@@ -17,4 +17,4 @@ jobs:
       - working-directory: .
         run: bun install
       - working-directory: .
-        run: bun run test
+        run: bun run check

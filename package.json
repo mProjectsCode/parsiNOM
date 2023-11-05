@@ -11,9 +11,11 @@
 		"snapshots": "bun test --update-snapshots",
 		"perf": "bun run profiling/Profiling.ts",
 		"format": "prettier --write .",
+		"format:check": "prettier --check .",
 		"lint": "eslint --max-warnings=0 src/**",
 		"lint:fix": "eslint --max-warnings=0 --fix src/**",
-		"check": "bun run format && bun run lint:fix && bun run tsc && bun run test"
+		"check": "bun run format:check && bun run lint && bun run tsc && bun run test",
+		"check:fix": "bun run format && bun run lint:fix && bun run tsc && bun run test"
 	},
 	"keywords": [],
 	"author": "Moritz Jung",

@@ -6,7 +6,7 @@ export function arrayUnion(a: string[] | undefined, b: string[] | undefined): st
 		return undefined;
 	}
 	if (a === undefined) {
-		return b!;
+		return b;
 	}
 	if (b === undefined) {
 		return a;

@@ -1,26 +1,20 @@
 import {
-	DeParserArray,
-	NomLanguage,
-	NomLanguagePartial,
-	NomLanguageRef,
-	NomLanguageRules,
-	ParseFailure,
-	ParseFunction,
-	ParseResult,
-	ParserRef,
-	STypeBase,
-	TupleToUnion,
+	type DeParserArray,
+	type NomLanguage,
+	type NomLanguagePartial,
+	type NomLanguageRef,
+	type NomLanguageRules,
+	type ParseFailure,
+	type ParseFunction,
+	type ParseResult,
+	type ParserRef,
+	type STypeBase,
+	type TupleToUnion,
 } from './HelperTypes';
 import { Parser } from './Parser';
-import { ParsingError } from './ParserError';
 import { P_HELPERS, validateRegexFlags } from './Helpers';
 
 export class P {
-	// --- OTHER ---
-	static createError(str: string, parseFailure: ParseFailure): ParsingError {
-		return new ParsingError(str, parseFailure);
-	}
-
 	// --- COMBINATORS ---
 
 	/**
@@ -141,8 +135,8 @@ export class P {
 		return new Parser<TupleToUnion<DeParserArray<ParserArr>>>(function _or(context): ParseResult<TupleToUnion<DeParserArray<ParserArr>>> {
 			let result = undefined;
 
-			for (let i = 0; i < parsers.length; i++) {
-				const p = parsers[i] as Parser<TupleToUnion<DeParserArray<ParserArr>>>;
+			for (const parser of parsers) {
+				const p = parser as Parser<TupleToUnion<DeParserArray<ParserArr>>>;
 
 				const contextCopy = context.copy();
 				const newResult = p.p(contextCopy);
@@ -154,6 +148,7 @@ export class P {
 				}
 			}
 
+			// this cast is safe, since we run the above loop at least once
 			return result as ParseFailure;
 		});
 	}

@@ -1,6 +1,6 @@
 import { Parser } from './Parser';
 import { P } from './ParsiNOM';
-import { ParsingPosition, ParsingRange } from './HelperTypes';
+import { type ParsingPosition, type ParsingRange } from './HelperTypes';
 
 export class P_UTILS {
 	/**
@@ -106,42 +106,42 @@ export class P_UTILS {
 	/**
 	 * Matches as much whitespace as it can or no whitespace.
 	 */
-	static optionalWhitespace() {
+	static optionalWhitespace(): Parser<string> {
 		return P.regexp(/^\s*/).describe('optional whitespace');
 	}
 
 	/**
 	 * Matches multiple, at least one, whitespace.
 	 */
-	static whitespace() {
+	static whitespace(): Parser<string> {
 		return P.regexp(/^\s+/).describe('whitespace');
 	}
 
 	/**
 	 * Matches a `\r` character.
 	 */
-	static cr() {
+	static cr(): Parser<string> {
 		return P.string('\r');
 	}
 
 	/**
 	 * Matches a `\n` character.
 	 */
-	static lf() {
+	static lf(): Parser<string> {
 		return P.string('\n');
 	}
 
 	/**
 	 * Matches a `\r\n` character.
 	 */
-	static crlf() {
+	static crlf(): Parser<string> {
 		return P.string('\r\n');
 	}
 
 	/**
 	 * Matches a newline character (either `\r\n`, `\n` or `\r`).
 	 */
-	static newline() {
+	static newline(): Parser<string> {
 		return P.or(this.crlf(), this.lf(), this.cr()).describe('newline');
 	}
 
@@ -158,7 +158,7 @@ export class P_UTILS {
 		combine: (a: OperatorSType, b: OtherSType | ReturnSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		return P.sequenceMap(
-			(prefixes, x) => {
+			(prefixes: OperatorSType[], x: OtherSType) => {
 				return prefixes.reduce<OtherSType | ReturnSType>((acc, y) => combine(y, acc), x);
 			},
 			operatorsParser.many(),
@@ -179,7 +179,7 @@ export class P_UTILS {
 		combine: (a: OperatorSType, b: OtherSType | ReturnSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		return P.sequenceMap(
-			(x, postfixes) => {
+			(x: OtherSType, postfixes: OperatorSType[]) => {
 				return postfixes.reduce<OtherSType | ReturnSType>((acc, y) => combine(y, acc), x);
 			},
 			nextParser,
@@ -200,7 +200,7 @@ export class P_UTILS {
 		combine: (a: OtherSType, b: OperatorSType, c: OtherSType | ReturnSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		return P.sequenceMap(
-			(others, last: OtherSType) => {
+			(others: [OtherSType, OperatorSType][], last: OtherSType) => {
 				return others.reverse().reduce<OtherSType | ReturnSType>((acc, y) => {
 					const [operand, operator] = y;
 					return combine(operand, operator, acc);
@@ -224,7 +224,7 @@ export class P_UTILS {
 		combine: (a: OtherSType | ReturnSType, b: OperatorSType, c: OtherSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		return P.sequenceMap(
-			(first: OtherSType, others) => {
+			(first: OtherSType, others: [OperatorSType, OtherSType][]) => {
 				return others.reduce<OtherSType | ReturnSType>((acc, y) => {
 					const [operator, operand] = y;
 					return combine(acc, operator, operand);
@@ -248,7 +248,7 @@ export class P_UTILS {
 		combine: (range: ParsingRange, a: OtherSType, b: OperatorSType, c: OtherSType | ReturnSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		return P.sequenceMap(
-			(others, last: OtherSType, to) => {
+			(others: [ParsingPosition, OtherSType, OperatorSType][], last: OtherSType, to: ParsingPosition) => {
 				return others.reverse().reduce<OtherSType | ReturnSType>((acc, y) => {
 					const [from, operand, operator] = y;
 					return combine({ from, to }, operand, operator, acc);
@@ -273,7 +273,7 @@ export class P_UTILS {
 		combine: (range: ParsingRange, a: OtherSType | ReturnSType, b: OperatorSType, c: OtherSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		return P.sequenceMap(
-			(from, first: OtherSType, others) => {
+			(from: ParsingPosition, first: OtherSType, others: [OperatorSType, OtherSType, ParsingPosition][]) => {
 				return others.reduce<OtherSType | ReturnSType>((acc, y) => {
 					const [operator, operand, to] = y;
 					return combine({ from, to }, acc, operator, operand);
@@ -290,7 +290,7 @@ export class P_UTILS {
 		args: Parser<ArgsSType>,
 		combine: (name: string, args: ArgsSType) => ReturnSType,
 	): Parser<ReturnSType> {
-		const nameParser = typeof name === 'string' ? P.string(name) : name;
+		const nameParser: Parser<string> = typeof name === 'string' ? P.string(name) : name;
 		return P.sequenceMap(
 			(name, _lBracket, _1, args, _2, _rBracket) => {
 				return combine(name, args);

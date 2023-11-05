@@ -1,6 +1,10 @@
 import { arrayUnion, getIndex } from './Helpers';
-import { ParseResult, ParsingPosition, STypeBase } from './HelperTypes';
+import { type ParseResult, type ParsingPosition, type STypeBase } from './HelperTypes';
 
+/**
+ * Holds the input string as well as the current parsing position.
+ * Also provides methods for succeeding and failing a parse, as well as merging two parse results.
+ */
 export class ParserContext {
 	readonly input: string;
 	/**
@@ -56,7 +60,7 @@ export class ParserContext {
 	/**
 	 * Advances the parser to an index while counting lines.
 	 *
-	 * @param index
+	 * @param index the index to advance to, this can't be smaller than the current position
 	 * @private
 	 */
 	private advanceTo(index: number): void {
@@ -91,7 +95,7 @@ export class ParserContext {
 	/**
 	 * Succeed at a specific offset from the current position.
 	 *
-	 * @param offset
+	 * @param offset the offset from the current position, must be positive
 	 * @param value
 	 */
 	succeedOffset<SType extends STypeBase>(offset: number, value: SType): ParseResult<SType> {
@@ -101,7 +105,7 @@ export class ParserContext {
 	/**
 	 * Fail at a specific offset from the current position.
 	 *
-	 * @param offset
+	 * @param offset the offset from the current position, must be positive
 	 * @param expected
 	 */
 	failOffset<SType extends STypeBase>(offset: number, expected: string | string[]): ParseResult<SType> {

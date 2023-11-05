@@ -39,7 +39,7 @@ describe.each([
 	['#', false],
 	[' ', false],
 	['', false],
-])(`letter`, (str, shouldSucceed) => {
+])(`unicodeLetter`, (str, shouldSucceed) => {
 	const parser = P_UTILS.unicodeLetter().thenEof();
 	testParser(parser, str, shouldSucceed);
 });
@@ -53,7 +53,7 @@ describe.each([
 	['#', false],
 	[' ', false],
 	['', false],
-])(`letters`, (str, shouldSucceed) => {
+])(`unicodeLetters`, (str, shouldSucceed) => {
 	const parser = P_UTILS.unicodeLetters().thenEof();
 	testParser(parser, str, shouldSucceed);
 });
@@ -68,7 +68,7 @@ describe.each([
 	['#', false],
 	[' ', false],
 	['', false],
-])(`letter`, (str, shouldSucceed) => {
+])(`unicodeAlphanumeric`, (str, shouldSucceed) => {
 	const parser = P_UTILS.unicodeAlphanumeric().thenEof();
 	testParser(parser, str, shouldSucceed);
 });
@@ -84,7 +84,7 @@ describe.each([
 	['#', false],
 	[' ', false],
 	['', false],
-])(`letters`, (str, shouldSucceed) => {
+])(`unicodeAlphanumeric`, (str, shouldSucceed) => {
 	const parser = P_UTILS.unicodeAlphanumerics().thenEof();
 	testParser(parser, str, shouldSucceed);
 });

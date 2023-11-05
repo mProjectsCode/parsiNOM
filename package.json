@@ -5,11 +5,15 @@
 	"main": "ParsiNOM.js",
 	"scripts": {
 		"build": "tsc",
+		"tsc": "tsc --project ./tsconfig.json --noEmit",
 		"test": "bun test",
-		"test-adv": "bun test -t=advanced",
+		"test:adv": "bun test -t=advanced",
 		"snapshots": "bun test --update-snapshots",
 		"perf": "bun run profiling/Profiling.ts",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"lint": "eslint --max-warnings=0 src/**",
+		"lint:fix": "eslint --max-warnings=0 --fix src/**",
+		"check": "bun run format && bun run lint:fix && bun run tsc && bun run test"
 	},
 	"keywords": [],
 	"author": "Moritz Jung",
@@ -23,7 +27,13 @@
 		"prettier": "^3.0.3",
 		"tslib": "^2.6.2",
 		"typescript": "^5.2.2",
-		"mitata": "^0.1.6"
+		"mitata": "^0.1.6",
+		"eslint": "^8.52.0",
+		"eslint-plugin-import": "^2.28.1",
+		"eslint-plugin-isaacscript": "^3.5.6",
+		"eslint-plugin-only-warn": "^1.1.0",
+		"@typescript-eslint/eslint-plugin": "^6.0.0",
+		"@typescript-eslint/parser": "^6.0.0"
 	},
 	"files": [
 		"lib/**/*"

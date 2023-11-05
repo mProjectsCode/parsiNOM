@@ -1,4 +1,4 @@
-import { ParseResult, ParsingPosition, STypeBase } from './HelperTypes';
+import { type ParseResult, type ParsingPosition, type STypeBase } from './HelperTypes';
 import { Parser } from './Parser';
 
 export function arrayUnion(a: string[] | undefined, b: string[] | undefined): string[] | undefined {
@@ -6,10 +6,10 @@ export function arrayUnion(a: string[] | undefined, b: string[] | undefined): st
 		return undefined;
 	}
 	if (a === undefined) {
-		return b as string[];
+		return b!;
 	}
 	if (b === undefined) {
-		return a as string[];
+		return a;
 	}
 
 	for (const bElement of b) {

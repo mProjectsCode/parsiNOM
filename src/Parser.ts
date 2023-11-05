@@ -1,8 +1,18 @@
 import { ParserContext } from './ParserContext';
-import { NamedParsingMarker, ParseFailure, ParseFunction, ParseResult, ParsingMarker, ParsingPosition, ParsingRange, STypeBase } from './HelperTypes';
+import {
+	type NamedParsingMarker,
+	type ParseFailure,
+	type ParseFunction,
+	type ParseResult,
+	type ParsingMarker,
+	type ParsingPosition,
+	type ParsingRange,
+	type STypeBase,
+} from './HelperTypes';
 import { P } from './ParsiNOM';
 import { P_HELPERS, validateRange } from './Helpers';
 import { P_UTILS } from './ParserUtils';
+import { ParsingError } from './ParserError';
 
 export class Parser<const SType extends STypeBase> {
 	public p: ParseFunction<SType>;
@@ -26,11 +36,11 @@ export class Parser<const SType extends STypeBase> {
 	 * @param str
 	 */
 	parse(str: string): SType {
-		const result = this.tryParse(str);
+		const result: ParseResult<SType> = this.tryParse(str);
 		if (result.success) {
 			return result.value;
 		} else {
-			throw P.createError(str, result as ParseFailure);
+			throw new ParsingError(str, result);
 		}
 	}
 
@@ -76,17 +86,17 @@ export class Parser<const SType extends STypeBase> {
 		return new Parser<SType>(function _wrap(context): ParseResult<SType> {
 			const leftResult = leftParser.p(context);
 			if (!leftResult.success) {
-				return leftResult as ParseFailure;
+				return leftResult;
 			}
 
 			const thisResult = context.merge(leftResult, _this.p(context));
 			if (!thisResult.success) {
-				return thisResult as ParseFailure;
+				return thisResult;
 			}
 
 			const rightResult = context.merge(thisResult, rightParser.p(context));
 			if (!rightResult.success) {
-				return rightResult as ParseFailure;
+				return rightResult;
 			}
 
 			return context.merge(rightResult, context.succeed(thisResult.value));
@@ -116,12 +126,12 @@ export class Parser<const SType extends STypeBase> {
 		return new Parser<OtherSType>(function _then(context) {
 			const firstResult = _this.p(context);
 			if (!firstResult.success) {
-				return firstResult as ParseFailure;
+				return firstResult;
 			}
 
 			const secondResult = context.merge(firstResult, next.p(context));
 			if (!secondResult.success) {
-				return secondResult as ParseFailure;
+				return secondResult;
 			}
 
 			return secondResult;
@@ -138,14 +148,14 @@ export class Parser<const SType extends STypeBase> {
 		const _this = this;
 
 		return new Parser<SType>(function _skip(context) {
-			const firstResult = _this.p(context);
+			const firstResult: ParseResult<SType> = _this.p(context);
 			if (!firstResult.success) {
-				return firstResult as ParseFailure;
+				return firstResult;
 			}
 
 			const secondResult = context.merge(firstResult, next.p(context));
 			if (!secondResult.success) {
-				return secondResult as ParseFailure;
+				return secondResult;
 			}
 
 			return context.merge(secondResult, context.succeed(firstResult.value));
@@ -303,11 +313,14 @@ export class Parser<const SType extends STypeBase> {
 		const _this = this;
 		return new Parser(function _map(context): ParseResult<OtherSType> {
 			// we use any here, because that allows us to change the value of the result later
-			const result: ParseResult<any> = _this.p(context);
+			const result: ParseResult<SType> = _this.p(context);
 			if (!result.success) {
-				return result as ParseFailure;
+				return result;
 			}
+
+			// @ts-ignore
 			result.value = fn(result.value);
+			// @ts-ignore
 			return result;
 		});
 	}
@@ -449,7 +462,7 @@ export class Parser<const SType extends STypeBase> {
 		return new Parser<OtherSType>(function _chain(context): ParseResult<OtherSType> {
 			const result: ParseResult<SType> = _this.p(context);
 			if (!result.success) {
-				return result as ParseFailure;
+				return result;
 			}
 			const nextParser: Parser<OtherSType> = fn(result.value);
 			const nextResult = nextParser.p(context);

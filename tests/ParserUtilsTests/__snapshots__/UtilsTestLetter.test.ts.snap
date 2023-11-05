@@ -343,3 +343,205 @@ exports[`letters '你叫什么名字' conditional failure tests Error matches sn
   },
 }
 `;
+
+exports[`unicodeLetter 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
+
+exports[`unicodeLetter 'b' conditional success tests AST matches snapshot 1`] = `"b"`;
+
+exports[`unicodeLetter 'z' conditional success tests AST matches snapshot 1`] = `"z"`;
+
+exports[`unicodeLetter 'こ' conditional success tests AST matches snapshot 1`] = `"こ"`;
+
+exports[`unicodeLetter '你' conditional success tests AST matches snapshot 1`] = `"你"`;
+
+exports[`unicodeLetter '#' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "a unicode letter",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`unicodeLetter ' ' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "a unicode letter",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`unicodeLetter '' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "a unicode letter",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`unicodeLetters 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
+
+exports[`unicodeLetters 'bb' conditional success tests AST matches snapshot 1`] = `"bb"`;
+
+exports[`unicodeLetters 'zz' conditional success tests AST matches snapshot 1`] = `"zz"`;
+
+exports[`unicodeLetters 'こんにちは' conditional success tests AST matches snapshot 1`] = `"こんにちは"`;
+
+exports[`unicodeLetters '你叫什么名字' conditional success tests AST matches snapshot 1`] = `"你叫什么名字"`;
+
+exports[`unicodeLetters '#' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "multiple unicode letters",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`unicodeLetters ' ' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "multiple unicode letters",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`unicodeLetters '' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "multiple unicode letters",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`unicodeAlphanumeric 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
+
+exports[`unicodeAlphanumeric 'b' conditional success tests AST matches snapshot 1`] = `"b"`;
+
+exports[`unicodeAlphanumeric 'z' conditional success tests AST matches snapshot 1`] = `"z"`;
+
+exports[`unicodeAlphanumeric 'こ' conditional success tests AST matches snapshot 1`] = `"こ"`;
+
+exports[`unicodeAlphanumeric '你' conditional success tests AST matches snapshot 1`] = `"你"`;
+
+exports[`unicodeAlphanumeric '1' conditional success tests AST matches snapshot 1`] = `"1"`;
+
+exports[`unicodeAlphanumeric '#' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "a unicode alphanumeric character",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`unicodeAlphanumeric ' ' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "a unicode alphanumeric character",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`unicodeAlphanumeric '' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "a unicode alphanumeric character",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`unicodeAlphanumeric 'a' conditional success tests AST matches snapshot 2`] = `"a"`;
+
+exports[`unicodeAlphanumeric 'bb' conditional success tests AST matches snapshot 1`] = `"bb"`;
+
+exports[`unicodeAlphanumeric 'zz' conditional success tests AST matches snapshot 1`] = `"zz"`;
+
+exports[`unicodeAlphanumeric 'こんにちは' conditional success tests AST matches snapshot 1`] = `"こんにちは"`;
+
+exports[`unicodeAlphanumeric '你叫什么名字' conditional success tests AST matches snapshot 1`] = `"你叫什么名字"`;
+
+exports[`unicodeAlphanumeric 'こんにちは123' conditional success tests AST matches snapshot 1`] = `"こんにちは123"`;
+
+exports[`unicodeAlphanumeric '你叫什么名字123' conditional success tests AST matches snapshot 1`] = `"你叫什么名字123"`;
+
+exports[`unicodeAlphanumeric '#' conditional failure tests Error matches snapshot 2`] = `
+{
+  "expected": [
+    "multiple unicode alphanumeric characters",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`unicodeAlphanumeric ' ' conditional failure tests Error matches snapshot 2`] = `
+{
+  "expected": [
+    "multiple unicode alphanumeric characters",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`unicodeAlphanumeric '' conditional failure tests Error matches snapshot 2`] = `
+{
+  "expected": [
+    "multiple unicode alphanumeric characters",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;

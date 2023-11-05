@@ -1,7 +1,7 @@
-import { Parser } from './Parser';
-import { ParserContext } from './ParserContext';
+import { type Parser } from './Parser';
+import { type ParserContext } from './ParserContext';
 
-export type STypeBase = any;
+export type STypeBase = unknown;
 
 export interface ParseSuccess<SType extends STypeBase> {
 	success: true;

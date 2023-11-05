@@ -17,4 +17,10 @@ jobs:
       - working-directory: .
         run: bun install
       - working-directory: .
-        run: bun run check
+        run: bun run format:check
+      - working-directory: .
+        run: bun run lint
+      - working-directory: .
+        run: bun run tsc
+      - working-directory: .
+        run: bun run test

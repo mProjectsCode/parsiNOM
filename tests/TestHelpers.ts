@@ -113,7 +113,7 @@ export function testParserAdvanced<T>(parser: Parser<T>, data: Readonly<ParserTe
 			describe('conditional failure tests', () => {
 				// we test that the parse result is undefined
 				test(`AST is undefined`, () => {
-					expect(markedResult.value).toBe(undefined);
+					expect<ParsingMarker<unknown> | undefined>(markedResult.value).toBe(undefined);
 				});
 
 				// we test that the parser started at index 0

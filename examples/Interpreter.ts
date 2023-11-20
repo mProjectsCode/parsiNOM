@@ -1,9 +1,3 @@
-import { ParsingRange, TupleToUnion } from '../../src/HelperTypes';
-import { P } from '../../src/ParsiNOM';
-import { P_UTILS } from '../../src/ParserUtils';
-import { Parser } from '../../src/Parser';
-import { describe, test, expect } from 'bun:test';
-
 /*
  * ----- INTERPRETER -----
  *
@@ -23,6 +17,11 @@ import { describe, test, expect } from 'bun:test';
  * 	- objects or classes
  * 	- namespaces
  */
+
+import { P_UTILS } from '../src/ParserUtils';
+import { P } from '../src/ParsiNOM';
+import { Parser } from '../src/Parser';
+import { ParsingRange, TupleToUnion } from '../src/HelperTypes';
 
 const ComparisonOperators = ['>', '>=', '<=', '<', '==', '!='] as const;
 type ComparisonOperator = TupleToUnion<typeof ComparisonOperators>;
@@ -73,7 +72,7 @@ class Callable {
 
 type Value = null | string | number | boolean | Callable;
 
-enum BaseType {
+export enum BaseType {
 	STRING = 'STRING',
 	NUMBER = 'NUMBER',
 	BOOL = 'BOOL',
@@ -964,94 +963,10 @@ const lang = P.createLanguage<LangRules>({
 			.node((x, range) => new AST_Block(range, x)),
 });
 
-const progParser = P.separateBy(
+export const interpreterParser = P.separateBy(
 	P.sequenceMap((statement, _1, _2) => statement, lang.statement, optW, P.string(';')),
 	optW,
 )
 	.trim(optW)
 	.thenEof()
 	.node((x, range) => new AST_Block(range, x));
-
-describe('prog lang', () => {
-	test('1 + 2;', () => {
-		const ast = progParser.parse('1 + 2;');
-		const type = ast.validateType();
-		const res = ast.evaluate();
-
-		expect(type.type).toEqual(BaseType.NUMBER);
-		expect(res).toBe(3);
-	});
-
-	test('function def', () => {
-		const ast = progParser.parse(`
-fn hello(): string {
-	"hello world";
-};
-hello();
-		`);
-		// console.log(ast);
-		const type = ast.validateType();
-		// console.log('--- evaluate ---');
-		const res = ast.evaluate();
-
-		expect(type.type).toEqual(BaseType.STRING);
-		expect(res).toBe('hello world');
-	});
-
-	test('nested function def', () => {
-		const ast = progParser.parse(`
-fn get2squared(): number {
-	fn pow(x: number): number {
-		x * x;
-	};
-	pow(2);
-};
-get2squared() + 1;
-		`);
-		const type = ast.validateType();
-		// console.log('--- evaluate ---');
-		const res = ast.evaluate();
-
-		expect(type.type).toEqual(BaseType.NUMBER);
-		expect(res).toBe(5);
-	});
-
-	test('variable def', () => {
-		const ast = progParser.parse(`
-fn get2squared(): number {
-	var num: number = 2;
-	fn pow(x: number): number {
-		x * x;
-	};
-	pow(num);
-};
-get2squared() + 1;
-		`);
-		const type = ast.validateType();
-		// console.log('--- evaluate ---');
-		const res = ast.evaluate();
-
-		expect(type.type).toEqual(BaseType.NUMBER);
-		expect(res).toBe(5);
-	});
-
-	// currently not implemented
-	// 	test('variable access over scope', () => {
-	// 		const ast = progParser.parse(`
-	// var num: number = 2;
-	// fn get2squared(): number {
-	// 	fn pow(x: number): number {
-	// 		x * x;
-	// 	};
-	// 	pow(num);
-	// };
-	// get2squared() + 1;
-	// 		`);
-	// 		const type = ast.validateType();
-	// 		console.log('--- evaluate ---');
-	// 		const res = ast.evaluate();
-	//
-	// 		expect(type).toEqual(TypeC.NUMBER);
-	// 		expect(res).toBe(5);
-	// 	});
-});

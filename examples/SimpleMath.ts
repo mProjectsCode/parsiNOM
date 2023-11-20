@@ -1,8 +1,7 @@
-import { Parser } from '../../src/Parser';
-import { P } from '../../src/ParsiNOM';
-import { STypeBase } from '../../src/HelperTypes';
-import { P_UTILS } from '../../src/ParserUtils';
-import { describe, test, expect } from 'bun:test';
+import { P_UTILS } from '../src/ParserUtils';
+import { Parser } from '../src/Parser';
+import { P } from '../src/ParsiNOM';
+import { STypeBase } from '../src/HelperTypes';
 
 const _ = P_UTILS.optionalWhitespace();
 
@@ -69,13 +68,13 @@ function binaryLeft<OperatorSType extends STypeBase, OtherSType extends STypeBas
 	);
 }
 
-let Num: Parser<readonly ['Number', number]> = P.regexp(/[0-9]+/)
+const Num: Parser<readonly ['Number', number]> = P.regexp(/[0-9]+/)
 	.map(str => ['Number', Number.parseInt(str)] as const)
 	.describe('number');
 
-let Basic: Parser<unknown> = P.reference(() => P.string('(').then(Math).skip(P.string(')')).or(Num));
+const Basic: Parser<unknown> = P.reference(() => P.string('(').then(SimpleMathParser).skip(P.string(')')).or(Num));
 
-let table: {
+const table: {
 	type: (
 		operatorsParser: Parser<string>,
 		nextParser: Parser<unknown>,
@@ -89,18 +88,6 @@ let table: {
 	{ type: binaryLeft, ops: operators({ Add: '+', Subtract: '-' }) },
 ];
 
-let tableParser: Parser<unknown> = table.reduce((acc, level) => level.type(level.ops, acc), Basic);
+const tableParser: Parser<unknown> = table.reduce((acc, level) => level.type(level.ops, acc), Basic);
 
-let Math: Parser<unknown> = tableParser.trim(_);
-
-describe('math test', () => {
-	const testCases: string[] = ['1 + 2', '1 + 2 + 3', '1 * 2 + 3', '1 + 2 * 3', '(1 + 2) * 3', '1 + -2', '1 + -2 ^ 2', '1 + -2 ^ 2!'];
-
-	for (const testCase of testCases) {
-		test(testCase, () => {
-			const res = Math.tryParse(testCase);
-			expect(res.success).toBe(true);
-			expect(res.value).toMatchSnapshot();
-		});
-	}
-});
+export const SimpleMathParser: Parser<unknown> = tableParser.trim(_);

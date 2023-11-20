@@ -6,6 +6,32 @@ exports[`letter 'b' conditional success tests AST matches snapshot 1`] = `"b"`;
 
 exports[`letter 'z' conditional success tests AST matches snapshot 1`] = `"z"`;
 
+exports[`letter 'こ' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "a letter",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`letter '你' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "a letter",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
 exports[`letter '#' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
@@ -51,6 +77,32 @@ exports[`letters 'bb' conditional success tests AST matches snapshot 1`] = `"bb"
 
 exports[`letters 'zz' conditional success tests AST matches snapshot 1`] = `"zz"`;
 
+exports[`letters 'こんにちは' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "multiple letters",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
+exports[`letters '你叫什么名字' conditional failure tests Error matches snapshot 1`] = `
+{
+  "expected": [
+    "multiple letters",
+  ],
+  "pos": {
+    "column": 1,
+    "index": 0,
+    "line": 1,
+  },
+}
+`;
+
 exports[`letters '#' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
@@ -78,260 +130,6 @@ exports[`letters ' ' conditional failure tests Error matches snapshot 1`] = `
 `;
 
 exports[`letters '' conditional failure tests Error matches snapshot 1`] = `
-{
-  "expected": [
-    "multiple letters",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letter 'a' conditional success tests AST matches snapshot 2`] = `"a"`;
-
-exports[`letter 'b' conditional success tests AST matches snapshot 2`] = `"b"`;
-
-exports[`letter 'z' conditional success tests AST matches snapshot 2`] = `"z"`;
-
-exports[`letter 'こ' conditional success tests AST matches snapshot 1`] = `"こ"`;
-
-exports[`letter '你' conditional success tests AST matches snapshot 1`] = `"你"`;
-
-exports[`letter '#' conditional failure tests Error matches snapshot 2`] = `
-{
-  "expected": [
-    "a unicode letter",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letter ' ' conditional failure tests Error matches snapshot 2`] = `
-{
-  "expected": [
-    "a unicode letter",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letter '' conditional failure tests Error matches snapshot 2`] = `
-{
-  "expected": [
-    "a unicode letter",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letters 'a' conditional success tests AST matches snapshot 2`] = `"a"`;
-
-exports[`letters 'bb' conditional success tests AST matches snapshot 2`] = `"bb"`;
-
-exports[`letters 'zz' conditional success tests AST matches snapshot 2`] = `"zz"`;
-
-exports[`letters 'こんにちは' conditional success tests AST matches snapshot 1`] = `"こんにちは"`;
-
-exports[`letters '你叫什么名字' conditional success tests AST matches snapshot 1`] = `"你叫什么名字"`;
-
-exports[`letters '#' conditional failure tests Error matches snapshot 2`] = `
-{
-  "expected": [
-    "multiple unicode letters",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letters ' ' conditional failure tests Error matches snapshot 2`] = `
-{
-  "expected": [
-    "multiple unicode letters",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letters '' conditional failure tests Error matches snapshot 2`] = `
-{
-  "expected": [
-    "multiple unicode letters",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letter 'a' conditional success tests AST matches snapshot 3`] = `"a"`;
-
-exports[`letter 'b' conditional success tests AST matches snapshot 3`] = `"b"`;
-
-exports[`letter 'z' conditional success tests AST matches snapshot 3`] = `"z"`;
-
-exports[`letter 'こ' conditional success tests AST matches snapshot 2`] = `"こ"`;
-
-exports[`letter '你' conditional success tests AST matches snapshot 2`] = `"你"`;
-
-exports[`letter '1' conditional success tests AST matches snapshot 1`] = `"1"`;
-
-exports[`letter '#' conditional failure tests Error matches snapshot 3`] = `
-{
-  "expected": [
-    "a unicode alphanumeric character",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letter ' ' conditional failure tests Error matches snapshot 3`] = `
-{
-  "expected": [
-    "a unicode alphanumeric character",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letter '' conditional failure tests Error matches snapshot 3`] = `
-{
-  "expected": [
-    "a unicode alphanumeric character",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letters 'a' conditional success tests AST matches snapshot 3`] = `"a"`;
-
-exports[`letters 'bb' conditional success tests AST matches snapshot 3`] = `"bb"`;
-
-exports[`letters 'zz' conditional success tests AST matches snapshot 3`] = `"zz"`;
-
-exports[`letters 'こんにちは' conditional success tests AST matches snapshot 2`] = `"こんにちは"`;
-
-exports[`letters '你叫什么名字' conditional success tests AST matches snapshot 2`] = `"你叫什么名字"`;
-
-exports[`letters 'こんにちは123' conditional success tests AST matches snapshot 1`] = `"こんにちは123"`;
-
-exports[`letters '你叫什么名字123' conditional success tests AST matches snapshot 1`] = `"你叫什么名字123"`;
-
-exports[`letters '#' conditional failure tests Error matches snapshot 3`] = `
-{
-  "expected": [
-    "multiple unicode alphanumeric characters",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letters ' ' conditional failure tests Error matches snapshot 3`] = `
-{
-  "expected": [
-    "multiple unicode alphanumeric characters",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letters '' conditional failure tests Error matches snapshot 3`] = `
-{
-  "expected": [
-    "multiple unicode alphanumeric characters",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letter 'こ' conditional failure tests Error matches snapshot 1`] = `
-{
-  "expected": [
-    "a letter",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letter '你' conditional failure tests Error matches snapshot 1`] = `
-{
-  "expected": [
-    "a letter",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letters 'こんにちは' conditional failure tests Error matches snapshot 1`] = `
-{
-  "expected": [
-    "multiple letters",
-  ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
-}
-`;
-
-exports[`letters '你叫什么名字' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "multiple letters",

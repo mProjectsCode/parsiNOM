@@ -1,9 +1,6 @@
-import { P } from '../../src/ParsiNOM';
-import { P_UTILS } from '../../src/ParserUtils';
-import { Parser } from '../../src/Parser';
-
-import { describe, test, expect } from 'bun:test';
-import { testParser } from '../TestHelpers';
+import { P } from '../src/ParsiNOM';
+import { Parser } from '../src/Parser';
+import { P_UTILS } from '../src/ParserUtils';
 
 type Action = string;
 
@@ -37,7 +34,7 @@ class Operation<OperatorType extends Operator> {
 	}
 }
 
-export interface ProcessTreeLanguage {
+interface ProcessTreeLanguage {
 	operator: Operator;
 	operation: Operation<Operator>;
 	simpleTree: ElementaryProcessTree;
@@ -45,7 +42,7 @@ export interface ProcessTreeLanguage {
 	root: Operation<Sequence> | ElementaryProcessTree;
 }
 
-export const processTreeLanguage = P.createLanguage<ProcessTreeLanguage>({
+const processTreeLanguage = P.createLanguage<ProcessTreeLanguage>({
 	operator: () => P.or(P.string(sequence), P.string(loop), P.string(choice), P.string(parallel)) as Parser<Operator>,
 	operation: (lang, ref) =>
 		P_UTILS.func(lang.operator, ref.tree.separateBy(P.string(',').trim(P_UTILS.optionalWhitespace())), (a, b) => new Operation(a as Operator, b)),
@@ -58,32 +55,4 @@ export const processTreeLanguage = P.createLanguage<ProcessTreeLanguage>({
 		),
 });
 
-export const processTreeParser = processTreeLanguage.root.thenEof();
-
-describe.each([
-	// basic trees
-	['a', true],
-	['\\tau', true],
-	['\\rightarrow(a)', true],
-	['\\rightarrow(\\tau)', true],
-
-	// smoke tests - a few process trees
-	['\\rightarrow(a,\\circlearrowleft(\\rightarrow(\\wedge(\\times(b, c), d), e ), f ), \\times(g, h))', true],
-
-	// Incorrect trees: empty tree
-	['', false],
-	// Numbers are not valid event names
-	['1', false],
-	// Incomplete/typoed sequence operation
-	['\\rightarrow', false],
-	['\\rightarrow(', false],
-	['\\rightarrow)', false],
-	['\\rightarrow(a', false],
-	['\\rightarrowa)', false],
-	// Disallowed starting operations
-	['\\wedge(a)', false],
-	['\\circlearrowleft(a)', false],
-	['\\times(a)', false],
-])(`Process Tree Testsuite`, (str, shouldSucceed) => {
-	testParser(processTreeParser, str, shouldSucceed);
-});
+export const ProcessTreeParser = processTreeLanguage.root.thenEof();

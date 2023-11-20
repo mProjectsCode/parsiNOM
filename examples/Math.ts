@@ -1,38 +1,36 @@
-import { Parser } from '../../src/Parser';
-import { P } from '../../src/ParsiNOM';
-import { TupleToUnion } from '../../src/HelperTypes';
-import { P_UTILS } from '../../src/ParserUtils';
-import { describe, test, expect } from 'bun:test';
+import { TupleToUnion } from '../src/HelperTypes';
+import { P } from '../src/ParsiNOM';
+import { Parser } from '../src/Parser';
+import { P_UTILS } from '../src/ParserUtils';
 
-export type Literal = string | number | boolean;
+type Literal = string | number | boolean;
 
-export const ComparisonOperators = ['>', '>=', '<=', '<', '=', '!='] as const;
-// @ts-ignore
-export type ComparisonOperator = TupleToUnion<typeof ComparisonOperators>;
+const ComparisonOperators = ['>', '>=', '<=', '<', '=', '!='] as const;
+type ComparisonOperator = TupleToUnion<typeof ComparisonOperators>;
 
-export const ArithmeticOperators = ['+', '-', '*', '/', '%', '^', '&&', '||'] as const;
-export type ArithmeticOperator = TupleToUnion<typeof ArithmeticOperators>;
+const ArithmeticOperators = ['+', '-', '*', '/', '%', '^', '&&', '||'] as const;
+type ArithmeticOperator = TupleToUnion<typeof ArithmeticOperators>;
 
-export const UnaryOperators = ['!', '-'] as const;
-export type UnaryOperator = TupleToUnion<typeof UnaryOperators>;
+const UnaryOperators = ['!', '-'] as const;
+type UnaryOperator = TupleToUnion<typeof UnaryOperators>;
 
-export type BinaryOperator = ComparisonOperator | ArithmeticOperator;
-export type Operator = BinaryOperator | UnaryOperator;
+type BinaryOperator = ComparisonOperator | ArithmeticOperator;
+type Operator = BinaryOperator | UnaryOperator;
 
-export type Expression = LiteralExpression | UnaryExpression | BinaryExpression;
+type Expression = LiteralExpression | UnaryExpression | BinaryExpression;
 
-export interface LiteralExpression {
+interface LiteralExpression {
 	type: 'literal';
 	value: Literal;
 }
 
-export interface UnaryExpression {
+interface UnaryExpression {
 	type: 'unary';
 	operator: Operator;
 	value: Expression;
 }
 
-export interface BinaryExpression {
+interface BinaryExpression {
 	type: 'binary';
 	operator: Operator;
 
@@ -54,9 +52,9 @@ export class _ExpressionConstructor {
 	}
 }
 
-export const EXPRESSION_CONSTRUCTOR = new _ExpressionConstructor();
+const EXPRESSION_CONSTRUCTOR = new _ExpressionConstructor();
 
-export interface MathTokenLanguage {
+interface MathTokenLanguage {
 	number: number;
 	string: string;
 	bool: boolean;
@@ -99,7 +97,7 @@ const MATH_TOKEN = P.createLanguage<MathTokenLanguage>({
 	binaryOr: _ => (P.string('||') as Parser<ArithmeticOperator>).describe("'||'"),
 });
 
-export interface MathLanguage {
+interface MathLanguage {
 	number: LiteralExpression;
 	bool: LiteralExpression;
 	string: LiteralExpression;
@@ -143,17 +141,4 @@ const Math = P.createLanguage<MathLanguage>({
 	expression: l => l.binaryOp,
 });
 
-const MathParser = Math.expression.thenEof();
-
-describe('math2 test', () => {
-	const testCases: string[] = ['1', '1+2', '1 + 2 + 3', '1 * 2 + 3', '1 + 2 * 3', '(1 + 2) * 3', '1 + -2', '1 + -2 ^ 2', '1 + -2 ^ 2!'];
-
-	for (const testCase of testCases) {
-		test(testCase, () => {
-			const res = MathParser.tryParse(testCase);
-			// console.log(testCase, res);
-
-			expect(res.success).toBe(true);
-		});
-	}
-});
+export const MathParser = Math.expression.thenEof();

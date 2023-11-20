@@ -1,6 +1,6 @@
-import * as JsonData from './__data__/JsonData';
-import { jsonParser } from '../../profiling/Json';
+import * as JsonData from '../__data__/JsonData';
 import { describe, test, expect } from 'bun:test';
+import { jsonParser } from '../../examples/JSON';
 
 describe('json parser', () => {
 	const testCases: unknown[] = ['1', [1, '2'], { a: 1, b: ['2', false] }, { a: { foo: '1' }, b: null, c: undefined }];
@@ -23,37 +23,7 @@ describe('json parser', () => {
 			// expect(res.success).toBe(true);
 			expect(res.value).toEqual(testCase);
 		});
-
-		// it(JSON.stringify(testCase) + ' performance', async () => {
-		// 	await benchmark.record(['JSON parser', str], () => {
-		// 		jsonParser.tryParse(str);
-		// 	});
-		//
-		// 	await benchmark.record(['js JSON parser', str], () => {
-		// 		JSON.parse(str);
-		// 	});
-		// });
 	}
-
-	// describe('json perf', () => {
-	// 	// JEST:
-	// 	// result optimizations ~ 8.4 ms
-	// 	// index optimizations ~ 7.3 ms
-	// 	// parser optimizations ~ 7.2 ms
-	// 	// replace number and string parsing with regexp ~ 3.6 ms
-	// 	// replace string parsing with manyNotOf ~ 5 ms
-	// 	// skip and then optimizations ~ 4.7 ms
-	// 	// wrap optimizations ~ 4.2 ms
-	// 	it('big json file', async () => {
-	// 		await benchmark.record(['parsiNOM parser'], () => {
-	// 			jsonParser.tryParse(JsonData.data);
-	// 		});
-	//
-	// 		await benchmark.record(['builtin parser'], () => {
-	// 			JSON.parse(JsonData.data);
-	// 		});
-	// 	});
-	// });
 
 	describe('json file', () => {
 		test('normal data', () => {

@@ -1,5 +1,5 @@
-import { Parser } from '../../src/Parser';
-import { P } from '../../src/ParsiNOM';
+import { Parser } from '../src/Parser';
+import { P } from '../src/ParsiNOM';
 import { describe, test, expect } from 'bun:test';
 
 const number = P.regexp(/^[0-9]+/);

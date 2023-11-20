@@ -1,5 +1,5 @@
-import * as JsonData from '../tests/languages/__data__/JsonData';
-import { jsonParserRegexp } from './Json';
+import * as JsonData from '../tests/__data__/JsonData';
+import { jsonParserRegexp } from '../examples/JSON';
 import { baseline, bench, run } from 'mitata';
 
 function parsiNomJsonTest() {

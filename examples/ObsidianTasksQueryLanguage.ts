@@ -1,7 +1,6 @@
-import { describe, test, expect } from 'bun:test';
-import { P } from '../../src/ParsiNOM';
-import { P_UTILS } from '../../src/ParserUtils';
-import { ParseFailure, ParsingRange } from '../../src/HelperTypes';
+import { P } from '../src/ParsiNOM';
+import { P_UTILS } from '../src/ParserUtils';
+import { ParsingRange } from '../src/HelperTypes';
 
 /*
  * This is a simplified version of the tasks query language.
@@ -18,7 +17,7 @@ type Task = string;
 /**
  * This represents a task expression, so a leaf in our AST.
  */
-class TaskQueryExpression {
+export class TaskQueryExpression {
 	range: ParsingRange;
 	tasks: Task[];
 
@@ -32,7 +31,7 @@ class TaskQueryExpression {
 	}
 }
 
-enum TaskExpressionOperator {
+export enum TaskExpressionOperator {
 	AND = 'AND',
 	OR = 'OR',
 }
@@ -40,7 +39,7 @@ enum TaskExpressionOperator {
 /**
  * This represents an operation such as AND, so a node in our AST.
  */
-class TaskExpressionOperation {
+export class TaskExpressionOperation {
 	range: ParsingRange;
 	operator: TaskExpressionOperator;
 	lhs: TaskASTElement;
@@ -117,106 +116,4 @@ const TasksQueryLanguage = P.createLanguage<TasksQueryLanguageDef>({
 	parser: language => P.or(language.operation, language.expression).thenEof(),
 });
 
-const TasksParser = TasksQueryLanguage.parser;
-
-describe('task query language', () => {
-	test('single expression', () => {
-		const result = TasksParser.tryParse('abc');
-
-		expect(result.success).toBe(true);
-		expect(result.value?.evaluate().sort()).toEqual(['a', 'b', 'c']);
-	});
-
-	test('single expression with parens', () => {
-		const str = '(abc)';
-		const result = TasksParser.tryParse(str);
-
-		if (!result.success) {
-			console.log(P.createError(str, result));
-		}
-
-		expect(result.success).toBe(true);
-		expect(result.value?.evaluate().sort()).toEqual(['a', 'b', 'c']);
-	});
-
-	test('dual expression with AND', () => {
-		const result = TasksParser.tryParse('(abc) AND (acd)');
-
-		expect(result.success).toBe(true);
-		expect(result.value?.evaluate().sort()).toEqual(['a', 'c']);
-	});
-
-	test('dual expression with OR', () => {
-		const result = TasksParser.tryParse('(abc) OR (acd)');
-
-		expect(result.success).toBe(true);
-		expect(result.value?.evaluate().sort()).toEqual(['a', 'b', 'c', 'd']);
-	});
-
-	test('triple expression with AND', () => {
-		const result = TasksParser.tryParse('(abc) AND (acd) AND (abd)');
-
-		expect(result.success).toBe(true);
-		expect(result.value?.evaluate().sort()).toEqual(['a']);
-	});
-
-	test('triple expression with OR', () => {
-		const result = TasksParser.tryParse('(abc) OR (acd) OR (ade)');
-
-		expect(result.success).toBe(true);
-		expect(result.value?.evaluate().sort()).toEqual(['a', 'b', 'c', 'd', 'e']);
-	});
-
-	test('mixed expression with AND and OR', () => {
-		const result = TasksParser.tryParse('(abc) AND (acd) OR (ae)');
-
-		expect(result.success).toBe(true);
-		// since AND and OR have the same precedence, they are parsed left to right. So AND should be the inner one and OR the outer one.
-		// @ts-ignore
-		expect(result.value?.operator).toBe(TaskExpressionOperator.OR);
-		expect(result.value?.evaluate().sort()).toEqual(['a', 'c', 'e']);
-	});
-
-	test('mixed expression with AND and OR and parens', () => {
-		const str = '(abc) AND ((acd) OR (be))';
-		const result = TasksParser.tryParse(str);
-
-		expect(result.success).toBe(true);
-		// since OR is in parens, AND should be the outer one and OR the inner one.
-		// @ts-ignore
-		expect(result.value?.operator).toBe(TaskExpressionOperator.AND);
-		expect(result.value?.evaluate().sort()).toEqual(['a', 'b', 'c']);
-	});
-
-	test('double paren', () => {
-		const str = '((abc))';
-		const result = TasksParser.tryParse(str);
-
-		expect(result.success).toBe(true);
-		expect(result.value?.evaluate().sort()).toEqual(['a', 'b', 'c']);
-	});
-
-	test('double paren AND', () => {
-		const str = '((abc) AND (acd))';
-		const result = TasksParser.tryParse(str);
-
-		expect(result.success).toBe(true);
-		expect(result.value?.evaluate().sort()).toEqual(['a', 'c']);
-	});
-
-	test('paren is an allowed character', () => {
-		const str = '"ab(c)"';
-		const result = TasksParser.tryParse(str);
-
-		expect(result.success).toBe(true);
-		expect(result.value?.evaluate().sort()).toEqual(['(', ')', 'a', 'b', 'c']);
-	});
-
-	test('parens inside AND', () => {
-		const str = '( "ab(c)" ) AND ( c )';
-		const result = TasksParser.tryParse(str);
-
-		expect(result.success).toBe(true);
-		expect(result.value?.evaluate().sort()).toEqual(['c']);
-	});
-});
+export const ObsidianTasksQueryParser = TasksQueryLanguage.parser;

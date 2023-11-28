@@ -12,12 +12,21 @@ export function arrayUnion(a: string[] | undefined, b: string[] | undefined): st
 		return a;
 	}
 
+	// for (const bElement of b) {
+	// 	if (!a.includes(bElement)) {
+	// 		a.push(bElement);
+	// 	}
+	// }
+	// return a;
+
+	// this clone is necessary
+	const c = [...a];
 	for (const bElement of b) {
-		if (!a.includes(bElement)) {
-			a.push(bElement);
+		if (!c.includes(bElement)) {
+			c.push(bElement);
 		}
 	}
-	return a;
+	return c;
 }
 
 export function getIndex(position: ParsingPosition | undefined): number {

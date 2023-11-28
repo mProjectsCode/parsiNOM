@@ -92,7 +92,7 @@ parsiNOM also has `P_UTILS` which contains a lot of utility parsers, such as par
 
 ### Examples
 
-The folder `test/languages` contains a few parsers written using parsiNOM, which you can use as a reference.
+The folder `examples` contains a few parsers written using parsiNOM, which you can use as a reference. The tests for these parsers are located in `tests/examples`.
 
 ## Technical Things
 

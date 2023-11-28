@@ -82,7 +82,7 @@ describe.each<ParserTestData<[[string[], string] | undefined, string]>>([
 		input: 'aaaaa',
 		shouldSucceed: false,
 		furthest: 5,
-		expected: [`('a' as part of many 'a's)`, "'b'"],
+		expected: [`('a' as part of many 'a's)`, "('b' as part of the end of the 'a's)"],
 	},
 	{
 		input: 'aab',
@@ -103,6 +103,6 @@ describe.each<ParserTestData<[[string[], string] | undefined, string]>>([
 		toIndex: 4,
 	},
 ])(`box multiple errors advanced`, data => {
-	const parser = P.sequence(P.sequence(P.string('a').many().box("many 'a's"), P.string('b')).optional(), P.string('c'));
+	const parser = P.sequence(P.sequence(P.string('a').many().box("many 'a's"), P.string('b').box("the end of the 'a's")).optional(), P.string('c'));
 	testParserAdvanced(parser, data);
 });

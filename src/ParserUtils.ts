@@ -1,6 +1,16 @@
-import type { ParsingRange } from './HelperTypes';
+import { P_HELPERS } from './Helpers';
+import type { InternalParseResult, ParsingRange } from './HelperTypes';
 import { Parser } from './Parser';
 import { P } from './ParsiNOM';
+
+const charCodeZero = '0'.charCodeAt(0);
+const charCodeNine = '9'.charCodeAt(0);
+
+const charCodeA = 'a'.charCodeAt(0);
+const charCodeZ = 'z'.charCodeAt(0);
+
+const charCodeAUpper = 'A'.charCodeAt(0);
+const charCodeZUpper = 'Z'.charCodeAt(0);
 
 export class P_UTILS {
 	/**
@@ -51,28 +61,36 @@ export class P_UTILS {
 	 * Matches a single digit.
 	 */
 	static digit(): Parser<string> {
-		return P.regexp(/^[0-9]/).describe('a digit');
+		return P_HELPERS.testCharCode(charCode => {
+			return charCode >= charCodeZero && charCode <= charCodeNine;
+		}, 'a digit');
 	}
 
 	/**
 	 * Matches multiple digits.
 	 */
 	static digits(): Parser<string> {
-		return P.regexp(/^[0-9]+/).describe('multiple digits');
+		return P_HELPERS.testCharCodes(charCode => {
+			return charCode >= charCodeZero && charCode <= charCodeNine;
+		}, 'multiple digits');
 	}
 
 	/**
 	 * Matches a single ascii letter.
 	 */
 	static letter(): Parser<string> {
-		return P.regexp(/^[a-z]/i).describe('a letter');
+		return P_HELPERS.testCharCode(charCode => {
+			return (charCode >= charCodeA && charCode <= charCodeZ) || (charCode >= charCodeAUpper && charCode <= charCodeZUpper);
+		}, 'a letter');
 	}
 
 	/**
 	 * Matches multiple ascii letters.
 	 */
 	static letters(): Parser<string> {
-		return P.regexp(/^[a-z]+/i).describe('multiple letters');
+		return P_HELPERS.testCharCodes(charCode => {
+			return (charCode >= charCodeA && charCode <= charCodeZ) || (charCode >= charCodeAUpper && charCode <= charCodeZUpper);
+		}, 'multiple letters');
 	}
 
 	/**
@@ -106,43 +124,114 @@ export class P_UTILS {
 	/**
 	 * Matches as much whitespace as it can or no whitespace.
 	 */
-	static optionalWhitespace(): Parser<string> {
-		return P.regexp(/^\s*/).describe('optional whitespace');
+	static optionalWhitespace(): Parser<void> {
+		return new Parser<void>(function _test(context): InternalParseResult<void> {
+			let i = context.position;
+			for (; i < context.input.length; i++) {
+				const char = context.input[i];
+				if (char !== ' ' && char !== '\t' && char !== '\n' && char !== '\r') {
+					break;
+				}
+			}
+
+			return context.succeedAt(i, undefined);
+		});
 	}
 
 	/**
 	 * Matches multiple, at least one, whitespace.
 	 */
-	static whitespace(): Parser<string> {
-		return P.regexp(/^\s+/).describe('whitespace');
+	static whitespace(): Parser<void> {
+		return new Parser<void>(function _test(context): InternalParseResult<void> {
+			let i = context.position;
+			for (; i < context.input.length; i++) {
+				const char = context.input[i];
+				if (char !== ' ' && char !== '\t' && char !== '\n' && char !== '\r') {
+					break;
+				}
+			}
+
+			if (i === context.position) {
+				return context.fail('whitespace');
+			} else {
+				return context.succeedAt(i, undefined);
+			}
+		});
 	}
 
 	/**
 	 * Matches a `\r` character.
 	 */
-	static cr(): Parser<string> {
-		return P.string('\r');
+	static cr(): Parser<void> {
+		return new Parser<void>(function _test(context): InternalParseResult<void> {
+			const char = context.input[context.position];
+			if (!context.atEOF() && char === '\r') {
+				return context.succeedOffset(1, undefined);
+			} else {
+				return context.fail('\\r');
+			}
+		});
 	}
 
 	/**
 	 * Matches a `\n` character.
 	 */
-	static lf(): Parser<string> {
-		return P.string('\n');
+	static lf(): Parser<void> {
+		return new Parser<void>(function _test(context): InternalParseResult<void> {
+			const char = context.input[context.position];
+			if (!context.atEOF() && char === '\n') {
+				return context.succeedOffset(1, undefined);
+			} else {
+				return context.fail('\\n');
+			}
+		});
 	}
 
 	/**
 	 * Matches a `\r\n` character.
 	 */
-	static crlf(): Parser<string> {
-		return P.string('\r\n');
+	static crlf(): Parser<void> {
+		return new Parser<void>(function _test(context): InternalParseResult<void> {
+			if (context.position + 1 >= context.input.length) {
+				return context.fail('\\r\\n');
+			}
+
+			const char = context.input[context.position];
+			const nextChar = context.input[context.position + 1];
+
+			if (char === '\r' && nextChar === '\n') {
+				return context.succeedOffset(2, undefined);
+			} else {
+				return context.fail('\\r\\n');
+			}
+		});
 	}
 
 	/**
 	 * Matches a newline character (either `\r\n`, `\n` or `\r`).
 	 */
-	static newline(): Parser<string> {
-		return P.or(this.crlf(), this.lf(), this.cr()).describe('newline');
+	static newline(): Parser<void> {
+		const failureString = 'newline';
+
+		return new Parser<void>(function _test(context): InternalParseResult<void> {
+			if (context.position >= context.input.length) {
+				return context.fail(failureString);
+			}
+
+			const char = context.input[context.position];
+
+			if (char === '\n') {
+				return context.succeedOffset(1, undefined);
+			} else if (char === '\r') {
+				if (context.position + 1 < context.input.length && context.input[context.position + 1] === '\n') {
+					return context.succeedOffset(2, undefined);
+				} else {
+					return context.succeedOffset(1, undefined);
+				}
+			} else {
+				return context.fail(failureString);
+			}
+		});
 	}
 
 	/**

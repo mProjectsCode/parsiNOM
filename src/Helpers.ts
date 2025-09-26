@@ -88,13 +88,43 @@ export class ParserHelpers {
 	 *
 	 * @param fn
 	 */
-	test(fn: (char: string) => boolean): Parser<string> {
+	test(fn: (char: string) => boolean, failureMessage: string): Parser<string> {
 		return new Parser<string>(function _test(context): InternalParseResult<string> {
 			const char = context.input[context.position];
 			if (!context.atEOF() && fn(char)) {
 				return context.succeedOffset(1, char);
 			} else {
-				return context.fail(`a character matching ${fn}`);
+				return context.fail(failureMessage);
+			}
+		});
+	}
+
+	testCharCode(fn: (char: number) => boolean, failureMessage: string): Parser<string> {
+		return new Parser<string>(function _test(context): InternalParseResult<string> {
+			const charCode = context.input.charCodeAt(context.position);
+			if (!context.atEOF() && fn(charCode)) {
+				return context.succeedOffset(1, context.input[context.position]);
+			} else {
+				return context.fail(failureMessage);
+			}
+		});
+	}
+
+	testCharCodes(fn: (char: number) => boolean, failureMessage: string): Parser<string> {
+		return new Parser<string>(function _test(context): InternalParseResult<string> {
+			let i = context.position;
+			for (; i < context.input.length; i++) {
+				const charCode = context.input.charCodeAt(i);
+				if (!fn(charCode)) {
+					break;
+				}
+			}
+
+			if (i > context.position) {
+				const text = context.input.slice(context.position, i);
+				return context.succeedAt(i, text);
+			} else {
+				return context.fail(failureMessage);
 			}
 		});
 	}

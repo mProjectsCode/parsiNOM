@@ -191,7 +191,7 @@ export class P {
 				}
 			}
 
-			return context.succeedAt(context.position + str.length, str);
+			return context.succeedOffset(str.length, str);
 		});
 	}
 
@@ -273,7 +273,7 @@ export class P {
 	static oneOf(str: string): Parser<string> {
 		return P_HELPERS.test(function _oneOf(char: string): boolean {
 			return str.includes(char);
-		}).describe(`one character of '${str}'`);
+		}, `one character of '${str}'`);
 	}
 
 	/**
@@ -285,7 +285,7 @@ export class P {
 	static noneOf(str: string): Parser<string> {
 		return P_HELPERS.test(function _noneOf(char: string): boolean {
 			return !str.includes(char);
-		}).describe(`no character of '${str}'`);
+		}, `no character of '${str}'`);
 	}
 
 	/**
@@ -354,10 +354,9 @@ export class P {
 	static range(begin: string, end: string): Parser<string> {
 		const beginCharCode = begin.charCodeAt(0);
 		const endCharCode = end.charCodeAt(0);
-		return P_HELPERS.test(function _range(char): boolean {
-			const charCode = char.charCodeAt(0);
+		return P_HELPERS.testCharCode(function _range(charCode): boolean {
 			return beginCharCode <= charCode && charCode <= endCharCode;
-		}).describe(`${begin}-${end}`);
+		}, `${begin}-${end}`);
 	}
 
 	/**

@@ -1,4 +1,4 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`separateBy '' conditional success tests AST matches snapshot 1`] = `[]`;
 
@@ -28,11 +28,7 @@ exports[`separateBy 'this, this' conditional failure tests Error matches snapsho
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 6,
-    "index": 5,
-    "line": 1,
-  },
+  "pos": 5,
 }
 `;
 
@@ -42,10 +38,6 @@ exports[`separateBy 'foo' conditional failure tests Error matches snapshot 1`] =
     "'this'",
     "eof",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

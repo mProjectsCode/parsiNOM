@@ -1,4 +1,4 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`letter 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
 
@@ -11,11 +11,7 @@ exports[`letter 'こ' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a letter",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -24,11 +20,7 @@ exports[`letter '你' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a letter",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -37,11 +29,7 @@ exports[`letter '#' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a letter",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -50,11 +38,7 @@ exports[`letter ' ' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a letter",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -63,11 +47,7 @@ exports[`letter '' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a letter",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -82,11 +62,7 @@ exports[`letters 'こんにちは' conditional failure tests Error matches snaps
   "expected": [
     "multiple letters",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -95,11 +71,7 @@ exports[`letters '你叫什么名字' conditional failure tests Error matches sn
   "expected": [
     "multiple letters",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -108,11 +80,7 @@ exports[`letters '#' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "multiple letters",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -121,11 +89,7 @@ exports[`letters ' ' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "multiple letters",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -134,11 +98,7 @@ exports[`letters '' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "multiple letters",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -157,11 +117,7 @@ exports[`unicodeLetter '#' conditional failure tests Error matches snapshot 1`] 
   "expected": [
     "a unicode letter",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -170,11 +126,7 @@ exports[`unicodeLetter ' ' conditional failure tests Error matches snapshot 1`] 
   "expected": [
     "a unicode letter",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -183,11 +135,7 @@ exports[`unicodeLetter '' conditional failure tests Error matches snapshot 1`] =
   "expected": [
     "a unicode letter",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -206,11 +154,7 @@ exports[`unicodeLetters '#' conditional failure tests Error matches snapshot 1`]
   "expected": [
     "multiple unicode letters",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -219,11 +163,7 @@ exports[`unicodeLetters ' ' conditional failure tests Error matches snapshot 1`]
   "expected": [
     "multiple unicode letters",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -232,11 +172,7 @@ exports[`unicodeLetters '' conditional failure tests Error matches snapshot 1`] 
   "expected": [
     "multiple unicode letters",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -257,11 +193,7 @@ exports[`unicodeAlphanumeric '#' conditional failure tests Error matches snapsho
   "expected": [
     "a unicode alphanumeric character",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -270,11 +202,7 @@ exports[`unicodeAlphanumeric ' ' conditional failure tests Error matches snapsho
   "expected": [
     "a unicode alphanumeric character",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -283,11 +211,7 @@ exports[`unicodeAlphanumeric '' conditional failure tests Error matches snapshot
   "expected": [
     "a unicode alphanumeric character",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -310,11 +234,7 @@ exports[`unicodeAlphanumeric '#' conditional failure tests Error matches snapsho
   "expected": [
     "multiple unicode alphanumeric characters",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -323,11 +243,7 @@ exports[`unicodeAlphanumeric ' ' conditional failure tests Error matches snapsho
   "expected": [
     "multiple unicode alphanumeric characters",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -336,10 +252,6 @@ exports[`unicodeAlphanumeric '' conditional failure tests Error matches snapshot
   "expected": [
     "multiple unicode alphanumeric characters",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

@@ -1,4 +1,4 @@
-import type {ParsingPosition, ParsingRange} from './HelperTypes';
+import type { ParsingRange } from './HelperTypes';
 import { Parser } from './Parser';
 import { P } from './ParsiNOM';
 
@@ -6,9 +6,9 @@ export class P_UTILS {
 	/**
 	 * Yields the current position in the input string.
 	 */
-	static position(): Parser<ParsingPosition> {
-		return new Parser<ParsingPosition>(context => {
-			return context.succeed(context.getPosition());
+	static position(): Parser<number> {
+		return new Parser<number>(context => {
+			return context.succeed(context.position);
 		});
 	}
 
@@ -21,7 +21,7 @@ export class P_UTILS {
 			if (context.atEOF()) {
 				return context.fail('any character');
 			}
-			return context.succeedOffset(1, context.input[context.position.index]);
+			return context.succeedOffset(1, context.input[context.position]);
 		});
 	}
 
@@ -31,7 +31,7 @@ export class P_UTILS {
 	 */
 	static remaining(): Parser<string> {
 		return new Parser<string>(context => {
-			return context.succeedAt(context.input.length, context.input.slice(context.position.index));
+			return context.succeedAt(context.input.length, context.input.slice(context.position));
 		});
 	}
 
@@ -248,7 +248,7 @@ export class P_UTILS {
 		combine: (range: ParsingRange, a: OtherSType, b: OperatorSType, c: OtherSType | ReturnSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		return P.sequenceMap(
-			(others: [ParsingPosition, OtherSType, OperatorSType][], last: OtherSType, to: ParsingPosition) => {
+			(others: [number, OtherSType, OperatorSType][], last: OtherSType, to: number) => {
 				return others.reverse().reduce<OtherSType | ReturnSType>((acc, y) => {
 					const [from, operand, operator] = y;
 					return combine({ from, to }, operand, operator, acc);
@@ -273,7 +273,7 @@ export class P_UTILS {
 		combine: (range: ParsingRange, a: OtherSType | ReturnSType, b: OperatorSType, c: OtherSType) => ReturnSType,
 	): Parser<OtherSType | ReturnSType> {
 		return P.sequenceMap(
-			(from: ParsingPosition, first: OtherSType, others: [OperatorSType, OtherSType, ParsingPosition][]) => {
+			(from: number, first: OtherSType, others: [OperatorSType, OtherSType, number][]) => {
 				return others.reduce<OtherSType | ReturnSType>((acc, y) => {
 					const [operator, operand, to] = y;
 					return combine({ from, to }, acc, operator, operand);

@@ -80,10 +80,8 @@ export interface ParserTestFailureData {
 export type ParserTestData<T> = ParserTestSuccessData<T> | ParserTestFailureData;
 
 export function testParserAdvanced<T>(parser: Parser<T>, data: Readonly<ParserTestData<T>>, testName?: string): void {
-	const markedResult: ParseResult<ParsingMarker<unknown>> = parser.marker().tryParse(data.input);
-	const alwaysSucceedMarkerResult: ParseSuccess<ParsingMarker<unknown>> = parser.optional(undefined).marker().tryParse(data.input) as ParseSuccess<
-		ParsingMarker<unknown>
-	>;
+	const markedResult: ParseResult<ParsingMarker<T>> = parser.marker().tryParse(data.input);
+	const alwaysSucceedMarkerResult: ParseSuccess<ParsingMarker<T>> = parser.optional(undefined).marker().tryParse(data.input) as ParseSuccess<ParsingMarker<T>>;
 
 	const name = (testName ?? data.input).replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
 
@@ -101,34 +99,34 @@ export function testParserAdvanced<T>(parser: Parser<T>, data: Readonly<ParserTe
 
 				// we test that the parser started at index 0
 				test(`Node from index is 0`, () => {
-					expect(markedResult.value?.range.from.index).toBe(0);
+					expect(markedResult.value?.range.from).toBe(0);
 				});
 
 				// we test that after parsing the parser is at the position that we expect
 				test(`Node to index is ${data.toIndex}`, () => {
-					expect(markedResult.value?.range.to.index).toBe(data.toIndex);
+					expect(markedResult.value?.range.to).toBe(data.toIndex);
 				});
 			});
 		} else {
 			describe('conditional failure tests', () => {
 				// we test that the parse result is undefined
 				test(`AST is undefined`, () => {
-					expect<ParsingMarker<unknown> | undefined>(markedResult.value).toBe(undefined);
+					expect<ParsingMarker<T> | undefined>(markedResult.value).toBe(undefined);
 				});
 
 				// we test that the parser started at index 0
 				test(`Node from index is 0`, () => {
-					expect(alwaysSucceedMarkerResult.value.range.from.index).toBe(0);
+					expect(alwaysSucceedMarkerResult.value.range.from).toBe(0);
 				});
 
 				// we test that the parser hasn't advanced
 				test(`Node to index is 0`, () => {
-					expect(alwaysSucceedMarkerResult.value.range.to.index).toBe(0);
+					expect(alwaysSucceedMarkerResult.value.range.to).toBe(0);
 				});
 
 				// we test that the furthest position is what we expect
 				test(`Furthest position is ${data.furthest}`, () => {
-					expect(markedResult.furthest?.index).toBe(data.furthest);
+					expect(markedResult.furthest).toBe(data.furthest);
 				});
 
 				// we test that the expected values of the parser match what we expect

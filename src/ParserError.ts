@@ -1,4 +1,4 @@
-import type {ParseFailure} from './HelperTypes';
+import type { ParseFailure } from './HelperTypes';
 
 /**
  * Generate an error message string for a parse failure on a specific string.
@@ -8,16 +8,18 @@ import type {ParseFailure} from './HelperTypes';
  * @param verbose will underline the failure position in the input string, if set to true
  */
 export function createParsingErrorMessage(str: string, parseFailure: ParseFailure, verbose: boolean): string {
+	const { line, column } = mapIndexToLineColumn(str, parseFailure.furthest);
+
 	const expectedMessage = `Expected ${parseFailure.expected.sort().join(' or ')}`;
-	let message = `Parse Failure: ${expectedMessage} at index ${parseFailure.furthest.index}, line ${parseFailure.furthest.line}, column ${parseFailure.furthest.column}.`;
+	let message = `Parse Failure: ${expectedMessage} at index ${parseFailure.furthest}, line ${line}, column ${column}.`;
 
 	if (verbose) {
 		const lines = str.split('\n');
-		const failedLine = lines[parseFailure.furthest.line - 1]; // line is a one based index
+		const failedLine = lines[line - 1]; // line is a one based index
 
-		const linePrefix = `${parseFailure.furthest.line} |   `;
+		const linePrefix = `${line} |   `;
 		message += `\n\n${linePrefix}${failedLine}`;
-		message += `\n${' '.repeat(parseFailure.furthest.column - 1 + linePrefix.length)}^ (${expectedMessage})`;
+		message += `\n${' '.repeat(column - 1 + linePrefix.length)}^ (${expectedMessage})`;
 	}
 
 	return message;
@@ -30,4 +32,20 @@ export class ParsingError extends Error {
 	constructor(str: string, parseFailure: ParseFailure) {
 		super(createParsingErrorMessage(str, parseFailure, true));
 	}
+}
+
+export function mapIndexToLineColumn(str: string, index: number): { line: number; column: number } {
+	let line = 1;
+	let column = 1;
+
+	for (let i = 0; i < index && i < str.length; i++) {
+		if (str[i] === '\n') {
+			line++;
+			column = 1;
+		} else {
+			column++;
+		}
+	}
+
+	return { line, column };
 }

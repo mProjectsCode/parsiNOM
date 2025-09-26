@@ -1,15 +1,11 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`thenEof '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -20,11 +16,7 @@ exports[`thenEof 'thisthat' conditional failure tests Error matches snapshot 1`]
   "expected": [
     "eof",
   ],
-  "pos": {
-    "column": 5,
-    "index": 4,
-    "line": 1,
-  },
+  "pos": 4,
 }
 `;
 
@@ -33,10 +25,6 @@ exports[`thenEof 'foo' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

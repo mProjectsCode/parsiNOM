@@ -1,15 +1,11 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`followedBy '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -17,30 +13,14 @@ exports[`followedBy 'thisthat' conditional success tests AST matches snapshot 1`
 {
   "name": "after",
   "range": {
-    "from": {
-      "column": 1,
-      "index": 0,
-      "line": 1,
-    },
-    "to": {
-      "column": 5,
-      "index": 4,
-      "line": 1,
-    },
+    "from": 0,
+    "to": 4,
   },
   "value": {
     "name": "before",
     "range": {
-      "from": {
-        "column": 1,
-        "index": 0,
-        "line": 1,
-      },
-      "to": {
-        "column": 5,
-        "index": 4,
-        "line": 1,
-      },
+      "from": 0,
+      "to": 4,
     },
     "value": "this",
   },
@@ -52,11 +32,7 @@ exports[`followedBy 'this' conditional failure tests Error matches snapshot 1`] 
   "expected": [
     "'that'",
   ],
-  "pos": {
-    "column": 5,
-    "index": 4,
-    "line": 1,
-  },
+  "pos": 4,
 }
 `;
 
@@ -65,11 +41,7 @@ exports[`followedBy 'that' conditional failure tests Error matches snapshot 1`] 
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -78,11 +50,7 @@ exports[`followedBy 'thatthis' conditional failure tests Error matches snapshot 
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -91,10 +59,6 @@ exports[`followedBy 'foo' conditional failure tests Error matches snapshot 1`] =
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

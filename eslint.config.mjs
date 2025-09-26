@@ -58,5 +58,5 @@ export default defineConfig(
 
 			'@typescript-eslint/no-this-alias': ['error', { allowedNames: ['_this'] }],
 		},
-	}
+	},
 );

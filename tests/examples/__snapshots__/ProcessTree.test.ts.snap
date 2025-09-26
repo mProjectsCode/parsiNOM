@@ -1,4 +1,4 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`Process Tree Testsuite 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
 
@@ -70,11 +70,7 @@ exports[`Process Tree Testsuite '' conditional failure tests Error matches snaps
     "'/tau'",
     "action name",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -85,11 +81,7 @@ exports[`Process Tree Testsuite '1' conditional failure tests Error matches snap
     "'/tau'",
     "action name",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -98,11 +90,7 @@ exports[`Process Tree Testsuite '/rightarrow' conditional failure tests Error ma
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 12,
-    "index": 11,
-    "line": 1,
-  },
+  "pos": 11,
 }
 `;
 
@@ -117,11 +105,7 @@ exports[`Process Tree Testsuite '/rightarrow(' conditional failure tests Error m
     "'/wedge'",
     "action name",
   ],
-  "pos": {
-    "column": 13,
-    "index": 12,
-    "line": 1,
-  },
+  "pos": 12,
 }
 `;
 
@@ -130,11 +114,7 @@ exports[`Process Tree Testsuite '/rightarrow)' conditional failure tests Error m
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 12,
-    "index": 11,
-    "line": 1,
-  },
+  "pos": 11,
 }
 `;
 
@@ -144,11 +124,7 @@ exports[`Process Tree Testsuite '/rightarrow(a' conditional failure tests Error 
     "')'",
     "','",
   ],
-  "pos": {
-    "column": 14,
-    "index": 13,
-    "line": 1,
-  },
+  "pos": 13,
 }
 `;
 
@@ -157,11 +133,7 @@ exports[`Process Tree Testsuite '/rightarrowa)' conditional failure tests Error 
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 12,
-    "index": 11,
-    "line": 1,
-  },
+  "pos": 11,
 }
 `;
 
@@ -172,11 +144,7 @@ exports[`Process Tree Testsuite '/wedge(a)' conditional failure tests Error matc
     "'/tau'",
     "action name",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -187,11 +155,7 @@ exports[`Process Tree Testsuite '/circlearrowleft(a)' conditional failure tests 
     "'/tau'",
     "action name",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -202,10 +166,6 @@ exports[`Process Tree Testsuite '/times(a)' conditional failure tests Error matc
     "'/tau'",
     "action name",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

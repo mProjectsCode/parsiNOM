@@ -1,8 +1,8 @@
-import { arrayUnion, getIndex } from './Helpers';
-import type {InternalParseResult, ParseResult, ParsingPosition, STypeBase} from './HelperTypes';
+import { arrayUnion } from './Helpers';
+import type { InternalParseResult, STypeBase } from './HelperTypes';
 
 interface LatestError {
-	position: ParsingPosition;
+	position: number;
 	expected: string[];
 }
 
@@ -15,51 +15,20 @@ export class ParserContext {
 	/**
 	 * The current parsing position. This will be modified during parsing.
 	 */
-	position: ParsingPosition;
+	position: number;
 
 	latestError: LatestError | undefined;
 
-	constructor(input: string, position: ParsingPosition) {
+	constructor(input: string, position: number) {
 		this.input = input;
 		this.position = position;
-	}
-
-	/**
-	 * Move to a certain position.
-	 *
-	 * @param position
-	 */
-	moveToPosition(position: ParsingPosition): ParserContext {
-		this.position = position;
-		return this;
-	}
-
-	copyPosition(position: ParsingPosition): ParserContext {
-		this.position = {
-			index: position.index,
-			column: position.column,
-			line: position.line,
-		};
-		return this;
-	}
-
-	/**
-	 * Returns a copy of the current position.
-	 * Use this is you want to hold on to the position object.
-	 */
-	getPosition(): ParsingPosition {
-		return {
-			index: this.position.index,
-			column: this.position.column,
-			line: this.position.line,
-		};
 	}
 
 	/**
 	 * Checks if the parser it at or beyond the end of the input string.
 	 */
 	atEOF(): boolean {
-		return this.position.index >= this.input.length;
+		return this.position >= this.input.length;
 	}
 
 	/**
@@ -69,23 +38,7 @@ export class ParserContext {
 	 * @private
 	 */
 	private advanceTo(index: number): void {
-		if (index < this.position.index) {
-			throw new Error(`Can not advance backwards. Current pos ${this.position.index}. Advance target index ${index}.`);
-		}
-		if (index === this.position.index) {
-			return;
-		}
-
-		for (let i = this.position.index; i < index; i++) {
-			if (this.input[i] === '\n') {
-				this.position.line += 1;
-				this.position.column = 1;
-			} else {
-				this.position.column += 1;
-			}
-		}
-
-		this.position.index = index;
+		this.position = index;
 	}
 
 	/**
@@ -94,7 +47,7 @@ export class ParserContext {
 	 * @param endIndex the index to slice to
 	 */
 	sliceTo(endIndex: number): string {
-		return this.input.slice(this.position.index, endIndex);
+		return this.input.slice(this.position, endIndex);
 	}
 
 	/**
@@ -104,7 +57,7 @@ export class ParserContext {
 	 * @param value
 	 */
 	succeedOffset<SType extends STypeBase>(offset: number, value: SType): InternalParseResult<SType> {
-		return this.succeedAt(this.position.index + offset, value);
+		return this.succeedAt(this.position + offset, value);
 	}
 
 	/**
@@ -114,7 +67,7 @@ export class ParserContext {
 	 * @param expected
 	 */
 	failOffset<SType extends STypeBase>(offset: number, expected: string | string[]): InternalParseResult<SType> {
-		return this.failAt(this.position.index + offset, expected);
+		return this.failAt(this.position + offset, expected);
 	}
 
 	/**
@@ -123,7 +76,7 @@ export class ParserContext {
 	 * @param value
 	 */
 	succeed<SType extends STypeBase>(value: SType): InternalParseResult<SType> {
-		return this.succeedAt(this.position.index, value);
+		return this.succeedAt(this.position, value);
 	}
 
 	/**
@@ -132,7 +85,7 @@ export class ParserContext {
 	 * @param expected
 	 */
 	fail<SType extends STypeBase>(expected: string | string[]): InternalParseResult<SType> {
-		return this.failAt(this.position.index, expected);
+		return this.failAt(this.position, expected);
 	}
 
 	/**
@@ -169,38 +122,13 @@ export class ParserContext {
 		};
 	}
 
-	// /**
-	//  * Merge a new result (`b`) into an existing result (`b`).
-	//  *
-	//  * @param a
-	//  * @param b
-	//  */
-	// merge<ASType extends STypeBase, BSType extends STypeBase>(a: ParseResult<ASType> | undefined, b: ParseResult<BSType>): ParseResult<BSType> {
-	// 	if (a === undefined) {
-	// 		return b;
-	// 	}
-
-	// 	const aIndex = getIndex(a.furthest);
-	// 	const bIndex = getIndex(b.furthest);
-
-	// 	if (bIndex > aIndex) {
-	// 		return b;
-	// 	}
-
-	// 	const expected = bIndex === aIndex ? arrayUnion(a.expected, b.expected) : a.expected;
-
-	// 	b.furthest = a.furthest;
-	// 	b.expected = expected;
-	// 	return b;
-	// }
-
 	addError(expected: string[]): void {
-		if (this.latestError === undefined || getIndex(this.latestError.position) < this.position.index) {
+		if (this.latestError === undefined || this.latestError.position < this.position) {
 			this.latestError = {
-				position: this.getPosition(),
+				position: this.position,
 				expected: expected,
 			};
-		} else if (getIndex(this.latestError.position) === this.position.index) {
+		} else if (this.latestError.position === this.position) {
 			this.latestError.expected = arrayUnion(this.latestError.expected, expected) ?? expected;
 		}
 	}
@@ -216,9 +144,9 @@ export class ParserContext {
 			return;
 		}
 
-		if (this.latestError === undefined || getIndex(this.latestError.position) < getIndex(other.position)) {
+		if (this.latestError === undefined || this.latestError.position < other.position) {
 			this.latestError = other;
-		} else if (getIndex(this.latestError.position) === getIndex(other.position)) {
+		} else if (this.latestError.position === other.position) {
 			this.latestError.expected = arrayUnion(this.latestError.expected, other.expected) ?? other.expected;
 		}
 	}

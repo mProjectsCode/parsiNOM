@@ -1,15 +1,11 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`whitespace '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "whitespace",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -28,11 +24,7 @@ exports[`whitespace 'b' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "whitespace",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -53,11 +45,7 @@ exports[`optional whitespace 'b' conditional failure tests Error matches snapsho
   "expected": [
     "eof",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -66,11 +54,7 @@ exports[`newline '' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "newline",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -79,11 +63,7 @@ exports[`newline ' ' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "newline",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -98,11 +78,7 @@ exports[`newline '/r/n  /n' conditional failure tests Error matches snapshot 1`]
   "expected": [
     "eof",
   ],
-  "pos": {
-    "column": 1,
-    "index": 2,
-    "line": 2,
-  },
+  "pos": 2,
 }
 `;
 
@@ -111,10 +87,6 @@ exports[`newline 'b' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "newline",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

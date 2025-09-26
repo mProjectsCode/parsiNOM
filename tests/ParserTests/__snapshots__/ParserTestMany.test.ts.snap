@@ -1,4 +1,4 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`many '' conditional success tests AST matches snapshot 1`] = `[]`;
 
@@ -29,10 +29,6 @@ exports[`many 'abaa' conditional failure tests Error matches snapshot 1`] = `
     "'a'",
     "eof",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;

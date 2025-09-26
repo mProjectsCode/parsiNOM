@@ -1,15 +1,11 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`box '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "('this' as part of some error)",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -20,10 +16,6 @@ exports[`box 'foo' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "('this' as part of some error)",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

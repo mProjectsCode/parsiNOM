@@ -1,5 +1,16 @@
 import { P_HELPERS, validateRegexFlags } from './Helpers';
-import type {DeParserArray, InternalParseResult, NomLanguage, NomLanguagePartial, NomLanguageRef, NomLanguageRules, ParseFunction, ParseResult, ParserRef, STypeBase, TupleToUnion} from './HelperTypes';
+import type {
+	DeParserArray,
+	InternalParseResult,
+	NomLanguage,
+	NomLanguagePartial,
+	NomLanguageRef,
+	NomLanguageRules,
+	ParseFunction,
+	ParserRef,
+	STypeBase,
+	TupleToUnion,
+} from './HelperTypes';
 import { Parser } from './Parser';
 
 export class P {
@@ -66,7 +77,7 @@ export class P {
 
 			return {
 				success: true,
-				value: fn(...value as DeParserArray<ParserArr>),
+				value: fn(...(value as DeParserArray<ParserArr>)),
 			};
 		});
 	}
@@ -115,13 +126,13 @@ export class P {
 		}
 
 		return new Parser<TupleToUnion<DeParserArray<ParserArr>>>(function _or(context): InternalParseResult<TupleToUnion<DeParserArray<ParserArr>>> {
-			let startPosition = context.getPosition();
+			const startPosition = context.position;
 
 			for (const parser of parsers) {
 				const p = parser as Parser<TupleToUnion<DeParserArray<ParserArr>>>;
 
-				const contextCopy = context.copyPosition(startPosition);
-				const result = p.p(contextCopy);
+				context.position = startPosition;
+				const result = p.p(context);
 
 				if (result.success) {
 					return result;
@@ -130,8 +141,8 @@ export class P {
 
 			return {
 				success: false,
-				value: undefined
-			}
+				value: undefined,
+			};
 		});
 	}
 
@@ -146,7 +157,7 @@ export class P {
 	}
 
 	/**
-	 * Matches a separated list, so e.g. comma seperated values. Yields the values as an array. Does not accept empty input.
+	 * Matches a separated list, so e.g. comma separated values. Yields the values as an array. Does not accept empty input.
 	 *
 	 * @param parser
 	 * @param separator
@@ -175,12 +186,12 @@ export class P {
 
 		return new Parser<string>(function _string(context): InternalParseResult<string> {
 			for (let i = 0; i < str.length; i++) {
-				if (context.input[context.position.index + i] !== str[i]) {
+				if (context.input[context.position + i] !== str[i]) {
 					return context.fail(expected);
 				}
 			}
 
-			return context.succeedAt(context.position.index + str.length, str);
+			return context.succeedAt(context.position + str.length, str);
 		});
 	}
 
@@ -190,14 +201,14 @@ export class P {
 	 * @param regexp
 	 * @param group
 	 */
-	static regexp(regexp: RegExp, group?: number  ): Parser<string> {
+	static regexp(regexp: RegExp, group?: number): Parser<string> {
 		validateRegexFlags(regexp.flags);
 
 		const expected = regexp.source;
 
 		if (group !== undefined) {
 			return new Parser<string>(function _regexp(context): InternalParseResult<string> {
-				const subInput = context.input.slice(context.position.index);
+				const subInput = context.input.slice(context.position);
 				const match = regexp.exec(subInput);
 
 				if (match !== null) {
@@ -218,7 +229,7 @@ export class P {
 			});
 		} else {
 			return new Parser<string>(function _regexp(context): InternalParseResult<string> {
-				const subInput = context.input.slice(context.position.index);
+				const subInput = context.input.slice(context.position);
 				const match = regexp.exec(subInput);
 
 				if (match !== null) {
@@ -294,7 +305,7 @@ export class P {
 	 */
 	static manyOf(str: string): Parser<string> {
 		return new Parser<string>(function _manyOf(context): InternalParseResult<string> {
-			let i = context.position.index;
+			let i = context.position;
 			for (; i < context.input.length; i++) {
 				if (!str.includes(context.input[i])) {
 					break;
@@ -315,7 +326,7 @@ export class P {
 	 */
 	static manyNotOf(str: string): Parser<string> {
 		return new Parser<string>(function _manyOf(context): InternalParseResult<string> {
-			let i = context.position.index;
+			let i = context.position;
 			for (; i < context.input.length; i++) {
 				if (str.includes(context.input[i])) {
 					break;
@@ -356,11 +367,11 @@ export class P {
 	 */
 	static takeWhile(fn: (char: string) => boolean): Parser<string> {
 		return new Parser(function _takeWhile(context): InternalParseResult<string> {
-			let endIndex = context.position.index;
+			let endIndex = context.position;
 			while (endIndex < context.input.length && fn(context.input[endIndex])) {
 				endIndex++;
 			}
-			return context.succeedAt(endIndex, context.input.slice(context.position.index, endIndex));
+			return context.succeedAt(endIndex, context.input.slice(context.position, endIndex));
 		});
 	}
 

@@ -1,4 +1,4 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`binary left 'a' conditional success tests AST matches snapshot 1`] = `"a"`;
 
@@ -56,11 +56,7 @@ exports[`binary left 'ab+' conditional failure tests Error matches snapshot 1`] 
     "'+'",
     "eof",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;
 
@@ -69,11 +65,7 @@ exports[`binary left '+ab' conditional failure tests Error matches snapshot 1`] 
   "expected": [
     "'a' or 'b' or 'c'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -83,11 +75,7 @@ exports[`binary left 'bcaba' conditional failure tests Error matches snapshot 1`
     "'+'",
     "eof",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;
 
@@ -147,11 +135,7 @@ exports[`binary right 'ab+' conditional failure tests Error matches snapshot 1`]
     "'+'",
     "eof",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;
 
@@ -160,11 +144,7 @@ exports[`binary right '+ab' conditional failure tests Error matches snapshot 1`]
   "expected": [
     "'a' or 'b' or 'c'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -174,11 +154,7 @@ exports[`binary right 'bcaba' conditional failure tests Error matches snapshot 1
     "'+'",
     "eof",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;
 
@@ -206,11 +182,7 @@ exports[`prefix 'a - b' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "eof",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;
 
@@ -219,11 +191,7 @@ exports[`prefix 'ab-' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "eof",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;
 
@@ -232,11 +200,7 @@ exports[`prefix '-ab' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "eof",
   ],
-  "pos": {
-    "column": 3,
-    "index": 2,
-    "line": 1,
-  },
+  "pos": 2,
 }
 `;
 
@@ -246,11 +210,7 @@ exports[`prefix 'bcaba' conditional failure tests Error matches snapshot 1`] = `
     "'-'",
     "'a'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -279,11 +239,7 @@ exports[`postfix 'a- b' conditional failure tests Error matches snapshot 1`] = `
     "'-'",
     "eof",
   ],
-  "pos": {
-    "column": 3,
-    "index": 2,
-    "line": 1,
-  },
+  "pos": 2,
 }
 `;
 
@@ -293,11 +249,7 @@ exports[`postfix 'ab-' conditional failure tests Error matches snapshot 1`] = `
     "'-'",
     "eof",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;
 
@@ -306,11 +258,7 @@ exports[`postfix '-ab' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "'a'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -319,11 +267,7 @@ exports[`postfix 'bcaba' conditional failure tests Error matches snapshot 1`] = 
   "expected": [
     "'a'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -332,11 +276,7 @@ exports[`function 'a' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;
 
@@ -345,11 +285,7 @@ exports[`function 'a()' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "'b'",
   ],
-  "pos": {
-    "column": 3,
-    "index": 2,
-    "line": 1,
-  },
+  "pos": 2,
 }
 `;
 
@@ -365,11 +301,7 @@ exports[`function 'a (b)' conditional failure tests Error matches snapshot 1`] =
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;
 
@@ -378,11 +310,7 @@ exports[`function '(b)' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "'a'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -391,11 +319,7 @@ exports[`function 'a b' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;
 
@@ -404,10 +328,6 @@ exports[`function 'foo' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "'a'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

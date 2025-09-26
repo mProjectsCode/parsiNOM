@@ -1,4 +1,4 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`digit '0' conditional success tests AST matches snapshot 1`] = `"0"`;
 
@@ -11,11 +11,7 @@ exports[`digit 'a' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a digit",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -24,11 +20,7 @@ exports[`digit 'a1' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a digit",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -43,11 +35,7 @@ exports[`digits 'a' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "multiple digits",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -56,10 +44,6 @@ exports[`digits 'a12' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "multiple digits",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

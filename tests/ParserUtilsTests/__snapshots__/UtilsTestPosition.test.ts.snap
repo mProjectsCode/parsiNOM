@@ -1,33 +1,9 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
-exports[`position 'a' conditional success tests AST matches snapshot 1`] = `
-{
-  "column": 2,
-  "index": 1,
-  "line": 1,
-}
-`;
+exports[`position 'a' conditional success tests AST matches snapshot 1`] = `1`;
 
-exports[`position 'b' conditional success tests AST matches snapshot 1`] = `
-{
-  "column": 1,
-  "index": 0,
-  "line": 1,
-}
-`;
+exports[`position 'b' conditional success tests AST matches snapshot 1`] = `0`;
 
-exports[`position 'aab' conditional success tests AST matches snapshot 1`] = `
-{
-  "column": 3,
-  "index": 2,
-  "line": 1,
-}
-`;
+exports[`position 'aab' conditional success tests AST matches snapshot 1`] = `2`;
 
-exports[`position 'a/nab' conditional success tests AST matches snapshot 1`] = `
-{
-  "column": 2,
-  "index": 3,
-  "line": 2,
-}
-`;
+exports[`position 'a/nab' conditional success tests AST matches snapshot 1`] = `3`;

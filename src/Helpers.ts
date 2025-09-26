@@ -1,4 +1,4 @@
-import type {InternalParseResult, ParseResult, ParsingPosition, STypeBase} from './HelperTypes';
+import type { InternalParseResult, STypeBase } from './HelperTypes';
 import { Parser } from './Parser';
 
 export function arrayUnion(a: string[] | undefined, b: string[] | undefined): string[] | undefined {
@@ -27,10 +27,6 @@ export function arrayUnion(a: string[] | undefined, b: string[] | undefined): st
 		}
 	}
 	return c;
-}
-
-export function getIndex(position: ParsingPosition | undefined): number {
-	return position === undefined ? -1 : position.index;
 }
 
 export function validateRange(min: number, max: number): void {
@@ -64,8 +60,8 @@ export function validateRegexFlags(flags: string): void {
 export class ParserHelpers {
 	followedBy<SType extends STypeBase>(parser: Parser<SType>): Parser<SType> {
 		return new Parser<SType>(function _followedBy(context): InternalParseResult<SType> {
-			const position = context.getPosition();
-			const result =  parser.p(context);
+			const position = context.position;
+			const result = parser.p(context);
 			context.position = position;
 			return result;
 		});
@@ -79,11 +75,10 @@ export class ParserHelpers {
 	 */
 	notFollowedBy(parser: Parser<unknown>): Parser<undefined> {
 		return new Parser(function _notFollowedBy(context): InternalParseResult<undefined> {
-			const position = context.getPosition();
-			const result =  parser.p(context);
-			const index = context.position.index;
+			const position = context.position;
+			const result = parser.p(context);
+			const text = context.input.slice(position, context.position);
 			context.position = position;
-			const text = context.input.slice(context.position.index, index);
 			return result.success ? context.fail(`not '${text}'`) : context.succeed(undefined);
 		});
 	}
@@ -95,7 +90,7 @@ export class ParserHelpers {
 	 */
 	test(fn: (char: string) => boolean): Parser<string> {
 		return new Parser<string>(function _test(context): InternalParseResult<string> {
-			const char = context.input[context.position.index];
+			const char = context.input[context.position];
 			if (!context.atEOF() && fn(char)) {
 				return context.succeedOffset(1, char);
 			} else {

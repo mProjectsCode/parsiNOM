@@ -1,17 +1,19 @@
-import type {Parser} from './Parser';
-import type {ParserContext} from './ParserContext';
+import type { Parser } from './Parser';
+import type { ParserContext } from './ParserContext';
 
 export type STypeBase = unknown;
 
 export interface ParseSuccess<SType extends STypeBase> {
 	success: true;
 	value: SType;
+	furthest?: undefined;
+	expected?: undefined;
 }
 
 export interface ParseFailure {
 	success: false;
 	value: undefined;
-	furthest: ParsingPosition;
+	furthest: number;
 	expected: string[];
 }
 
@@ -26,15 +28,9 @@ export type InternalParseResult<SType extends STypeBase> = ParseSuccess<SType> |
 
 export type ParseFunction<SType extends STypeBase> = (context: ParserContext) => InternalParseResult<SType>;
 
-export interface ParsingPosition {
-	index: number;
-	line: number;
-	column: number;
-}
-
 export interface ParsingRange {
-	from: ParsingPosition;
-	to: ParsingPosition;
+	from: number;
+	to: number;
 }
 
 export interface ParsingMarker<SType extends STypeBase> {

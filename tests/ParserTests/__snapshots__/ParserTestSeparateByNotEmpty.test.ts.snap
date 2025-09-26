@@ -1,15 +1,11 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`separateByNotEmpty '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -39,11 +35,7 @@ exports[`separateByNotEmpty 'this, this' conditional failure tests Error matches
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 6,
-    "index": 5,
-    "line": 1,
-  },
+  "pos": 5,
 }
 `;
 
@@ -52,10 +44,6 @@ exports[`separateByNotEmpty 'foo' conditional failure tests Error matches snapsh
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

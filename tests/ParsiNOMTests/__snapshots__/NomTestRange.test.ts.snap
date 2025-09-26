@@ -1,15 +1,11 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`sequence '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "a-m",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -24,11 +20,7 @@ exports[`sequence 'n' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a-m",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -37,11 +29,7 @@ exports[`sequence 'z' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a-m",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -50,11 +38,7 @@ exports[`sequence '#' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a-m",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -63,11 +47,7 @@ exports[`sequence 'A' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a-m",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -76,11 +56,7 @@ exports[`sequence 'B' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a-m",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -89,11 +65,7 @@ exports[`sequence 'M' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a-m",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -102,11 +74,7 @@ exports[`sequence 'N' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a-m",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -115,10 +83,6 @@ exports[`sequence 'Z' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "a-m",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

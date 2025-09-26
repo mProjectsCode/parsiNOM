@@ -1,5 +1,5 @@
 import { P_HELPERS, validateRange } from './Helpers';
-import type {InternalParseResult, NamedParsingMarker, ParseFailure, ParseFunction, ParseResult, ParsingMarker, ParsingPosition, ParsingRange, STypeBase} from './HelperTypes';
+import type { NamedParsingMarker, ParseFunction, ParseResult, ParsingMarker, ParsingRange, STypeBase } from './HelperTypes';
 import { ParserContext } from './ParserContext';
 import { ParsingError } from './ParserError';
 import { P_UTILS } from './ParserUtils';
@@ -18,7 +18,7 @@ export class Parser<const SType extends STypeBase> {
 	 * @param str
 	 */
 	tryParse(str: string): ParseResult<SType> {
-		const context = new ParserContext(str, { index: 0, line: 1, column: 1 });
+		const context = new ParserContext(str, 0);
 		const result = this.p(context);
 		if (result.success) {
 			return result;
@@ -26,9 +26,9 @@ export class Parser<const SType extends STypeBase> {
 			return {
 				success: false,
 				value: undefined,
-				furthest: context.latestError?.position!,
-				expected: context.latestError?.expected!,
-			}
+				furthest: context.latestError!.position,
+				expected: context.latestError!.expected,
+			};
 		}
 	}
 
@@ -183,17 +183,17 @@ export class Parser<const SType extends STypeBase> {
 			const value: SType[] = [];
 
 			while (true) {
-				const beforePosition = context.getPosition();
+				const beforeIndex = context.position;
 				const result = _this.p(context);
 
 				if (result.success) {
-					if (context.position.index === beforePosition.index) {
+					if (context.position === beforeIndex) {
 						throw new Error('infinite loop in many() parser detected');
 					}
 
 					value.push(result.value);
 				} else {
-					context.moveToPosition(beforePosition);
+					context.position = beforeIndex;
 
 					return {
 						success: true,
@@ -220,17 +220,19 @@ export class Parser<const SType extends STypeBase> {
 			let count = 0;
 
 			while (count < max) {
-				const beforeIndex = context.position.index;
+				const beforeIndex = context.position;
 				const result = _this.p(context);
 
 				if (result.success) {
-					if (context.position.index === beforeIndex) {
+					if (context.position === beforeIndex) {
 						throw new Error('infinite loop in many() parser detected');
 					}
 
 					value.push(result.value);
 					count++;
 				} else {
+					context.position = beforeIndex;
+
 					if (count >= min) {
 						return {
 							success: true,

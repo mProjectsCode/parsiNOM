@@ -1,15 +1,11 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`trim fixed length '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "' '",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -20,11 +16,7 @@ exports[`trim fixed length 'this ' conditional failure tests Error matches snaps
   "expected": [
     "' '",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -33,11 +25,7 @@ exports[`trim fixed length ' this' conditional failure tests Error matches snaps
   "expected": [
     "' '",
   ],
-  "pos": {
-    "column": 6,
-    "index": 5,
-    "line": 1,
-  },
+  "pos": 5,
 }
 `;
 
@@ -46,11 +34,7 @@ exports[`trim fixed length '  this' conditional failure tests Error matches snap
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;
 
@@ -59,11 +43,7 @@ exports[`trim fixed length 'foo' conditional failure tests Error matches snapsho
   "expected": [
     "' '",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -72,11 +52,7 @@ exports[`trim variable length '' conditional failure tests Error matches snapsho
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -93,11 +69,7 @@ exports[`trim variable length 'foo' conditional failure tests Error matches snap
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -106,11 +78,7 @@ exports[`trim string fixed length '' conditional failure tests Error matches sna
   "expected": [
     "' '",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -121,11 +89,7 @@ exports[`trim string fixed length 'this ' conditional failure tests Error matche
   "expected": [
     "' '",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -134,11 +98,7 @@ exports[`trim string fixed length ' this' conditional failure tests Error matche
   "expected": [
     "' '",
   ],
-  "pos": {
-    "column": 6,
-    "index": 5,
-    "line": 1,
-  },
+  "pos": 5,
 }
 `;
 
@@ -147,11 +107,7 @@ exports[`trim string fixed length '  this' conditional failure tests Error match
   "expected": [
     "'this'",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;
 
@@ -160,10 +116,6 @@ exports[`trim string fixed length 'foo' conditional failure tests Error matches 
   "expected": [
     "' '",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

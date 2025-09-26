@@ -1,15 +1,11 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`wrap '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -20,11 +16,7 @@ exports[`wrap 'this)' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -33,11 +25,7 @@ exports[`wrap '(this' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "')'",
   ],
-  "pos": {
-    "column": 6,
-    "index": 5,
-    "line": 1,
-  },
+  "pos": 5,
 }
 `;
 
@@ -46,11 +34,7 @@ exports[`wrap ')this(' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -59,11 +43,7 @@ exports[`wrap 'foo' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -72,11 +52,7 @@ exports[`wrap string '' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -87,11 +63,7 @@ exports[`wrap string 'this)' conditional failure tests Error matches snapshot 1`
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -100,11 +72,7 @@ exports[`wrap string '(this' conditional failure tests Error matches snapshot 1`
   "expected": [
     "')'",
   ],
-  "pos": {
-    "column": 6,
-    "index": 5,
-    "line": 1,
-  },
+  "pos": 5,
 }
 `;
 
@@ -113,11 +81,7 @@ exports[`wrap string ')this(' conditional failure tests Error matches snapshot 1
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -126,10 +90,6 @@ exports[`wrap string 'foo' conditional failure tests Error matches snapshot 1`] 
   "expected": [
     "'('",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

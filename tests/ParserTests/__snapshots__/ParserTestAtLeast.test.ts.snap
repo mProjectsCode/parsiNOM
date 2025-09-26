@@ -1,15 +1,11 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`atLeast '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -18,11 +14,7 @@ exports[`atLeast 'a' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "'a'",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;
 
@@ -46,10 +38,6 @@ exports[`atLeast 'abaa' conditional failure tests Error matches snapshot 1`] = `
   "expected": [
     "'a'",
   ],
-  "pos": {
-    "column": 2,
-    "index": 1,
-    "line": 1,
-  },
+  "pos": 1,
 }
 `;

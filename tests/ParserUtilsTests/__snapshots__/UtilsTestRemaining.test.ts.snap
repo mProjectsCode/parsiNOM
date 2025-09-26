@@ -1,15 +1,11 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`remaining '' conditional failure tests Error matches snapshot 1`] = `
 {
   "expected": [
     "'a'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;
 
@@ -24,10 +20,6 @@ exports[`remaining 'baba' conditional failure tests Error matches snapshot 1`] =
   "expected": [
     "'a'",
   ],
-  "pos": {
-    "column": 1,
-    "index": 0,
-    "line": 1,
-  },
+  "pos": 0,
 }
 `;

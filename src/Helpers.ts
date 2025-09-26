@@ -1,4 +1,4 @@
-import { type ParseResult, type ParsingPosition, type STypeBase } from './HelperTypes';
+import type {InternalParseResult, ParseResult, ParsingPosition, STypeBase} from './HelperTypes';
 import { Parser } from './Parser';
 
 export function arrayUnion(a: string[] | undefined, b: string[] | undefined): string[] | undefined {
@@ -62,9 +62,12 @@ export function validateRegexFlags(flags: string): void {
 // Parser Helpers
 
 export class ParserHelpers {
-	followedBy<SType extends STypeBase>(x: Parser<SType>): Parser<SType> {
-		return new Parser<SType>(function _followedBy(context): ParseResult<SType> {
-			return x.p(context.copy());
+	followedBy<SType extends STypeBase>(parser: Parser<SType>): Parser<SType> {
+		return new Parser<SType>(function _followedBy(context): InternalParseResult<SType> {
+			const position = context.getPosition();
+			const result =  parser.p(context);
+			context.position = position;
+			return result;
 		});
 	}
 
@@ -75,11 +78,13 @@ export class ParserHelpers {
 	 * @param parser
 	 */
 	notFollowedBy(parser: Parser<unknown>): Parser<undefined> {
-		return new Parser(function _notFollowedBy(context): ParseResult<undefined> {
-			const contextCopy = context.copy();
-			const result = parser.p(contextCopy);
-			const text = context.sliceTo(contextCopy.position.index);
-			return result.success ? context.fail(`not '` + text + `'`) : context.succeed(undefined);
+		return new Parser(function _notFollowedBy(context): InternalParseResult<undefined> {
+			const position = context.getPosition();
+			const result =  parser.p(context);
+			const index = context.position.index;
+			context.position = position;
+			const text = context.input.slice(context.position.index, index);
+			return result.success ? context.fail(`not '${text}'`) : context.succeed(undefined);
 		});
 	}
 
@@ -89,7 +94,7 @@ export class ParserHelpers {
 	 * @param fn
 	 */
 	test(fn: (char: string) => boolean): Parser<string> {
-		return new Parser<string>(function _test(context): ParseResult<string> {
+		return new Parser<string>(function _test(context): InternalParseResult<string> {
 			const char = context.input[context.position.index];
 			if (!context.atEOF() && fn(char)) {
 				return context.succeedOffset(1, char);

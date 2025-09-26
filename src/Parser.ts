@@ -1,18 +1,9 @@
-import { ParserContext } from './ParserContext';
-import {
-	type NamedParsingMarker,
-	type ParseFailure,
-	type ParseFunction,
-	type ParseResult,
-	type ParsingMarker,
-	type ParsingPosition,
-	type ParsingRange,
-	type STypeBase,
-} from './HelperTypes';
-import { P } from './ParsiNOM';
 import { P_HELPERS, validateRange } from './Helpers';
-import { P_UTILS } from './ParserUtils';
+import type {InternalParseResult, NamedParsingMarker, ParseFailure, ParseFunction, ParseResult, ParsingMarker, ParsingPosition, ParsingRange, STypeBase} from './HelperTypes';
+import { ParserContext } from './ParserContext';
 import { ParsingError } from './ParserError';
+import { P_UTILS } from './ParserUtils';
+import { P } from './ParsiNOM';
 
 export class Parser<const SType extends STypeBase> {
 	public p: ParseFunction<SType>;
@@ -27,7 +18,18 @@ export class Parser<const SType extends STypeBase> {
 	 * @param str
 	 */
 	tryParse(str: string): ParseResult<SType> {
-		return this.p(new ParserContext(str, { index: 0, line: 1, column: 1 }));
+		const context = new ParserContext(str, { index: 0, line: 1, column: 1 });
+		const result = this.p(context);
+		if (result.success) {
+			return result;
+		} else {
+			return {
+				success: false,
+				value: undefined,
+				furthest: context.latestError?.position!,
+				expected: context.latestError?.expected!,
+			}
+		}
 	}
 
 	/**
@@ -83,23 +85,23 @@ export class Parser<const SType extends STypeBase> {
 	wrap(leftParser: Parser<unknown>, rightParser: Parser<unknown>): Parser<SType> {
 		const _this = this;
 
-		return new Parser<SType>(function _wrap(context): ParseResult<SType> {
+		return new Parser<SType>(function _wrap(context) {
 			const leftResult = leftParser.p(context);
 			if (!leftResult.success) {
 				return leftResult;
 			}
 
-			const thisResult = context.merge(leftResult, _this.p(context));
+			const thisResult = _this.p(context);
 			if (!thisResult.success) {
 				return thisResult;
 			}
 
-			const rightResult = context.merge(thisResult, rightParser.p(context));
+			const rightResult = rightParser.p(context);
 			if (!rightResult.success) {
 				return rightResult;
 			}
 
-			return context.merge(rightResult, context.succeed(thisResult.value));
+			return thisResult;
 		});
 	}
 
@@ -129,7 +131,7 @@ export class Parser<const SType extends STypeBase> {
 				return firstResult;
 			}
 
-			const secondResult = context.merge(firstResult, next.p(context));
+			const secondResult = next.p(context);
 			if (!secondResult.success) {
 				return secondResult;
 			}
@@ -148,17 +150,17 @@ export class Parser<const SType extends STypeBase> {
 		const _this = this;
 
 		return new Parser<SType>(function _skip(context) {
-			const firstResult: ParseResult<SType> = _this.p(context);
+			const firstResult = _this.p(context);
 			if (!firstResult.success) {
 				return firstResult;
 			}
 
-			const secondResult = context.merge(firstResult, next.p(context));
+			const secondResult = next.p(context);
 			if (!secondResult.success) {
 				return secondResult;
 			}
 
-			return context.merge(secondResult, context.succeed(firstResult.value));
+			return firstResult;
 		});
 	}
 
@@ -178,25 +180,25 @@ export class Parser<const SType extends STypeBase> {
 	many(): Parser<SType[]> {
 		const _this = this;
 		return new Parser<SType[]>(function _many(context): ParseResult<SType[]> {
-			let result = undefined;
-			const startIndex = context.position.index;
 			const value: SType[] = [];
 
 			while (true) {
-				const contextCopy = context.copy();
-				const newResult = _this.p(contextCopy);
-
-				result = context.merge(result, newResult);
+				const beforePosition = context.getPosition();
+				const result = _this.p(context);
 
 				if (result.success) {
-					if (contextCopy.position.index === startIndex) {
+					if (context.position.index === beforePosition.index) {
 						throw new Error('infinite loop in many() parser detected');
 					}
 
-					context.moveToPosition(contextCopy.position);
 					value.push(result.value);
 				} else {
-					return context.merge(result, context.succeed(value));
+					context.moveToPosition(beforePosition);
+
+					return {
+						success: true,
+						value: value,
+					};
 				}
 			}
 		});
@@ -213,40 +215,40 @@ export class Parser<const SType extends STypeBase> {
 		validateRange(min, max);
 		const _this = this;
 
-		return new Parser<SType[]>(function _repeat(context): ParseResult<SType[]> {
-			let newResult = undefined;
-			let result = undefined;
+		return new Parser<SType[]>(function _repeat(context) {
 			const value: SType[] = [];
-			let iteration = 0;
+			let count = 0;
 
-			for (; iteration < min; iteration++) {
-				newResult = _this.p(context);
+			while (count < max) {
+				const beforeIndex = context.position.index;
+				const result = _this.p(context);
 
-				result = context.merge(result, newResult);
+				if (result.success) {
+					if (context.position.index === beforeIndex) {
+						throw new Error('infinite loop in many() parser detected');
+					}
 
-				if (newResult.success) {
-					value.push(newResult.value);
+					value.push(result.value);
+					count++;
 				} else {
-					return result as ParseFailure;
+					if (count >= min) {
+						return {
+							success: true,
+							value: value,
+						};
+					} else {
+						return {
+							success: false,
+							value: undefined,
+						};
+					}
 				}
 			}
 
-			for (; iteration < max; iteration++) {
-				const contextCopy = context.copy();
-				newResult = _this.p(contextCopy);
-
-				result = context.merge(result, newResult);
-
-				if (newResult.success) {
-					context.moveToPosition(contextCopy.position);
-					value.push(newResult.value);
-				} else {
-					break;
-				}
-			}
-
-			// first move the result to the context position and then change its value.
-			return context.merge(result, context.succeed(value));
+			return {
+				success: true,
+				value: value,
+			};
 		});
 	}
 
@@ -311,17 +313,17 @@ export class Parser<const SType extends STypeBase> {
 	 */
 	map<OtherSType extends STypeBase>(fn: (value: SType) => OtherSType): Parser<OtherSType> {
 		const _this = this;
-		return new Parser(function _map(context): ParseResult<OtherSType> {
+		return new Parser(function _map(context) {
 			// we use any here, because that allows us to change the value of the result later
-			const result: ParseResult<SType> = _this.p(context);
+			const result = _this.p(context);
 			if (!result.success) {
 				return result;
 			}
 
-			// @ts-ignore
-			result.value = fn(result.value);
-			// @ts-ignore
-			return result;
+			return {
+				success: true,
+				value: fn(result.value),
+			};
 		});
 	}
 
@@ -411,11 +413,15 @@ export class Parser<const SType extends STypeBase> {
 		const _this = this;
 
 		return new Parser<SType>(function _describe(context) {
+			const oldLatestError = context.getAndClearLatestError();
+
 			const result = _this.p(context);
 
-			if (result.expected !== undefined && result.expected.length !== 0) {
-				result.expected = expected as string[];
+			if (context.latestError !== undefined) {
+				context.latestError.expected = expected;
 			}
+
+			context.mergeLatestError(oldLatestError);
 
 			return result;
 		});
@@ -432,11 +438,15 @@ export class Parser<const SType extends STypeBase> {
 		const _this = this;
 
 		return new Parser<SType>(function _describe(context) {
+			const oldLatestError = context.getAndClearLatestError();
+
 			const result = _this.p(context);
 
-			if (result.expected !== undefined && result.expected.length !== 0) {
-				result.expected = [`(${result.expected?.join(' or ')} as part of ${expected})`];
+			if (context.latestError !== undefined) {
+				context.latestError.expected = [`(${context.latestError.expected.join(' or ')} as part of ${expected})`];
 			}
+
+			context.mergeLatestError(oldLatestError);
 
 			return result;
 		});
@@ -459,14 +469,12 @@ export class Parser<const SType extends STypeBase> {
 	chain<OtherSType extends STypeBase>(fn: (result: SType) => Parser<OtherSType>): Parser<OtherSType> {
 		const _this = this;
 
-		return new Parser<OtherSType>(function _chain(context): ParseResult<OtherSType> {
-			const result: ParseResult<SType> = _this.p(context);
+		return new Parser<OtherSType>(function _chain(context) {
+			const result = _this.p(context);
 			if (!result.success) {
 				return result;
 			}
-			const nextParser: Parser<OtherSType> = fn(result.value);
-			const nextResult = nextParser.p(context);
-			return context.merge(result, nextResult);
+			return fn(result.value).p(context);
 		});
 	}
 
@@ -476,51 +484,14 @@ export class Parser<const SType extends STypeBase> {
 	thenEof(): Parser<SType> {
 		const _this = this;
 
-		return new Parser<SType>(function _thenEof(context): ParseResult<SType> {
-			const result: ParseResult<SType> = _this.p(context);
+		return new Parser<SType>(function _thenEof(context) {
+			const result = _this.p(context);
 			if (!result.success) {
 				return result;
 			}
 			if (!context.atEOF()) {
-				return context.merge(result, context.fail('eof'));
+				return context.fail('eof');
 			}
-			return result;
-		});
-	}
-
-	/**
-	 * Makes this parser remember previous calls on the same string.
-	 * This introduces quite a bit of overhead, but it can be worth it if the parser is called multiple times on the same position because the parser backtracks.
-	 */
-	memorize(): Parser<SType> {
-		const _this = this;
-		let memoInput: string = '';
-		const memoTable: Map<number, ParseResult<SType>> = new Map<number, ParseResult<SType>>();
-		const positionTable: Map<number, ParsingPosition> = new Map<number, ParsingPosition>();
-
-		return new Parser<SType>(function _thenEof(context): ParseResult<SType> {
-			const index = context.position.index;
-
-			if (context.input !== memoInput) {
-				memoInput = context.input;
-
-				memoTable.clear();
-				positionTable.clear();
-			} else {
-				const memoResult = memoTable.get(index);
-				const posResult = positionTable.get(index);
-
-				if (memoResult !== undefined && posResult !== undefined) {
-					context.moveToPosition({ ...posResult });
-					return { ...memoResult };
-				}
-			}
-
-			const result: ParseResult<SType> = _this.p(context);
-
-			memoTable.set(index, { ...result });
-			positionTable.set(index, context.getPosition());
-
 			return result;
 		});
 	}

@@ -1,18 +1,6 @@
-import {
-	type DeParserArray,
-	type NomLanguage,
-	type NomLanguagePartial,
-	type NomLanguageRef,
-	type NomLanguageRules,
-	type ParseFailure,
-	type ParseFunction,
-	type ParseResult,
-	type ParserRef,
-	type STypeBase,
-	type TupleToUnion,
-} from './HelperTypes';
-import { Parser } from './Parser';
 import { P_HELPERS, validateRegexFlags } from './Helpers';
+import type {DeParserArray, InternalParseResult, NomLanguage, NomLanguagePartial, NomLanguageRef, NomLanguageRules, ParseFunction, ParseResult, ParserRef, STypeBase, TupleToUnion} from './HelperTypes';
+import { Parser } from './Parser';
 
 export class P {
 	// --- COMBINATORS ---
@@ -27,16 +15,13 @@ export class P {
 			throw new Error('sequence must have at least one parser argument');
 		}
 
-		return new Parser<DeParserArray<ParserArr>>(function _sequence(context): ParseResult<DeParserArray<ParserArr>> {
-			let result = undefined;
+		return new Parser<DeParserArray<ParserArr>>(function _sequence(context): InternalParseResult<DeParserArray<ParserArr>> {
 			const value: unknown[] = new Array(parsers.length);
 
 			for (let i = 0; i < parsers.length; i++) {
 				const p = parsers[i];
 
-				const newResult = p.p(context);
-				result = context.merge(result, newResult);
-
+				const result = p.p(context);
 				if (!result.success) {
 					return result;
 				}
@@ -44,10 +29,10 @@ export class P {
 				value[i] = result.value;
 			}
 
-			// @ts-ignore
-			result.value = value;
-			// @ts-ignore
-			return result;
+			return {
+				success: true,
+				value: value as DeParserArray<ParserArr>,
+			};
 		});
 	}
 
@@ -65,16 +50,13 @@ export class P {
 			throw new Error('sequenceMap must have at least one parser argument');
 		}
 
-		return new Parser<OtherSType>(function _sequenceMap(context): ParseResult<OtherSType> {
-			let result = undefined;
+		return new Parser<OtherSType>(function _sequenceMap(context): InternalParseResult<OtherSType> {
 			const value: unknown[] = new Array(parsers.length);
 
 			for (let i = 0; i < parsers.length; i++) {
 				const p = parsers[i];
 
-				const newResult = p.p(context);
-				result = context.merge(result, newResult);
-
+				const result = p.p(context);
 				if (!result.success) {
 					return result;
 				}
@@ -82,10 +64,10 @@ export class P {
 				value[i] = result.value;
 			}
 
-			// @ts-ignore
-			result.value = fn(...value);
-			// @ts-ignore
-			return result;
+			return {
+				success: true,
+				value: fn(...value as DeParserArray<ParserArr>),
+			};
 		});
 	}
 
@@ -132,24 +114,24 @@ export class P {
 			throw new Error('or must have at least one alternative');
 		}
 
-		return new Parser<TupleToUnion<DeParserArray<ParserArr>>>(function _or(context): ParseResult<TupleToUnion<DeParserArray<ParserArr>>> {
-			let result = undefined;
+		return new Parser<TupleToUnion<DeParserArray<ParserArr>>>(function _or(context): InternalParseResult<TupleToUnion<DeParserArray<ParserArr>>> {
+			let startPosition = context.getPosition();
 
 			for (const parser of parsers) {
 				const p = parser as Parser<TupleToUnion<DeParserArray<ParserArr>>>;
 
-				const contextCopy = context.copy();
-				const newResult = p.p(contextCopy);
+				const contextCopy = context.copyPosition(startPosition);
+				const result = p.p(contextCopy);
 
-				result = context.merge(result, newResult);
 				if (result.success) {
-					context.moveToPosition(contextCopy.position);
 					return result;
 				}
 			}
 
-			// this cast is safe, since we run the above loop at least once
-			return result as ParseFailure;
+			return {
+				success: false,
+				value: undefined
+			}
 		});
 	}
 
@@ -191,7 +173,7 @@ export class P {
 	static string(str: string): Parser<string> {
 		const expected = "'" + str + "'";
 
-		return new Parser<string>(function _string(context): ParseResult<string> {
+		return new Parser<string>(function _string(context): InternalParseResult<string> {
 			for (let i = 0; i < str.length; i++) {
 				if (context.input[context.position.index + i] !== str[i]) {
 					return context.fail(expected);
@@ -208,13 +190,13 @@ export class P {
 	 * @param regexp
 	 * @param group
 	 */
-	static regexp(regexp: RegExp, group?: number | undefined): Parser<string> {
+	static regexp(regexp: RegExp, group?: number  ): Parser<string> {
 		validateRegexFlags(regexp.flags);
 
 		const expected = regexp.source;
 
 		if (group !== undefined) {
-			return new Parser<string>(function _regexp(context): ParseResult<string> {
+			return new Parser<string>(function _regexp(context): InternalParseResult<string> {
 				const subInput = context.input.slice(context.position.index);
 				const match = regexp.exec(subInput);
 
@@ -235,7 +217,7 @@ export class P {
 				}
 			});
 		} else {
-			return new Parser<string>(function _regexp(context): ParseResult<string> {
+			return new Parser<string>(function _regexp(context): InternalParseResult<string> {
 				const subInput = context.input.slice(context.position.index);
 				const match = regexp.exec(subInput);
 
@@ -255,7 +237,7 @@ export class P {
 	 * @param value
 	 */
 	static succeed<SType extends STypeBase>(value: SType): Parser<SType> {
-		return new Parser<SType>(function _succeed(context): ParseResult<SType> {
+		return new Parser<SType>(function _succeed(context): InternalParseResult<SType> {
 			return context.succeed(value);
 		});
 	}
@@ -266,7 +248,7 @@ export class P {
 	 * @param expected
 	 */
 	static fail<SType extends STypeBase>(expected: string): Parser<SType> {
-		return new Parser<SType>(function _fail(context): ParseResult<SType> {
+		return new Parser<SType>(function _fail(context): InternalParseResult<SType> {
 			return context.fail(expected);
 		});
 	}
@@ -311,7 +293,7 @@ export class P {
 	 * @param str
 	 */
 	static manyOf(str: string): Parser<string> {
-		return new Parser<string>(function _manyOf(context): ParseResult<string> {
+		return new Parser<string>(function _manyOf(context): InternalParseResult<string> {
 			let i = context.position.index;
 			for (; i < context.input.length; i++) {
 				if (!str.includes(context.input[i])) {
@@ -332,7 +314,7 @@ export class P {
 	 * @param str
 	 */
 	static manyNotOf(str: string): Parser<string> {
-		return new Parser<string>(function _manyOf(context): ParseResult<string> {
+		return new Parser<string>(function _manyOf(context): InternalParseResult<string> {
 			let i = context.position.index;
 			for (; i < context.input.length; i++) {
 				if (str.includes(context.input[i])) {
@@ -373,7 +355,7 @@ export class P {
 	 * @param fn
 	 */
 	static takeWhile(fn: (char: string) => boolean): Parser<string> {
-		return new Parser(function _takeWhile(context): ParseResult<string> {
+		return new Parser(function _takeWhile(context): InternalParseResult<string> {
 			let endIndex = context.position.index;
 			while (endIndex < context.input.length && fn(context.input[endIndex])) {
 				endIndex++;
@@ -389,7 +371,7 @@ export class P {
 	 * @param fn
 	 */
 	static reference<SType extends STypeBase>(fn: () => Parser<SType>): ParserRef<SType> {
-		return new Parser<SType>(function _reference(context): ParseResult<SType> {
+		return new Parser<SType>(function _reference(context): InternalParseResult<SType> {
 			return fn().p(context);
 		});
 	}

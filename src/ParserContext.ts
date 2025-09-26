@@ -1,5 +1,10 @@
 import { arrayUnion, getIndex } from './Helpers';
-import { type ParseResult, type ParsingPosition, type STypeBase } from './HelperTypes';
+import type {InternalParseResult, ParseResult, ParsingPosition, STypeBase} from './HelperTypes';
+
+interface LatestError {
+	position: ParsingPosition;
+	expected: string[];
+}
 
 /**
  * Holds the input string as well as the current parsing position.
@@ -11,6 +16,8 @@ export class ParserContext {
 	 * The current parsing position. This will be modified during parsing.
 	 */
 	position: ParsingPosition;
+
+	latestError: LatestError | undefined;
 
 	constructor(input: string, position: ParsingPosition) {
 		this.input = input;
@@ -27,15 +34,13 @@ export class ParserContext {
 		return this;
 	}
 
-	/**
-	 * Copies the context with a new position object, while preserving the position.
-	 */
-	copy(): ParserContext {
-		return new ParserContext(this.input, {
-			index: this.position.index,
-			column: this.position.column,
-			line: this.position.line,
-		});
+	copyPosition(position: ParsingPosition): ParserContext {
+		this.position = {
+			index: position.index,
+			column: position.column,
+			line: position.line,
+		};
+		return this;
 	}
 
 	/**
@@ -98,7 +103,7 @@ export class ParserContext {
 	 * @param offset the offset from the current position, must be positive
 	 * @param value
 	 */
-	succeedOffset<SType extends STypeBase>(offset: number, value: SType): ParseResult<SType> {
+	succeedOffset<SType extends STypeBase>(offset: number, value: SType): InternalParseResult<SType> {
 		return this.succeedAt(this.position.index + offset, value);
 	}
 
@@ -108,7 +113,7 @@ export class ParserContext {
 	 * @param offset the offset from the current position, must be positive
 	 * @param expected
 	 */
-	failOffset<SType extends STypeBase>(offset: number, expected: string | string[]): ParseResult<SType> {
+	failOffset<SType extends STypeBase>(offset: number, expected: string | string[]): InternalParseResult<SType> {
 		return this.failAt(this.position.index + offset, expected);
 	}
 
@@ -117,7 +122,7 @@ export class ParserContext {
 	 *
 	 * @param value
 	 */
-	succeed<SType extends STypeBase>(value: SType): ParseResult<SType> {
+	succeed<SType extends STypeBase>(value: SType): InternalParseResult<SType> {
 		return this.succeedAt(this.position.index, value);
 	}
 
@@ -126,7 +131,7 @@ export class ParserContext {
 	 *
 	 * @param expected
 	 */
-	fail<SType extends STypeBase>(expected: string | string[]): ParseResult<SType> {
+	fail<SType extends STypeBase>(expected: string | string[]): InternalParseResult<SType> {
 		return this.failAt(this.position.index, expected);
 	}
 
@@ -137,14 +142,12 @@ export class ParserContext {
 	 * @param index
 	 * @param value
 	 */
-	succeedAt<SType extends STypeBase>(index: number, value: SType): ParseResult<SType> {
+	succeedAt<SType extends STypeBase>(index: number, value: SType): InternalParseResult<SType> {
 		this.advanceTo(index);
 
 		return {
 			success: true,
 			value: value,
-			furthest: undefined,
-			expected: undefined,
 		};
 	}
 
@@ -155,39 +158,68 @@ export class ParserContext {
 	 * @param index
 	 * @param expected
 	 */
-	failAt<SType extends STypeBase>(index: number, expected: string | string[]): ParseResult<SType> {
+	failAt<SType extends STypeBase>(index: number, expected: string | string[]): InternalParseResult<SType> {
 		this.advanceTo(index);
+
+		this.addError(Array.isArray(expected) ? expected : [expected]);
 
 		return {
 			success: false,
 			value: undefined,
-			furthest: this.position,
-			expected: Array.isArray(expected) ? expected : [expected],
 		};
 	}
 
-	/**
-	 * Merge a new result (`b`) into an existing result (`b`).
-	 *
-	 * @param a
-	 * @param b
-	 */
-	merge<ASType extends STypeBase, BSType extends STypeBase>(a: ParseResult<ASType> | undefined, b: ParseResult<BSType>): ParseResult<BSType> {
-		if (a === undefined) {
-			return b;
+	// /**
+	//  * Merge a new result (`b`) into an existing result (`b`).
+	//  *
+	//  * @param a
+	//  * @param b
+	//  */
+	// merge<ASType extends STypeBase, BSType extends STypeBase>(a: ParseResult<ASType> | undefined, b: ParseResult<BSType>): ParseResult<BSType> {
+	// 	if (a === undefined) {
+	// 		return b;
+	// 	}
+
+	// 	const aIndex = getIndex(a.furthest);
+	// 	const bIndex = getIndex(b.furthest);
+
+	// 	if (bIndex > aIndex) {
+	// 		return b;
+	// 	}
+
+	// 	const expected = bIndex === aIndex ? arrayUnion(a.expected, b.expected) : a.expected;
+
+	// 	b.furthest = a.furthest;
+	// 	b.expected = expected;
+	// 	return b;
+	// }
+
+	addError(expected: string[]): void {
+		if (this.latestError === undefined || getIndex(this.latestError.position) < this.position.index) {
+			this.latestError = {
+				position: this.getPosition(),
+				expected: expected,
+			};
+		} else if (getIndex(this.latestError.position) === this.position.index) {
+			this.latestError.expected = arrayUnion(this.latestError.expected, expected) ?? expected;
+		}
+	}
+
+	getAndClearLatestError(): LatestError | undefined {
+		const error = this.latestError;
+		this.latestError = undefined;
+		return error;
+	}
+
+	mergeLatestError(other: LatestError | undefined): void {
+		if (other === undefined) {
+			return;
 		}
 
-		const aIndex = getIndex(a.furthest);
-		const bIndex = getIndex(b.furthest);
-
-		if (bIndex > aIndex) {
-			return b;
+		if (this.latestError === undefined || getIndex(this.latestError.position) < getIndex(other.position)) {
+			this.latestError = other;
+		} else if (getIndex(this.latestError.position) === getIndex(other.position)) {
+			this.latestError.expected = arrayUnion(this.latestError.expected, other.expected) ?? other.expected;
 		}
-
-		const expected = bIndex === aIndex ? arrayUnion(a.expected, b.expected) : a.expected;
-
-		b.furthest = a.furthest;
-		b.expected = expected;
-		return b;
 	}
 }

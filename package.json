@@ -5,7 +5,7 @@
 	"main": "ParsiNOM.js",
 	"scripts": {
 		"build": "tsc",
-		"tsc": "tsc --project ./tsconfig.json --noEmit",
+		"tsc": "tsc --noEmit",
 		"test": "bun test",
 		"test:adv": "bun test -t=advanced",
 		"snapshots": "bun test --update-snapshots",
@@ -25,17 +25,15 @@
 		"url": "https://github.com/mProjectsCode/parsiNOM.git"
 	},
 	"devDependencies": {
-		"bun-types": "1.0.8",
-		"prettier": "^3.0.3",
-		"tslib": "^2.6.2",
-		"typescript": "^5.2.2",
-		"mitata": "^0.1.6",
-		"eslint": "^8.52.0",
-		"eslint-plugin-import": "^2.28.1",
-		"eslint-plugin-isaacscript": "^3.5.6",
+		"bun-types": "1.2.22",
+		"prettier": "^3.6.2",
+		"tslib": "^2.8.1",
+		"typescript": "^5.9.2",
+		"mitata": "^1.0.34",
+		"eslint": "^9.36.0",
+		"eslint-plugin-import": "^2.32.0",
 		"eslint-plugin-only-warn": "^1.1.0",
-		"@typescript-eslint/eslint-plugin": "^6.0.0",
-		"@typescript-eslint/parser": "^6.0.0"
+		"typescript-eslint": "^8.44.1"
 	},
 	"files": [
 		"lib/**/*"

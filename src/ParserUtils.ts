@@ -1,6 +1,6 @@
+import type {ParsingPosition, ParsingRange} from './HelperTypes';
 import { Parser } from './Parser';
 import { P } from './ParsiNOM';
-import { type ParsingPosition, type ParsingRange } from './HelperTypes';
 
 export class P_UTILS {
 	/**

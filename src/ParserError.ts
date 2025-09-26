@@ -1,4 +1,4 @@
-import { type ParseFailure } from './HelperTypes';
+import type {ParseFailure} from './HelperTypes';
 
 /**
  * Generate an error message string for a parse failure on a specific string.

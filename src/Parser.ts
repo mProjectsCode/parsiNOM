@@ -52,7 +52,8 @@ export class Parser<const SType extends STypeBase> {
 	 * @param other
 	 */
 	or<OtherSType extends STypeBase>(other: Parser<OtherSType>): Parser<SType | OtherSType> {
-		return P.or(this as Parser<SType>, other);
+		const _this: Parser<SType> = this;
+		return P.or(_this, other);
 	}
 
 	/**
@@ -171,7 +172,8 @@ export class Parser<const SType extends STypeBase> {
 	 * @param next
 	 */
 	and<OtherSType extends STypeBase>(next: Parser<OtherSType>): Parser<[SType, OtherSType]> {
-		return P.sequence(this as Parser<SType>, next);
+		const _this: Parser<SType> = this;
+		return P.sequence(_this, next);
 	}
 
 	/**
@@ -333,6 +335,7 @@ export class Parser<const SType extends STypeBase> {
 	 * Wrap the return value if this parser in an object containing the before and after parsing position.
 	 */
 	marker(): Parser<ParsingMarker<SType>> {
+		const _this: Parser<SType> = this;
 		return P.sequenceMap(
 			function _marker(from, value: SType, to): ParsingMarker<SType> {
 				return {
@@ -341,7 +344,7 @@ export class Parser<const SType extends STypeBase> {
 				};
 			},
 			P_UTILS.position(),
-			this as Parser<SType>,
+			_this,
 			P_UTILS.position(),
 		);
 	}
@@ -352,6 +355,7 @@ export class Parser<const SType extends STypeBase> {
 	 * @param name
 	 */
 	namedMarker(name: string): Parser<NamedParsingMarker<SType>> {
+		const _this: Parser<SType> = this;
 		return P.sequenceMap(
 			function _namedMarker(from, value: SType, to): NamedParsingMarker<SType> {
 				return {
@@ -361,7 +365,7 @@ export class Parser<const SType extends STypeBase> {
 				};
 			},
 			P_UTILS.position(),
-			this as Parser<SType>,
+			_this,
 			P_UTILS.position(),
 		);
 	}
@@ -372,12 +376,13 @@ export class Parser<const SType extends STypeBase> {
 	 * @param fn
 	 */
 	node<NodeType>(fn: (value: SType, range: ParsingRange) => NodeType): Parser<NodeType> {
+		const _this: Parser<SType> = this;
 		return P.sequenceMap(
 			function _node(from, value: SType, to): NodeType {
 				return fn(value, { from, to });
 			},
 			P_UTILS.position(),
-			this as Parser<SType>,
+			_this,
 			P_UTILS.position(),
 		);
 	}
